@@ -1,0 +1,32 @@
+.custom-flex{
+    display: flex;
+    flex-direction: row;
+}
+
+.invertir-color{
+    filter: invert();
+}
+
+.my-btn{
+    color: white;
+}
+
+.my-btn:hover{
+    background-color: #20a000;
+}
+
+.my-btn:focus{
+    color: white;
+}
+
+@media (min-width: 993px) {
+    .visualizar-md-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 993px) {
+    .visualizar-xl-lg {
+        display: none;
+    }
+}

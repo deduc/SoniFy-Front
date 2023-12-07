@@ -1,0 +1,11 @@
+a:link {
+    color: red;
+}
+
+a:visited {
+    color: yellow;
+}
+
+a:hover {
+    background-color: rgba(255, 255, 255, 0.41);
+}
