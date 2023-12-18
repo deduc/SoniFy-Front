@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { BuscadorComponent } from 'src/app/shared/buscador/buscador.component';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -7,9 +6,4 @@ import { BuscadorComponent } from 'src/app/shared/buscador/buscador.component';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-
-    constructor() { }
-
-    ngOnInit() {}
-}
+export class HomeComponent {}
