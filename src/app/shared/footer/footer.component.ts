@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { appName, githubLink, email } from 'src/app/core/constants';
+import { appName, githubLink, email } from 'src/app/core/constants/constants';
 
 @Component({
   selector: 'shared-footer',
