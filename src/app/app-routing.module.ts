@@ -9,7 +9,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { 
-        path: '', 
+        path: 'me', 
         /*
             Lazy loading. Se carga cuando es necesario acceder a esta ruta.
             importa pages module y cuando termina de cargar, lo usa.
@@ -20,7 +20,8 @@ const routes: Routes = [
          */
         loadChildren: () => import("./pages/pages.module").then(m => m.PagesModule) 
     },
-  ];
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+];
   
   
 @NgModule({
