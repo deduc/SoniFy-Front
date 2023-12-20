@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 // mis componentes
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MyPlaylistsComponent } from './my-playlists/my-playlists.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
@@ -20,7 +19,6 @@ import { LoginService } from '../pages/login/login.service';
   declarations: [
     HomeComponent,
     LoginComponent,
-    RegisterComponent,
     MyPlaylistsComponent,
     MyProfileComponent
   ],
