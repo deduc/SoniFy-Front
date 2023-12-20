@@ -5,6 +5,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 
 import { AuthParamsInterface } from './interfaces/AuthParamsInterface';
 import { APIMakeAuthParams, SpotifyAuthUrl } from "src/app/core/constants/constants"
+import { ClientSecretInterface } from './interfaces/ClientSecretInterface';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class LoginService {
     }
 
     public async getAuthParams(): Promise<AuthParamsInterface> {
-        let codeChallenge: string = await this.doMakeCodeChallenge();
+        let codeChallenge: string = await this.makeCodeChallenge();
 
         try {
             let authParamsAux: AuthParamsInterface = await this.getAuthParamsFromApi(codeChallenge);
@@ -32,9 +33,29 @@ export class LoginService {
             throw Error(`${error}`);
         }
     }
+    
+    public async getClientSecret(url: string): Promise<string> {
+        let datos: ClientSecretInterface = await fetch(url)
+            .then(response => {
+                if (! response.ok) {
+                    throw new Error(`${response.status} ${response.statusText}`);
+                }
+
+                return response.json();
+            })
+            .then((data) => {
+                return data;
+            })
+            .catch(error => {
+                // TODO: En vez de tirar el error, saca un dialog que informe sobre este.            
+                throw error;
+            });
+
+        return datos.client_secret;
+    }
 
     private async getAuthParamsFromApi(codeChallenge: string): Promise<AuthParamsInterface> {
-        const url: string = `${APIMakeAuthParams}e?codeChallenge=${codeChallenge}`;
+        const url: string = `${APIMakeAuthParams}?codeChallenge=${codeChallenge}`;
 
         let authParams: AuthParamsInterface;
  
@@ -56,32 +77,11 @@ export class LoginService {
 
         return authParams;
     }
-        
-    private doSendCodeChallengeToAPI(codeChallenge: string): Observable<AuthParamsInterface> {
-        const url: string = `${APIMakeAuthParams}?codeChallenge=${codeChallenge}`;
     
-        return this.http.get(url)
-        .pipe(
-            catchError((error) => {
-                // API apagada
-                if (error.status === 0) {
-                    // TODO: Sacar un dialog con esto
-                    console.error('Error de conexión: No se puede acceder al servidor.');
-                }
-                else {
-                    // TODO: Sacar un dialog con esto
-                    console.error('Error:', error);
-                }
-                return throwError(() => error);
-            }),
-            map((res: any) => {
-                return res as AuthParamsInterface;
-            })
-        );
-    }
-    
-    private async doMakeCodeChallenge(): Promise<string> {
+    private async makeCodeChallenge(): Promise<string> {
         let codeVerifier: string = this.generateRandomString(64);
+        localStorage.setItem('code_verifier', codeVerifier);
+
         let hashed: ArrayBuffer = await this.sha256(codeVerifier);
         let codeChallenge: string = this.base64encode(hashed);
         
