@@ -14,11 +14,12 @@ export class AuthService {
     }
 
     private doCheckAccessToken(): boolean{
-        if (localStorage.getItem(accessTokenKey)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return true;
+        // if (localStorage.getItem(accessTokenKey)){
+        //     return true;
+        // }
+        // else{
+        //     return false;
+        // }
     }
 }
