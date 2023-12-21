@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, clientIdKey, clientSecretKey, oneHourTimeStamp } from 'src/app/core/constants/constants';
-import { BodyTokenRequestInterface } from './interfaces/BodyTokenRequestInterface';
 
+import { SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, clientIdKey, clientSecretKey, oneHourTimeStamp } from 'src/app/core/constants/constants';
+import { BodyTokenRequestInterface } from '../../pages/home/interfaces/BodyTokenRequestInterface';
+
+/**
+ * Clase dedicada a obtener tokens de autenticación con spotify
+ */
 @Injectable({providedIn: 'root'})
-export class HomeService {
+export class TokenService {
     /**
      * Una vez el usuario ha dado permisos en la aplicación autenticadora OAuth2.0, 
      * obtengo el token de acceso a la api de spotify o utilizo el que ya tengo.
