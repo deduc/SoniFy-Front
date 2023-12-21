@@ -6,4 +6,7 @@ export interface AuthParamsInterface
     code_challenge_method: string,
     code_challenge: string,
     redirect_uri: string,
+
+    // Index signature: Sirve para convertir a string clave:valor
+    [key: string]: string;
 }

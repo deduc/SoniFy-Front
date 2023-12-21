@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BuscadorComponent } from './buscador/buscador.component';
+// fomrularios
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { BuscadorComponent } from './buscador/buscador.component';
     BuscadorComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
   ]
 })
 export class SharedModule { }
