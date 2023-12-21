@@ -18,22 +18,24 @@ export class LoginService {
         this.http = http;
     }
 
+    /**
+     * Get an Authorization Code with PKCE Flow
+     */
     public async getAuthParams(): Promise<AuthParamsInterface> {
         let codeChallenge: string = await this.makeCodeChallenge();
 
         try {
             let authParamsAux: AuthParamsInterface = await this.getAuthParamsFromApi(codeChallenge);
             return authParamsAux;
-            
-            // let authParams = {...authParamsAux}
-            // SpotifyAuthUrl.search = new URLSearchParams(authParams).toString();
-            // window.location.href = SpotifyAuthUrl.toString();
         }
         catch (error){
             throw Error(`${error}`);
         }
     }
     
+    /**
+     * API GET request to obtain the secret client code
+     */
     public async getClientSecret(url: string): Promise<string> {
         let datos: ClientSecretInterface = await fetch(url)
             .then(response => {
@@ -79,7 +81,7 @@ export class LoginService {
     }
     
     private async makeCodeChallenge(): Promise<string> {
-        let codeVerifier: string = this.generateRandomString(64);
+        let codeVerifier: string = this.generateCodeVerifiergenerateRandomString(64);
         localStorage.setItem('code_verifier', codeVerifier);
 
         let hashed: ArrayBuffer = await this.sha256(codeVerifier);
@@ -89,7 +91,7 @@ export class LoginService {
     }
 
     
-    private generateRandomString(length: number): string {
+    private generateCodeVerifiergenerateRandomString(length: number): string {
         const possible: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         const values: Uint8Array = crypto.getRandomValues(new Uint8Array(length));
 
