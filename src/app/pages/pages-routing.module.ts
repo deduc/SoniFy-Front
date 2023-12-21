@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyPlaylistsComponent } from './my-playlists/my-playlists.component';
-
-import { AuthService } from '../core/auth.service';
+// auth guard service
+import { AuthService } from '../core/auth-guards/auth.service';
 
 
 const routes: Routes = [

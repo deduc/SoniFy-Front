@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HomeService } from './home.service';
+import { TokenService } from '../../core/services/token.service';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { HomeService } from './home.service';
 export class HomeComponent {
     private accessToken: string = "";
 
-    constructor(private homeService: HomeService) {}
+    constructor(private homeService: TokenService) {}
 
     async ngOnInit(): Promise<void> {
         this.accessToken = await this.homeService.checkAccessToken();
