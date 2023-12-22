@@ -11,12 +11,15 @@ import { AuthParamsInterface } from './interfaces/AuthParamsInterface';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent{
-    public appName: string = appName;
-    public redirectUriKey: string = redirectUriKey;
+    public appName: string;
+    public redirectUriKey: string;
 
     private getAuthParamsEndpoint: string = APIGetAuthParamsEndpoint;
     
-    constructor(private loginService: LoginService) { }
+    constructor(private loginService: LoginService) { 
+        this.appName = appName
+        this.redirectUriKey = redirectUriKey
+    }
 
     ngOnInit(): void {
         // todo

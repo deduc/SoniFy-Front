@@ -22,5 +22,4 @@ export class HeaderComponent implements OnInit {
     public navigate(url: string): void{
         this.router.navigateByUrl(url);
     }
-
 }

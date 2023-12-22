@@ -1,12 +1,16 @@
-<shared-header></shared-header>
+<div class="bg-black">
+    <shared-header></shared-header>
 
-<div class="container-fluid bg-black">
-    <shared-buscador></shared-buscador>
-</div>
-<main class="bg-black text-white container-fluid">
-    <div *ngFor="let item of albumInfoList">
-        {{item.name}}
+    <div class="container-fluid bg-black">
+        <shared-buscador></shared-buscador>
     </div>
-</main>
 
-<shared-footer></shared-footer>
+    <main class="bg-black text-white container-fluid">
+        <h1>¿Qué pasa nen?</h1>
+
+        <h2>Tus artistas favoritos</h2>
+        <home-artistas-favoritos></home-artistas-favoritos>
+    </main>
+
+    <shared-footer></shared-footer>
+</div>

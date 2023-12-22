@@ -28,11 +28,18 @@ export const codeVerifierKey: string = "code_verifier";
 export const codeFromUrlKey: string = "code";
 
 
-//* Otras variables
+//* Rutas de la aplicación
+export const loginUrl: string = "/login";
+
+
+//* Otras constantes
 export const appName: string = "SoniFy";
 export const githubLink: string = "https://github.com/deduc";
 export const email: string = "deductivegoose@outlook.es";
 export const oneHourTimeStamp: number = 3600000;
 
 
-// curl -X GET "https://api.spotify.com/v1/me" -H "Authorization: Bearer BQC7dVOYbKZ_G11FUcg12kY2Foxg9G1zlMkK8Q64NGLAmAFtuCpB-EVXUb4ZvNnwXg4Lt4ufmfKsbWSJKLhaAlS9pECmyMQRbRdu5y1CMRSXcGwVBTs"
+
+
+
+// curl -X GET "https://api.spotify.com/v1/me" -H "Authorization: Bearer token"

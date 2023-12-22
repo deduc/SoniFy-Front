@@ -13,17 +13,19 @@ import { SharedModule } from '../shared/shared.module';
 // modulo http para usar el componente HttpClient
 import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from '../pages/login/login.service';
+import { HomeModule } from './home/home.module';
 
 
 @NgModule({
   declarations: [
-    HomeComponent,
+    // HomeComponent,
     LoginComponent,
     MyPlaylistsComponent,
-    MyProfileComponent
+    MyProfileComponent,
   ],
   imports: [
     CommonModule,
+    HomeModule,
     SharedModule,
     PagesRoutingModule,
     HttpClientModule,
