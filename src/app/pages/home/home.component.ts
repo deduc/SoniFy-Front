@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
 import { AlbumInfoInterface } from 'src/app/core/interfaces/AlbumInfoInterface';
 import { HomeService } from './home.service';
-import { accessTokenKey } from 'src/app/core/constants/constants';
 
 
 @Component({
