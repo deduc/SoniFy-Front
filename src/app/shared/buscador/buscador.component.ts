@@ -1,6 +1,6 @@
-import { Component, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { BuscadorService } from './buscador.service';
-import { accessTokenKey } from 'src/app/core/constants/constants';
+import { accessTokenKey, lastSearchedKey } from 'src/app/core/constants/constants';
 import { AlbumInfoInterface } from '../../core/interfaces/AlbumInfoInterface';
 import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
 
@@ -10,17 +10,13 @@ import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
     styleUrls: ['./buscador.component.css']
 })
 export class BuscadorComponent {
-    @Output()
     public albumsInfoList: AlbumInfoInterface[] = [];
-    
     public searchText: string = "";
     public next20AlbumsUrl: string = "";
     public token: string;
 
     private buscadorService: BuscadorService;
     private dataEmitterService: DataEmitterService;
-
-
 
     constructor(buscadorService: BuscadorService, dataEmitterService: DataEmitterService) { 
         this.buscadorService = buscadorService;
@@ -35,6 +31,8 @@ export class BuscadorComponent {
      */
     public searchContent(): void {
         let searchText = this.searchText;
+        
+        localStorage.setItem(lastSearchedKey, searchText);
 
         this.buscadorService.searchContent(searchText, this.token)
         .subscribe(
@@ -50,7 +48,6 @@ export class BuscadorComponent {
                 }
             }
         )
-        // fin metodo
     }
 
     /**
@@ -67,33 +64,33 @@ export class BuscadorComponent {
         for (let index = 0; index < albums.length; index++) {
             const album: any = albums[index];
             
-            let albumInfoObj: AlbumInfoInterface = {
-                album_type: album.album_type,
-                api_href: album.href,
-                api_id: album.id,
-                artist: album.artists[0].name,
-                img_url: album.images[0].url,
-                name: album.name,
-                release_date: album.release_date,
-                spotify_url: album.external_urls.spotify,
-                total_tracks: album.total_tracks,
-            }
+            let albumInfoObj: AlbumInfoInterface = this.makeAlbumInfoInterfaceObject(album);
             albumInfoList[index] = albumInfoObj;
         }
 
         this.albumsInfoList = albumInfoList;
         this.emitAlbumList(albumInfoList)
     }
+    
+    private makeAlbumInfoInterfaceObject(album: any): AlbumInfoInterface {
+        let albumInfoObj: AlbumInfoInterface = {
+            album_type: album.album_type,
+            api_href: album.href,
+            api_id: album.id,
+            artist: album.artists[0].name,
+            img_url: album.images[0].url,
+            name: album.name,
+            release_date: album.release_date,
+            spotify_url: album.external_urls.spotify,
+            total_tracks: album.total_tracks,
+        }
 
-    /**
-     * 
-     */
+        return albumInfoObj;
+    }
+
     private emitAlbumList(albumInfoList: AlbumInfoInterface[]){
         console.log("emitAlbumList()", albumInfoList);
         
         this.dataEmitterService.emitAlbumInterface(albumInfoList)
     }
-    
-
-    // fin clase
 }

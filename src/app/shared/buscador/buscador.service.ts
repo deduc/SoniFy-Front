@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SpotifySearch } from 'src/app/core/constants/constants';
 
 
 @Injectable({
@@ -14,9 +15,8 @@ export class BuscadorService {
 
     public searchContent(query: string, token: string): Observable<any> {
         const searchQuery = query;
-        const url = `${this.apiUrl}/search?q=${searchQuery}&type=album`;
+        const url = `${SpotifySearch}?q=${searchQuery}&type=album`;
 
-        // Reemplaza 'Bearer <TOKEN>' con tu token de autorización de Spotify
         const headers = new HttpHeaders({
             'Authorization': 'Bearer ' + token
         });

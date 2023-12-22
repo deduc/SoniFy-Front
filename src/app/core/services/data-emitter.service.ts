@@ -8,12 +8,12 @@ import { AlbumInfoInterface } from '../interfaces/AlbumInfoInterface';
   providedIn: 'root'
 })
 export class DataEmitterService {
-    private albumInfo = new BehaviorSubject<AlbumInfoInterface[]>([]);
-    datosActuales = this.albumInfo.asObservable();
+    public albumInfoList = new BehaviorSubject<AlbumInfoInterface[]>([]);
+    public datosAlbumInfoList = this.albumInfoList.asObservable();
 
     constructor(){}
 
-    emitAlbumInterface(albumInfoList: AlbumInfoInterface[]) {
-        this.albumInfo.next(albumInfoList);
+    public emitAlbumInterface(albumInfoList: AlbumInfoInterface[]) {
+        this.albumInfoList.next(albumInfoList);
     }
 }
