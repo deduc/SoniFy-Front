@@ -31,15 +31,18 @@ export class LoginComponent{
         try {
             const authParams: AuthParamsInterface = await this.loginService.getAuthParams(this.getAuthParamsEndpoint);
             
-            // Emito authParams al servicio que escuche por este objeto.
             localStorage.setItem(this.redirectUriKey, authParams.redirect_uri)
-            
+
+            // Redirecciono al usuario a una pantalla de login con el servicio OAuth2.0
             SpotifyAuthUrl.search = new URLSearchParams({...authParams}).toString();
             window.location.href = SpotifyAuthUrl.toString();
         }
         catch (err){
             console.log(err);
-            
         }
+
+        // fin metodo
     }
+
+    // fin clase
 }

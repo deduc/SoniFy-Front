@@ -1,6 +1,20 @@
-<main class="container-fluid text-white bg-black">
+<!-- <main class="container-fluid text-white bg-black">
     <div class="row">
         <h1>{{ appName }}</h1>
         <button class="btn btn-success" (click)="login()">Login</button>
     </div>
+</main> -->
+
+<main class="container-fluid bg-black d-flex align-items-center justify-content-around">
+    <article class="col-5 d-flex justify-content-center py-5">
+        <h1 class="custom-title">{{ appName }}</h1>
+    </article>
+
+    <article class="col-5 d-flex justify-content-start flex-column py-5">
+        <h2>Escucha tu música favorita usando tu cuenta de SpotiFy</h2>
+        
+        <div class="d-flex justify-content-center row mt-3">
+            <button class="btn btn-success login-btn-custom-color p-2" (click)="login()">Iniciar Sesión</button>
+        </div>
+    </article>
 </main>
