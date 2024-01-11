@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ApiGetClientIdAndSecret, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, loginUrl, oneHourTimeStamp, redirectUriKey } from 'src/app/core/constants/constants';
+import { ApiGetClientIdAndSecret, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, gotCodeFromUrl, loginUrl, oneHourTimeStamp, redirectUriKey } from 'src/app/core/constants/constants';
 import { TokenService } from 'src/app/core/services/token.service';
 
 
@@ -40,16 +40,18 @@ export class HomeService {
         this.oneHourTimeStamp = oneHourTimeStamp;
         
         // Valor de las variables asignadas mediante funciones.
-        this.setClientIdAndSecret(ApiGetClientIdAndSecret);
+        this.getAndSetClientIdAndSecret(ApiGetClientIdAndSecret);
         this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey);
         this.redirectUri = this.getRedirectUri(this.loginUrl);
     }
 
     /**
-     * Invocado por home.component.ts en ngOnInit()
+     * Invocado por HomeComponent.ngOnInit()
      */
     public getAccessToken(): void {
+        // Como hago llamadas a la API para obtener los códigos del cliente, hago que la función espere 0.5 segundos.
         setTimeout(async () => {
+            // Imprimo los datos obtenidos desde el constructor.
             this.consoleLogData();
 
             if (this.checkIfUserNeedsNewAccessToken(this.accessTokenKey, this.accessTokenTimestampKey, this.oneHourTimeStamp)) {
@@ -63,10 +65,6 @@ export class HomeService {
                 console.log("Hay code válido almacenado, no obtengo un nuevo token.");
             }
         }, 500);
-    }
-
-    public navigate(url: string): void{
-        this.router.navigateByUrl(url);
     }
 
     /**
@@ -95,9 +93,9 @@ export class HomeService {
     }
 
     /**
-     * HTTP GET Request a mi API para obtener estos 2 datos.
+     * HTTP GET Request a mi API para obtener y guardar clientId y clientSecret.
      */
-    private setClientIdAndSecret(endpoint: string): void {
+    private getAndSetClientIdAndSecret(endpoint: string): void {
         try {
             fetch(endpoint)
             .then(res => res.json())
@@ -107,15 +105,46 @@ export class HomeService {
             })
         } catch (error) {
             console.log(error);
-            alert("HomeService setClientIdAndSecret() No se ha podido contactar con la API.")
+            alert("HomeService getAndSetClientIdAndSecret() No se ha podido contactar con la API.")
                         
         }
     }
 
+    /**
+     * Navegar entre distintas rutas de la web.
+     */
+    private navigate(url: string): void {
+        this.router.navigateByUrl(url);
+    }
+
+    /**
+     * Compruebo que exista el parámetro code de la url en localStorage. 
+     * En caso de no existir, lo obtengo de la url y lo guardo en localStorage.
+     * 
+     * ! TODO: Mejorar este apartado para no ejecutar este método, desde el constructor, cada vez que el usuario pasa por homeComponent.
+     * En caso que haya obtenido el código anteriormente y el usuario se mueva entre las distintas urls de la web,
+     * lo obtengo de localStorage (porque la url va a cambiar).
+     */
     private getcodeFromUrl(codeFromUrlKey: string): string {
         const queryString = window.location.search;
-        const codeFromUrl: string = new URLSearchParams(queryString).get(codeFromUrlKey)!.toString();
-      
+        let codeFromUrl: string = localStorage.getItem(gotCodeFromUrl)!;
+
+        if (codeFromUrl == "1"){
+            console.log("homeService.getCodeFromUrl(): El parámetro code existe.");
+            
+            return codeFromUrl;
+        }
+
+        try {
+            codeFromUrl = new URLSearchParams(queryString).get(codeFromUrlKey)!.toString();
+            localStorage.setItem(gotCodeFromUrl, "1");
+
+        } catch (error) {
+            localStorage.setItem(gotCodeFromUrl, "0");
+            alert("ERROR homeService.getCodeFromUrl(): No hay código en la URL.\nRedirigiendo a la página de login.");
+            this.navigate(loginUrl)
+        }
+        
         return codeFromUrl;
     }
 
@@ -159,13 +188,12 @@ export class HomeService {
      * Imprimo por consola los valores de clientId, clientSecret, codeFromUrl, redirectUri y spotifyTokenUrl
      */
     private consoleLogData(){
-        console.log("HomeService consoleLogData()", {
+        console.log("HomeService.consoleLogData()", {
             clientId: this.clientId,
             clientSecret: this.clientSecret,
             codeFromUrl: this.codeFromUrl,
             redirectUri: this.redirectUri,
             spotifyTokenUrl: this.spotifyTokenUrl,
         });
-
     }
 }

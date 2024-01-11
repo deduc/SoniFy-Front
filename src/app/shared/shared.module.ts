@@ -6,18 +6,21 @@ import { FooterComponent } from './footer/footer.component';
 import { BuscadorComponent } from './buscador/buscador.component';
 // fomrularios
 import { FormsModule } from '@angular/forms';
+import { AlbumCardComponent } from './album-card/album-card.component';
 
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    FooterComponent,
+    AlbumCardComponent,
     BuscadorComponent,
+    FooterComponent,
+    HeaderComponent,
   ],
   exports: [
-    HeaderComponent,
-    FooterComponent,
+    AlbumCardComponent,
     BuscadorComponent,
+    FooterComponent,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,

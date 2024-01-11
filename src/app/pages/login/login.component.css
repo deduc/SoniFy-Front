@@ -1,50 +1,65 @@
 main {
-    width: 100%;
-    height: 100vh;
-    background-image: url("/assets/fondo-verde-y-negro.png");
+    min-height: 100vh;
+    color: white;
+    background: url("/assets/fondo-verde-y-negro.png") center/cover no-repeat;
 }
 
 article {
-    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.custom-title {
+.app-title {
+    font-size: 10rem;
     color: rgb(25, 255, 84);
+    text-shadow: 5px 5px black;
+
+    padding: 1rem;
 }
 
-.login-btn-custom-color {
-    background-color: rgb(0, 152, 71);
+.app-subtitle {
+    font-size: 32px;
+    margin-top: 1rem;
+    margin-left: 1rem;
+
+    color: rgb(0, 226, 56);
+}
+
+button {
+    width: 20rem;
+    background-color: rgb(0, 178, 83);
     color: white;
 }
 
-.login-btn-custom-color:hover {
+button:hover {
     background-color: rgb(6, 205, 99);
     border: 1px solid lightgreen;
 }
 
-.login-btn-custom-color:active {
+button:active {
     background-color: rgb(0, 255, 119);
 }
 
-@media (min-width:993px) {
+@media (min-width: 993px) {
     main {
-        background-size: cover;
-        
         display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 
-    .custom-title {
-        font-size: 8rem;
-        text-shadow: 5px 5px black;
+    .app-subtitle {
+        text-shadow: 3px 1px rgb(0, 152, 71);
     }
-
-    article {
-        padding: 16px;
-        border-radius: 10px;
-    }
-
 }
 
 @media (max-width:993px) {
@@ -52,5 +67,33 @@ article {
         background-position-x: 80%;
         background-size: cover;
         background-repeat: no-repeat;
+    }
+
+    div {
+        gap: 10vh;
+    }
+
+    button {
+        background-color: rgb(0, 255, 64);
+        color: rgb(0, 133, 33);
+    }
+
+    .app-title {
+        color: rgb(25, 255, 84);
+        font-size: 5.5rem;
+        margin-top: 5rem;
+
+        text-shadow: 2px 2px black;
+    }
+
+    .app-subtitle {
+        color: rgb(0, 226, 56);
+        font-size: 1rem;
+        text-shadow: 1px 1px rgb(0, 152, 71);
+    }
+
+    .login-title {
+        font-size: 1.5rem;
+
     }
 }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // mis componentes
-import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MyPlaylistsComponent } from './my-playlists/my-playlists.component';

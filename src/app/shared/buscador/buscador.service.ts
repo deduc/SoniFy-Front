@@ -13,6 +13,10 @@ export class BuscadorService {
 
     constructor(private http: HttpClient) { }
 
+    /**
+     * Invocado por BuscadorComponent.searchContent().
+     * Hago una petición a la api de spotify.
+     */
     public searchContent(query: string, token: string): Observable<any> {
         const searchQuery = query;
         const url = `${SpotifySearch}?q=${searchQuery}&type=album`;

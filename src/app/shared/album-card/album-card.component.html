@@ -1,0 +1,14 @@
+<main class="container-fluid">
+    <article *ngFor="let item of AlbumCards">
+        <img [src]="item.img" alt="album-img">
+        <p class="titulo">{{item.titulo}}</p>
+        <p class="grupo">{{item.grupo}}</p>
+        
+        <button>
+            <i class="material-icons">play_arrow</i>
+        </button>
+        <!-- <a href="">link al album</a> -->
+    </article>
+    <i class="fa-solid fa-play"></i>
+
+</main>

@@ -13,6 +13,7 @@ export class DataEmitterService {
 
     constructor(){}
 
+    /** Invocado desde BuscadorComponent */
     public emitAlbumInterface(albumInfoList: AlbumInfoInterface[]) {
         this.albumInfoList.next(albumInfoList);
     }

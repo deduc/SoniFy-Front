@@ -1,15 +1,15 @@
 <!-- Cabecera para dispositivos lg y xl -->
-<header class="container-fluid bg-success py-2 custom-flex visualizar-xl-lg">
-    <h1 class="text-white">{{ appName }}</h1>
-    <button class="btn my-btn col" (click)="navigate('home')">Home</button>
-    <button class="btn my-btn col" (click)="navigate('my-playlists')">Mis playlists</button>
-    <button class="btn my-btn col" (click)="navigate('my-profile')">Mi perfil</button>
+<header class="container-fluid bg-success py-2 header-flex visualizar-xl-lg">
+    <h1 class="app-tittle">{{ appName }}</h1>
+    <button class="btn my-btn" (click)="navigate('home')">Home</button>
+    <button class="btn my-btn" (click)="navigate('my-playlists')">Mis playlists</button>
+    <button class="btn my-btn" (click)="navigate('my-profile')">Mi perfil</button>
 </header>
 
 <!-- Cabecera para dispositivos md sm xs -->
 <nav class="navbar navbar-expand-lg bg-success visualizar-md-sm">
     <div class="container-fluid">
-        <h1 class="text-white">{{ appName }}</h1>
+        <h1 class="app-tittle">{{ appName }}</h1>
         
         <button class="navbar-toggler invertir-color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
             <span class="navbar-toggler-icon"></span>

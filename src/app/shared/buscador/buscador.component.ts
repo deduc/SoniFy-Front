@@ -26,8 +26,12 @@ export class BuscadorComponent {
     }
 
     /**
-     * API GET Request para obtener datos sobre los albumes que busque el usuario.
-     * * Invocado desde buscador.component.html
+     * Invocado desde buscador.component.html
+     * 
+     * API GET Request para obtener una lista de albums que busque el usuario.
+     * Formatea la lista a una lista de objetos conocidos.
+     * Emite la lista.
+     * 
      */
     public searchContent(): void {
         let searchText = this.searchText;
@@ -52,7 +56,7 @@ export class BuscadorComponent {
 
     /**
      * Formateo los albumes obtenidos de la API de spotify.
-     * * Invocado por searchContent()
+     * Invocado por searchContent()
      */
     private formatAlbumsList(albums: any) {
         let albumInfoList: AlbumInfoInterface[] = [];

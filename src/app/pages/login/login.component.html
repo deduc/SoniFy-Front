@@ -1,13 +1,13 @@
-<main class="container-fluid bg-black d-flex align-items-center justify-content-around">
-    <article class="col-5 d-flex justify-content-center py-5">
-        <h1 class="custom-title">{{ appName }}</h1>
-    </article>
-
-    <article class="col-5 d-flex justify-content-start flex-column py-5">
-        <h2>Escucha tu música favorita usando tu cuenta de SpotiFy</h2>
-        
-        <div class="d-flex justify-content-center row mt-3">
-            <button class="btn btn-success login-btn-custom-color p-2" (click)="login()">Iniciar Sesión</button>
-        </div>
-    </article>
+<main class="container-fluid bg-black">
+    <div class="row">
+        <article class="col-lg-5 col-md-12 col-sm-12">
+            <h1 class="app-title">{{ appName }}</h1>
+            <h2 class="app-subtitle">Iván Gómez Calvo</h2>
+        </article>
+    
+        <article class="col-lg-5 col-md-12 col-sm-12">
+            <h1 class="login-title text-center">Tu música favorita usando Spotify</h1>
+            <button class="btn" (click)="login()">Iniciar Sesión</button>
+        </article>
+    </div>
 </main>

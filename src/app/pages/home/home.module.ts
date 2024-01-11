@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 
-import { HomeComponent } from './home.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ArtistasFavoritosComponent } from './components/artistas-favoritos/artistas-favoritos.component';
+
+import { HomeComponent } from './home.component';
+import { UserTopItemsComponent } from './components/user-top-items/user-top-items.component';
+import { UserArtistsComponent } from './components/user-artists/user-artists.component';
 
 
 @NgModule({
@@ -11,8 +13,9 @@ import { ArtistasFavoritosComponent } from './components/artistas-favoritos/arti
     ],
     exports: [],
     declarations: [
-        ArtistasFavoritosComponent,
         HomeComponent,
+        UserArtistsComponent,
+        UserTopItemsComponent,
     ],
     providers: [],
 })
