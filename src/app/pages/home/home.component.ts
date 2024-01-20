@@ -26,6 +26,11 @@ export class HomeComponent implements OnInit {
         // todo intentar obtenre datos personales, pregunta a quien quieras yks
     }
 
+
+
+
+
+    
     // ! Este método quizá no deba estar aqui
     private async fetchProfile(token: string): Promise<any> {
         console.log("token", token);

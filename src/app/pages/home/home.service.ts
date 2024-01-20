@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ApiGetClientIdAndSecret, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, gotCodeFromUrl, loginUrl, oneHourTimeStamp, redirectUriKey } from 'src/app/core/constants/constants';
+import { ApiGetClientIdAndSecret, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, gotCodeFromUrlKey, loginUrl, oneHourTimeStamp, redirectUriKey } from 'src/app/core/constants/constants';
 import { TokenService } from 'src/app/core/services/token.service';
 
 
@@ -46,47 +46,55 @@ export class HomeService {
     }
 
     /**
-     * Invocado por HomeComponent.ngOnInit()
+     * Invocado por HomeComponent.ngOnInit().
+     * 
+     * Compruebo si necesito obtener un access_token y lo obtengo o no.
      */
     public getAccessToken(): void {
-        // Como hago llamadas a la API para obtener los códigos del cliente, hago que la función espere 0.5 segundos.
-        setTimeout(async () => {
-            // Imprimo los datos obtenidos desde el constructor.
-            this.consoleLogData();
-
-            if (this.checkIfUserNeedsNewAccessToken(this.accessTokenKey, this.accessTokenTimestampKey, this.oneHourTimeStamp)) {
-                // this.accessToken = await this.tokenService.checkAccessToken(this.clientId, this.clientSecret, this.codeFromUrl, this.redirectUri, this.spotifyTokenUrl);
+        let userNeedsNewToken: boolean = this.checkIfUserNeedsNewAccessToken(this.accessTokenKey, this.accessTokenTimestampKey, this.oneHourTimeStamp)
+        
+        if (userNeedsNewToken) {
+            // Como hago llamadas a la API para obtener los códigos del cliente, hago que la función espere 0.5 segundos.
+            setTimeout(async () => {
+                console.log("HomeService.getAccessToken() Obtengo access_token");
+                
+                // Imprimo los datos obtenidos desde el constructor.
+                this.consoleLogData();
+    
                 await this.tokenService.checkAccessToken(this.clientId, this.clientSecret, this.codeFromUrl, this.redirectUri, this.spotifyTokenUrl);
                 
                 localStorage.setItem(codeFromUrlKey, this.codeFromUrl);
-                console.log("codeFromUrl", localStorage.getItem(codeFromUrlKey));
-            }
-            else{
-                console.log("Hay code válido almacenado, no obtengo un nuevo token.");
-            }
-        }, 500);
+                console.log("HomeService.getAccessToken() saved codeFromUrl", localStorage.getItem(codeFromUrlKey));
+            }, 200);
+        }
+        else{
+            console.log("HomeService.getAccessToken() -> El usuario no necesita un nuevo token, hay access_token válido almacenado.");
+        }
     }
 
     /**
-     * Comprobar si el usuario necesita un nuevo token de acceso por los siguientes 2 motivos:
-     * - El usuario no se ha loggeado.
-     * - El usuario se ha loggeado pero hace más de 1 hora.
+     * Comprobar si el usuario, tras hacer login, necesita un nuevo token de acceso por los siguientes 2 motivos:
+     * - Usuario nunca se ha loggeado
+     *   + No existe access_token en localStorage
+     * 
+     * - Usuario se loggeó hace más de 1h
+     *   + Existe access_token pero accessTokenTimestamp de hace 1h
+     * 
+     * True si se necesita un nuevo token.
+     * False si no se necesita un nuevo token.
      */
     private checkIfUserNeedsNewAccessToken(accessTokenKey: string, accessTokenTimestampKey: string, oneHourTimeStamp: number): boolean{
         let semaforo: boolean = false;
 
-        const logged: boolean = this.searchToken(accessTokenKey);
+        const accessTokenExists: boolean = this.veryfyAccessTokenFromLocalStorage(accessTokenKey);
         const notMoreThan1Hour: boolean = this.verifyAccessTime(accessTokenTimestampKey, oneHourTimeStamp);
 
-        // el usuario no ha estado loggeado
-        // o el usuario ha estado loggeado recientemente pero hace más de 1 hora
-        if (!logged || logged && !notMoreThan1Hour){
-            console.log("Usuario sin sesión iniciada o desde hace más de 1 hora.");
+        if (!accessTokenExists && !notMoreThan1Hour) {
+            console.log("HomeService.checkIfUserNeedsNewAccessToken() -> Usuario necesita un nuevo token");
             semaforo = true;
         }
-        else{
-            this.accessToken = localStorage.getItem(accessTokenKey)!;
-            console.log("Hay token sin expirar:", this.accessToken);
+        else {
+            console.log("HomeService.checkIfUserNeedsNewAccessToken() -> Usuario no necesita un nuevo token");
         }
 
         return semaforo;
@@ -127,7 +135,7 @@ export class HomeService {
      */
     private getcodeFromUrl(codeFromUrlKey: string): string {
         const queryString = window.location.search;
-        let codeFromUrl: string = localStorage.getItem(gotCodeFromUrl)!;
+        let codeFromUrl: string = localStorage.getItem(gotCodeFromUrlKey)!;
 
         if (codeFromUrl == "1"){
             console.log("homeService.getCodeFromUrl(): El parámetro code existe.");
@@ -137,10 +145,10 @@ export class HomeService {
 
         try {
             codeFromUrl = new URLSearchParams(queryString).get(codeFromUrlKey)!.toString();
-            localStorage.setItem(gotCodeFromUrl, "1");
+            localStorage.setItem(gotCodeFromUrlKey, "1");
 
         } catch (error) {
-            localStorage.setItem(gotCodeFromUrl, "0");
+            localStorage.setItem(gotCodeFromUrlKey, "0");
             alert("ERROR homeService.getCodeFromUrl(): No hay código en la URL.\nRedirigiendo a la página de login.");
             this.navigate(loginUrl)
         }
@@ -162,10 +170,12 @@ export class HomeService {
     /**
      * Busco en localstorace el valor de la clave access_token
      */
-    private searchToken(accessTokenKey: string): boolean{
+    private veryfyAccessTokenFromLocalStorage(accessTokenKey: string): boolean{
         let semaforo: boolean = false;
         
-        if(localStorage.getItem(accessTokenKey)) semaforo = true;
+        if(localStorage.getItem(accessTokenKey)) {
+            semaforo = true;
+        }
         
         return semaforo;
     }
@@ -179,7 +189,14 @@ export class HomeService {
         let oldTime: number = parseInt(localStorage.getItem(accessTokenTimestampKey)!);
         let actualTime: number = new Date().getTime();
 
-        if(actualTime - oldTime <= oneHourTimeStamp) semaforo = true;
+        if(actualTime - oldTime <= oneHourTimeStamp) {
+            semaforo = true;
+
+            console.log(
+                "HomeService.verifyAccessTime() -> semaforo = ", 
+                semaforo, ". Usuario loggeado desde hace menos de 1 hora."
+            );
+        }
 
         return semaforo;
     }
@@ -196,4 +213,6 @@ export class HomeService {
             spotifyTokenUrl: this.spotifyTokenUrl,
         });
     }
+
+    // fin clase
 }

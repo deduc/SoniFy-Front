@@ -5,6 +5,6 @@ export interface AuthParamsInterface
     scope: string,
     redirect_uri: string,
 
-    // Index signature: Sirve para convertir a string clave:valor
+    // Index signature: Sirve para construir el objeto siguiendo el estilo "clave:valor"
     [key: string]: string;
 }

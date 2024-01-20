@@ -8,14 +8,15 @@ import { AuthParamsInterface } from './interfaces/AuthParamsInterface';
 })
 export class LoginService {
     /**
-     * Proceso de Authorization Code Flow
+     * Proceso de Authorization Code Flow. Retorna un objeto importante para el login.
      */
     public async getAuthParams(apiEndpoint: string): Promise<AuthParamsInterface> {
         try {
             let authParamsAux: AuthParamsInterface = await this.getAuthParamsFromApi(apiEndpoint);
+            
             return authParamsAux;
         }
-        catch (error){
+        catch (error) {
             throw Error(`${error}`);
         }
     }

@@ -1,14 +1,28 @@
-<main class="container-fluid">
-    <article *ngFor="let item of AlbumCards">
-        <img [src]="item.img" alt="album-img">
-        <p class="titulo">{{item.titulo}}</p>
-        <p class="grupo">{{item.grupo}}</p>
+<main class="container-fluid d-flex justify-content-center flex-wrap">
+    
+    <div class="row d-flex justify-content-lg-start justify-content-center gap-lg-5 gap-md-4">
         
-        <button>
-            <i class="material-icons">play_arrow</i>
-        </button>
-        <!-- <a href="">link al album</a> -->
-    </article>
-    <i class="fa-solid fa-play"></i>
+        <article *ngFor="let item of loadedAlbumCards" class="col-sm-6 col-md-3 col-lg-2 col-xl-2" [style]="item.css">
+        
+            <img class="card-img-top" [src]="item.img" alt="imagen-grupo"  [id]="item.img">
+            
+            <header class="card-body">
+                <h5 class="card-title">{{item.titulo}}</h5>
+            </header>
 
+            <div class="card-body">
+                <p class="card-text">{{item.grupo}}</p>
+            </div>
+            
+            <footer class="card-footer d-flex justify-content-end">
+                <button (click)="playAlbum()">
+                    <i class="material-icons">play_arrow</i>
+                </button>
+            </footer>
+            
+        </article>
+        
+    </div>
+    
+    <h2 class="text-center mt-lg-3" (click)="loadAlbumCards(5)">- Cargar más -</h2>
 </main>

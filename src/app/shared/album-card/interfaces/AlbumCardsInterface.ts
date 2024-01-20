@@ -3,4 +3,6 @@ export interface AlbumCardsInterface {
     titulo: string;
     grupo: string;
     spotifyLink: string;
+    
+    css: string | null;
 }

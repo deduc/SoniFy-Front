@@ -26,7 +26,7 @@ export const clientSecretKey: string = "clientSecret";
 export const codeVerifierKey: string = "code_verifier";
 // En la url hay un parámetro llamado code. Importante no cambiar su nombre.
 export const codeFromUrlKey: string = "code";
-export const gotCodeFromUrl: string = "gotCodeFromUrl";
+export const gotCodeFromUrlKey: string = "gotCodeFromUrl";
 export const lastSearchedKey: string = "lastSearch";
 export const redirectUriKey: string = "redirectUri";
 export const verifierKey: string = "verifier";
