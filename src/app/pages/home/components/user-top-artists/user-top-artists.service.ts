@@ -77,13 +77,16 @@ export class UserTopArtistsService {
      * Creo y devuelvo un objeto TopArtistListInterface con la propiedad items = ArtistInterface[].
      */
     private formatTopArtistsListObj(data: any): TopArtistListInterface {
-        let topArtistsListObj: TopArtistListInterface = {href: "", limit: 0, next: "", total: 0, items: []};
+        let topArtistsListObj: TopArtistListInterface;
         let infoArtistAux: ArtistInterface;
 
-        topArtistsListObj.href = data.href;
-        topArtistsListObj.limit = data.limit;
-        topArtistsListObj.next = data.next;
-        topArtistsListObj.total = data.total;
+        topArtistsListObj = {
+            href: data.href,
+            limit: data.limit,
+            next: data.next,
+            total: data.total,
+            items: []
+        }
         
         // Recorro la lista data.items para añadir objetos ArtistInterface a la lista topArtistsListObj.items
         for (let index = 0; index < data.items.length; index++) {

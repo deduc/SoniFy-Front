@@ -8,7 +8,7 @@ import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
 
 
 @Component({
-  selector: 'home-user-artists',
+  selector: 'home-user-top-artists',
   templateUrl: './user-top-artists.component.html',
   styleUrls: ['./user-top-artists.component.css']
 })
