@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+
 import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
-import { AlbumCardsInterface } from 'src/app/shared/album-card/interfaces/AlbumCardsInterface';
+
 import { ArtistCardInfoInterface } from '../../Interfaces/ArtistCardInfoInterface';
 
+
 @Component({
-  selector: 'home-user-artist-list',
-  templateUrl: './artist-list.component.html',
-  styleUrls: ['./artist-list.component.css']
+    selector: 'home-artist-list',
+    templateUrl: './artist-list.component.html',
+    styleUrls: ['./artist-list.component.css']
 })
 export class ArtistListComponent implements OnInit {
     public artistList: ArtistCardInfoInterface[] = []
@@ -38,16 +40,18 @@ export class ArtistListComponent implements OnInit {
         }
     }
 
+    /**
+     * 
+     */
     private setCardCssProperty(imageObject: ArtistCardInfoInterface, albumCardsIndex: number): void {
         let imgElement = new Image();
         
-        // Esto es para algo de las CORS
-        imgElement.crossOrigin = "Anonymous";
-    
         imgElement.onload = () => {
             this.setCss(imgElement, albumCardsIndex);
         };
         
+        // Esto es para evitar problemas con las CORS
+        imgElement.crossOrigin = "Anonymous";
         imgElement.src = imageObject.img;
     }
 
@@ -78,12 +82,15 @@ export class ArtistListComponent implements OnInit {
 
         colours = [pixelData[0], pixelData[1], pixelData[2]]
 
-        // console.log(colours);
-
         // Cambio la propiedad css del album del cual se está obteniendo el color
         this.artistList[albumCardsIndex].css = "background-color: rgb(" + colours + ");";
     
         return color;
     }
 
+    public navigateToSpotify(a: any) {
+        window.location.href = a
+    }
+
+    // fin clase
 }

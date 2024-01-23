@@ -1,7 +1,8 @@
 <main class="d-flex justify-content-center flex-wrap gap-lg-2 gap-1">
     <article 
-        class="d-flex justify-content-lg-start align-items-lg-center flex-lg-wrap gap-lg-2 gap-1 p-1"
+        class="d-flex justify-content-lg-start align-items-lg-center flex-lg-wrap gap-lg-1 gap-1 p-1"
         *ngFor="let item of artistList" 
+        (click)="navigateToSpotify(item.spotify_url)"
         [style]="item.css">
         
         <img [src]="item.img" alt="imagen-artista"  [id]="item.img">

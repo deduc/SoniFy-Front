@@ -5,7 +5,7 @@ import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
 
 
 @Component({
-  selector: 'shared-album-card',
+  selector: 'user-top-albums-album-card',
   templateUrl: './album-card.component.html',
   styleUrls: ['./album-card.component.css']
 })
