@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SpotifyTopArtists, accessTokenKey } from 'src/app/core/constants/constants';
-
-import { AlbumInfoInterface } from 'src/app/core/interfaces/AlbumInfoInterface';
+import { SpotifyTopAlbums, accessTokenKey } from 'src/app/core/constants/constants';
 
 import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
-import { UserTopAlbumsService } from './user-top-albums.service';
+import { UserTopAlbumsService } from './UserTopAlbums.service';
 
 
 @Component({
@@ -15,7 +13,7 @@ import { UserTopAlbumsService } from './user-top-albums.service';
 })
 export class UserTopAlbumsComponent implements OnInit {
     private accessToken: string = "";
-    private spotifyTopArtistsEndpoint: string;
+    private spotifyTopAlbumsEndpoint: string;
 
     private dataEmitterService: DataEmitterService;
     private userTopAlbumsService: UserTopAlbumsService;
@@ -25,13 +23,16 @@ export class UserTopAlbumsComponent implements OnInit {
         this.dataEmitterService = dataEmitterService;
         this.userTopAlbumsService = userTopAlbumsService;
         
-        this.spotifyTopArtistsEndpoint = SpotifyTopArtists;
+        this.spotifyTopAlbumsEndpoint = SpotifyTopAlbums;
                 
         this.accessToken = localStorage.getItem(accessTokenKey)!;
     }
 
     ngOnInit() {
-        this.userTopAlbumsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
+        setTimeout(() => {
+            // console.log("UserTopAlbumsComponent.ngOnInit() -> Invoco a this.userTopAlbumsService.fetchUserTopArtistsList()");
+            // this.userTopAlbumsService.fetchUserTopAlbumsList(this.spotifyTopAlbumsEndpoint, this.accessToken);
+        }, 400);
     }
 
     // fin clase

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { AlbumCardsInterface } from './interfaces/AlbumCardsInterface';
 import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
-import { AlbumInfoInterface } from 'src/app/core/interfaces/AlbumInfoInterface';
 
 
 @Component({
@@ -22,23 +22,22 @@ export class AlbumCardComponent implements OnInit {
         {grupo: "Linkin Park ", img: "https://picsum.photos/id/1031/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
         {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1041/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
         {grupo: "Linkin Park ", img: "https://picsum.photos/id/1033/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
-        {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1032/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
     ]
-
+    
+    // Lista que se carga en el html
     public loadedAlbumCards: AlbumCardsInterface[] = [];
     
     private contador: number = 0;
     private dataEmitterService: DataEmitterService;
 
+
     constructor(dataEmitterService: DataEmitterService) {
-        // todo: suscribirme al emisor de AlbumCards
         this.dataEmitterService = dataEmitterService;
     }
-
+    
     ngOnInit() {
-        this.searchFavouriteAlbums();
-
         setTimeout(() => {
+            this.searchTopAlbums();
             this.setAlbumCardsCssProperty();
             this.loadAlbumCards(5);
         }, 200);
@@ -52,10 +51,9 @@ export class AlbumCardComponent implements OnInit {
         alert(2);
     }
 
-    public searchFavouriteAlbums() {
-        // TODO: hay interfaces distintas, hazlas compatibles con respecto a la info que ya tienes
+    public searchTopAlbums() {
         // Me suscribo al emisor de albumes de dataEmitterService
-        // this.dataEmitterService.datosAlbumInfoList.subscribe(datos => this.albumInfoList = datos);
+        // this.dataEmitterService.topArtistList.subscribe();
     }
 
     /**
@@ -82,7 +80,6 @@ export class AlbumCardComponent implements OnInit {
 
     /**
      * Cargar una imagen para obtener el color de un píxel específico de esa imagen
-     * todo
      */
     private setCss(imgElement: HTMLImageElement, albumCardsIndex: number): string {
         let canvas: HTMLCanvasElement;

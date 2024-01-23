@@ -1,12 +1,14 @@
-// data.service.ts
-
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
 import { AlbumInfoInterface } from '../interfaces/AlbumInfoInterface';
+import { ArtistCardInfoInterface } from 'src/app/pages/home/components/user-top-artists/Interfaces/ArtistCardInfoInterface';
 import { TopArtistListInterface } from '../interfaces/TopArtistListInterface';
 
+
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class DataEmitterService {
     public albumInfoList = new BehaviorSubject<AlbumInfoInterface[]>([]);
@@ -17,15 +19,25 @@ export class DataEmitterService {
     );
     public datostopArtistList = this.topArtistList.asObservable();
 
-    constructor() {}
+    // Información sobre los top artistas del usuario
+    public artistInfoList = new Subject<ArtistCardInfoInterface[]>();
 
-    /** Invocado desde BuscadorComponent.emitAlbumList() */
     public emitAlbumInterface(albumInfoList: AlbumInfoInterface[]) {
+        // console.log("DataEmitterService.emitAlbumInterface() ->", albumInfoList);
         this.albumInfoList.next(albumInfoList);
     }
 
-    /** Invocado desde UserTopItemsComponent.fetchUserTopItemsList() */
     public emitTopArtistListInterface(topArtistList: TopArtistListInterface) {
+        // console.log("DataEmitterService.emitTopArtistListInterface() ->", topArtistList);
         this.topArtistList.next(topArtistList);
+    }
+
+    public emitArtistCardInfo(artistInfoList: ArtistCardInfoInterface[]) {
+        this.artistInfoList.next(artistInfoList);
+    }
+
+    public getArtistCardInfo(): Observable<ArtistCardInfoInterface[]> {
+        console.log("DataEmitterService.getArtistCardInfo() -> ", this.artistInfoList);
+        return this.artistInfoList.asObservable();
     }
 }

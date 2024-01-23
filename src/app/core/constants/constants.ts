@@ -7,6 +7,7 @@ export const SpotifyTokenUrl: string = "https://accounts.spotify.com/api/token";
 export const SpotifyMe: string = "https://api.spotify.com/v1/me";
 export const SpotifySearch: string = "https://api.spotify.com/v1/search";
 export const SpotifyTopArtists: string = "https://api.spotify.com/v1/me/top/artists";
+export const SpotifyTopAlbums: string = "https://api.spotify.com/v1/me/albums";
 
 
 //* API endpoints
