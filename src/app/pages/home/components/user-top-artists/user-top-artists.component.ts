@@ -41,13 +41,7 @@ export class UserTopArtistsComponent implements OnInit {
     private getTopArtists() {
         console.log("UserTopArtistsComponent.getTopArtists() -> Invoco a this.userTopArtistsService.fetchUserTopArtistsList()");
         let artistInfoList: Promise<ArtistCardInfoInterface[]> = this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
-
-        artistInfoList
-        .then(
-            res => {
-                this.artistCardInfoInterface = res;
-            }
-        )
+        artistInfoList.then(res => this.artistCardInfoInterface = res);
     }
 
     private emitArtistInfoList(artistInfoList: ArtistCardInfoInterface[]){

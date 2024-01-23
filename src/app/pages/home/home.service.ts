@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ApiGetClientIdAndSecret, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, gotCodeFromUrlKey, loginUrl, oneHourTimeStamp, redirectUriKey } from 'src/app/core/constants/constants';
+import { SpotifyAppDataInterface } from 'src/app/core/interfaces/SpotifyAppDataInterface';
 import { TokenService } from 'src/app/core/services/token.service';
 
 
@@ -10,36 +11,25 @@ import { TokenService } from 'src/app/core/services/token.service';
 })
 export class HomeService {
     public router: Router;
-    public loginUrl: string;
+    public loginUrl: string = loginUrl;
 
     private clientId: string = "null_clientId";
     private clientSecret: string = "null_clientSecret";
     private codeFromUrl: string = "null_codeFromUrl";
     private redirectUri: string = "null_redirectUri";
-    private spotifyTokenUrl: string = "null_spotifyTokenUrl";
-
-    private accessToken: string = "null_accessToken";
+    private spotifyTokenUrl: string = SpotifyTokenUrl;
+    private accessTokenKey: string = accessTokenKey;
+    private codeFromUrlKey: string = codeFromUrlKey;
+    private accessTokenTimestampKey: string = accessTokenTimestampKey;
+    private oneHourTimeStamp: number = oneHourTimeStamp;
     
-    private accessTokenKey: string;
-    private codeFromUrlKey: string;
-    private accessTokenTimestampKey: string;
-    private oneHourTimeStamp: number;
-
-    private tokenService: TokenService
+    private accessToken: string = "null_accessToken";
+    private tokenService: TokenService;
 
     constructor(router: Router, tokenService: TokenService) {
         this.router = router;
         this.tokenService = tokenService;
-        
-        // Valor de las variables asignadas por constantes.
-        this.loginUrl = loginUrl;
-        this.spotifyTokenUrl = SpotifyTokenUrl;
-        this.codeFromUrlKey = codeFromUrlKey;
-        this.accessTokenKey = accessTokenKey;
-        this.accessTokenTimestampKey = accessTokenTimestampKey;
-        this.oneHourTimeStamp = oneHourTimeStamp;
-        
-        // Valor de las variables asignadas mediante funciones.
+
         this.getAndSetClientIdAndSecret(ApiGetClientIdAndSecret);
         this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey);
         this.redirectUri = this.getRedirectUri(this.loginUrl);
@@ -56,15 +46,15 @@ export class HomeService {
         if (userNeedsNewToken) {
             // Como hago llamadas a la API para obtener los códigos del cliente, hago que la función espere 0.5 segundos.
             setTimeout(async () => {
-                console.log("HomeService.getAccessToken() Obtengo access_token");
-                
-                // Imprimo los datos obtenidos desde el constructor.
-                this.consoleLogData();
-    
-                await this.tokenService.checkAccessToken(this.clientId, this.clientSecret, this.codeFromUrl, this.redirectUri, this.spotifyTokenUrl);
-                
                 localStorage.setItem(codeFromUrlKey, this.codeFromUrl);
-                console.log("HomeService.getAccessToken() saved codeFromUrl", localStorage.getItem(codeFromUrlKey));
+                // Todo: estos logs son temporales
+                console.log("HomeService.getAccessToken() saved codeFromUrl");
+                console.log("HomeService.getAccessToken() Obtengo access_token");
+                // Imprimo los datos obtenidos desde el constructor.
+                console.log("HomeService.getAccessToken() -> Datos sobre el objeto a enviar", { clientId: this.clientId, clientSecret: this.clientSecret, codeFromUrl: this.codeFromUrl, redirectUri: this.redirectUri, spotifyTokenUrl: this.spotifyTokenUrl});
+                
+                let requestOptions: SpotifyAppDataInterface = this.makeRequestOptionsObj(this.clientId, this.clientSecret, this.codeFromUrl, this.redirectUri);
+                this.tokenService.checkAccessToken(this.spotifyTokenUrl, requestOptions);
             }, 200);
         }
         else{
@@ -200,19 +190,17 @@ export class HomeService {
 
         return semaforo;
     }
-    
-    /**
-     * Imprimo por consola los valores de clientId, clientSecret, codeFromUrl, redirectUri y spotifyTokenUrl
-     */
-    private consoleLogData(){
-        console.log("HomeService.consoleLogData()", {
-            clientId: this.clientId,
-            clientSecret: this.clientSecret,
-            codeFromUrl: this.codeFromUrl,
-            redirectUri: this.redirectUri,
-            spotifyTokenUrl: this.spotifyTokenUrl,
-        });
-    }
 
+    private makeRequestOptionsObj(clientId: string, clientSecret: string, codeFromUrl: string, redirectUri: string): SpotifyAppDataInterface {
+        let obj: SpotifyAppDataInterface = {
+            clientId: clientId,
+            clientSecret: clientSecret,
+            codeFromUrl: codeFromUrl,
+            redirectUri: redirectUri
+        }
+
+        return obj
+    }
+    
     // fin clase
 }

@@ -9,14 +9,7 @@ import { ArtistCardInfoInterface } from '../../Interfaces/ArtistCardInfoInterfac
   styleUrls: ['./artist-list.component.css']
 })
 export class ArtistListComponent implements OnInit {
-    public artistList: ArtistCardInfoInterface[] = [
-        {name: "", img: "", spotify_url: "", css: "background-color: rgb(255,255,255);"},
-        {name: "", img: "", spotify_url: "", css: "background-color: rgb(255,255,255);"},
-        {name: "", img: "", spotify_url: "", css: "background-color: rgb(255,255,255);"},
-        {name: "", img: "", spotify_url: "", css: "background-color: rgb(255,255,255);"},
-        {name: "", img: "", spotify_url: "", css: "background-color: rgb(255,255,255);"},
-        {name: "", img: "", spotify_url: "", css: "background-color: rgb(255,255,255);"},
-    ]
+    public artistList: ArtistCardInfoInterface[] = []
 
     private dataEmitterService: DataEmitterService;
 

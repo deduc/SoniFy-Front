@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { accessTokenKey, accessTokenTimestampKey, oneHourTimeStamp } from 'src/app/core/constants/constants';
+import { SpotifyAppDataInterface } from '../interfaces/SpotifyAppDataInterface';
 
 
 /**
@@ -15,44 +16,44 @@ export class TokenService {
      * Cuando el usuario da permisos en la aplicación autenticadora OAuth2.0, 
      * obtengo el token de acceso de la api de spotify o utilizo el que ya tengo.
      */
-    public async checkAccessToken(clientId: string, clientSecret: string, codeFromUrl: string, redirectUri: string, spotifyTokenUrl: string): Promise<string> {
-        let accessToken: string = await this.getToken(clientId, clientSecret, codeFromUrl, redirectUri, spotifyTokenUrl);
+    public async checkAccessToken(spotifyTokenUrl: string, spotifyAppData: SpotifyAppDataInterface): Promise<string> {
+        let accessToken: string = await this.getToken(spotifyTokenUrl, spotifyAppData);
 
         return accessToken
     }
 
-    private async getToken(clientId: string, clientSecret: string, codeFromUrl: string, redirectUri: string, spotifyTokenUrl: string): Promise<string> {
-        let accessToken: string = "";
-
-        let requestOptions: any = this.makeRequestOptionsObj(clientId, clientSecret, codeFromUrl, redirectUri);
-        accessToken = await this.getAndSaveToken(spotifyTokenUrl, requestOptions);
-
-        return accessToken;
+    /**
+     * Creo el objeto necesario, con header y body, para hacer la petición http a la api para obtener el access_token
+     * y retorno el accessToken obtenido.
+     */
+    private async getToken(spotifyTokenUrl: string, spotifyAppData: SpotifyAppDataInterface): Promise<string> {
+        let requestOptions: any = this.makeRequestOptionsObj(spotifyAppData);
+        
+        return this.getAndSaveToken(spotifyTokenUrl, requestOptions);
     }
-    
     /**
      * Creo un objeto que contiene el header y body necesarios para hacer
      * una llamada HTTP POST al endpoint de spotify /api/token
      */
-    private makeRequestOptionsObj(clientId: string, clientSecret: string, codeFromUrl: string, redirectUri: string): any {
-        const base64Credentials = btoa(`${clientId}:${clientSecret}`);
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${base64Credentials}`,
-        });
-    
-        const body = new URLSearchParams();
-        body.set('grant_type', 'authorization_code');
-        body.set('code', codeFromUrl);
-        body.set('redirect_uri', redirectUri);
-    
-        const requestOptions = {
-            headers: headers,
-            body: body.toString(),
-        };
-    
-        return requestOptions;
-    }
+        private makeRequestOptionsObj(spotifyAppData: SpotifyAppDataInterface): any {
+            const base64Credentials = btoa(`${spotifyAppData.clientId}:${spotifyAppData.clientSecret}`);
+            const headers = new HttpHeaders({
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Basic ${base64Credentials}`,
+            });
+        
+            const body = new URLSearchParams();
+            body.set('grant_type', 'authorization_code');
+            body.set('code', spotifyAppData.codeFromUrl);
+            body.set('redirect_uri', spotifyAppData.redirectUri);
+        
+            const requestOptions = {
+                headers: headers,
+                body: body.toString(),
+            };
+        
+            return requestOptions;
+        }
     
     /**
      * Hago una consulta al endpoint de spotify con url https://accounts.spotify.com/api/token
@@ -67,6 +68,7 @@ export class TokenService {
             
             localStorage.setItem(accessTokenKey, data.access_token);
             this.setTimeStampWhenAccessTokenWasTaken();
+            location.reload();
         });
     }
 
