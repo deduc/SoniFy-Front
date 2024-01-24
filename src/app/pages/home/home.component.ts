@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HomeService } from './home.service';
-
 
 @Component({
     selector: 'pages-home',
@@ -9,29 +7,18 @@ import { HomeService } from './home.service';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {    
-    private homeService: HomeService;
+    constructor() {}
 
-    constructor(homeService: HomeService) {
-        this.homeService = homeService;
-    }
-
-    async ngOnInit(): Promise<void> {
-        await this.homeService.getAccessToken();
-        
+    ngOnInit(): void {
         // prueba
         // await fetchProfile(localStorage.getItem(accessTokenKey)!);
-
-
+        
+        
         // todo para refrescar el access token cuando expire: https://developer.spotify.com/documentation/web-api/tutorials/refreshing-tokens
         // todo intentar obtenre datos personales, pregunta a quien quieras yks
     }
 
-
-
-
-
-    
-    // ! Este método quizá no deba estar aqui
+    // * Este método quizá no deba estar aqui, fue una prueba en algún momento para obtener la info del perfil de un usuario
     private async fetchProfile(token: string): Promise<any> {
         console.log("token", token);
         
