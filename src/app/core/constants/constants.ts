@@ -12,7 +12,7 @@ export const SpotifyTopAlbums: string = "https://api.spotify.com/v1/me/albums";
 
 //* API endpoints
 export const APIGetAuthParamsEndpoint: string = "https://localhost:7293/auth/getAuthParams";
-export const ApiGetClientIdAndSecret: string = "https://localhost:7293/auth/getClientIdAndSecret";
+export const ApiGetClientIdAndSecretEndpoint: string = "https://localhost:7293/auth/getClientIdAndSecret";
 
 
 //* Localhost urls
@@ -34,7 +34,7 @@ export const verifierKey: string = "verifier";
 
 
 //* Rutas de la aplicación
-export const homeUrl: string = "/home";
+export const homeUrl: string = "/me/home";
 export const loginUrl: string = "/login";
 
 
