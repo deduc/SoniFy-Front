@@ -5,75 +5,80 @@ import { ApiGetClientIdAndSecretEndpoint, SpotifyTokenUrl, accessTokenKey, acces
 import { Router } from '@angular/router';
 import { SpotifyAppDataInterface } from '../interfaces/SpotifyAppDataInterface';
 import { TokenService } from '../services/token.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class HomePageAuthService {
+    private router: Router;
+    private httpClient: HttpClient
+    private tokenService: TokenService;
     
-    public router: Router;
-    public loginUrl: string = loginUrl;
-
     private clientId: string = "null_clientId";
     private clientSecret: string = "null_clientSecret";
     private codeFromUrl: string = "null_codeFromUrl";
     private redirectUri: string = "null_redirectUri";
     private spotifyTokenUrl: string = SpotifyTokenUrl;
+    private loginUrl: string = loginUrl;
     private accessTokenKey: string = accessTokenKey;
     private codeFromUrlKey: string = codeFromUrlKey;
     private accessTokenTimestampKey: string = accessTokenTimestampKey;
     private oneHourTimeStamp: number = oneHourTimeStamp;
-    
-    private tokenService: TokenService;
 
 
-    constructor(router: Router, tokenService: TokenService) {
+    constructor(router: Router, tokenService: TokenService, httpClient: HttpClient) {
         this.router = router;
         this.tokenService = tokenService;
+        this.httpClient = httpClient;
+    }
 
-        this.getAndSetClientIdAndSecret(ApiGetClientIdAndSecretEndpoint);
+    /** Pseudo-constructor que asigna algunos valores porque "no da tiempo" en el constructor() */
+    private postConstructor() {
+        this.getAndSetClientIds(ApiGetClientIdAndSecretEndpoint);
         this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey);
         this.redirectUri = this.getRedirectUri(this.loginUrl);
     }
 
-    // * Este método se activa en primer lugar a la hora de gestionar permisos en pages-routing.module
+
     /**
-     * Comprobar si existe el token de acceso.
+     * ! Este método se activa en primer lugar a la hora de gestionar permisos en pages-routing.module
+     * 
+     * Inicializo algunos datos que no puede inicializar el constructor 
+     * y compruebo si el usuario tiene o necesita un access_token
      */
-    public canActivate(): boolean {
-        return this.checkIfUserHasAnAccessToken();
+    public canActivate(): boolean | void {
+        this.postConstructor();
+        
+        setTimeout(() => {
+            let semaforo: boolean = this.checkIfUserHasAValidToken();
+            return semaforo
+        }, 200);
     }
 
-    private checkIfUserHasAnAccessToken(): boolean {
+    private checkIfUserHasAValidToken(): boolean {
+        const userNeedsNewToken: boolean = this.checkIfUserNeedsNewAccessToken(this.accessTokenKey, this.accessTokenTimestampKey, this.oneHourTimeStamp);
         let semaforo: boolean = false;
-        let token: string = localStorage.getItem(accessTokenKey)!;
 
-        if (token && token.length > 0) {
-            console.log("HomeAuthService.checkIfUserHasAnAccessToken() -> El usuario no necesita un nuevo token, hay access_token válido almacenado. access_token:", token);
+        if (!userNeedsNewToken) {
+            console.log("HomeAuthService.checkIfUserHasAValidToken() -> hay access_token.");
             semaforo = true;
         }
         else {
-            console.log("HomeAuthService.checkIfUserHasAnAccessToken() -> No hay access_token, procedo a obtenerlo.");
+            console.log("HomeAuthService.checkIfUserHasAValidToken() -> No hay access_token, procedo a obtenerlo.");
             this.getAccessToken();
         }
-                
+
         return semaforo;
     }
 
-
-    /**
-     * Compruebo si necesito obtener un access_token y lo obtengo o no.
-     */
-    public getAccessToken(): void {
-        localStorage.setItem(codeFromUrlKey, this.codeFromUrl);
-        console.log("HomeService.getAccessToken() -> saved codeFromUrl");
-        console.log("HomeService.getAccessToken() -> Obtengo access_token");
-        // Estos datos son obtenidos en el constructor
-        console.log("HomeService.getAccessToken() -> Datos sobre el objeto a enviar", { clientId: this.clientId, clientSecret: this.clientSecret, codeFromUrl: this.codeFromUrl, redirectUri: this.redirectUri, spotifyTokenUrl: this.spotifyTokenUrl});
+    private getAccessToken(): void {
+        const spotifyAppData: SpotifyAppDataInterface = this.makeRequestOptionsObj(this.clientId, this.clientSecret, this.codeFromUrl, this.redirectUri);
         
-        let requestOptions: SpotifyAppDataInterface = this.makeRequestOptionsObj(this.clientId, this.clientSecret, this.codeFromUrl, this.redirectUri);
-        this.tokenService.checkAccessToken(this.spotifyTokenUrl, requestOptions);
+        localStorage.setItem(this.codeFromUrlKey, this.codeFromUrl);
+        
+        this.tokenService.getToken(this.spotifyTokenUrl, spotifyAppData);
     }
 
     /**
@@ -88,93 +93,25 @@ export class HomePageAuthService {
      * False si no se necesita un nuevo token.
      */
     private checkIfUserNeedsNewAccessToken(accessTokenKey: string, accessTokenTimestampKey: string, oneHourTimeStamp: number): boolean{
+        const accessTokenExists: boolean = this.verifyAccessTokenFromLocalStorage(accessTokenKey);
+        const notMoreThan1Hour: boolean = this.verifyAccessTime(accessTokenTimestampKey, oneHourTimeStamp);
         let semaforo: boolean = false;
 
-        const accessTokenExists: boolean = this.veryfyAccessTokenFromLocalStorage(accessTokenKey);
-        const notMoreThan1Hour: boolean = this.verifyAccessTime(accessTokenTimestampKey, oneHourTimeStamp);
-
         if (!accessTokenExists && !notMoreThan1Hour) {
-            console.log("HomeService.checkIfUserNeedsNewAccessToken() -> Usuario necesita un nuevo token");
+            console.log("HomePageAuthService.checkIfUserNeedsNewAccessToken() -> Usuario necesita un nuevo token");
             semaforo = true;
         }
         else {
-            console.log("HomeService.checkIfUserNeedsNewAccessToken() -> Usuario no necesita un nuevo token");
+            console.log("HomePageAuthService.checkIfUserNeedsNewAccessToken() -> Usuario no necesita un nuevo token");
         }
 
         return semaforo;
     }
 
     /**
-     * HTTP GET Request a mi API para obtener y guardar clientId y clientSecret.
-     */
-    private getAndSetClientIdAndSecret(endpoint: string): void {
-        try {
-            fetch(endpoint)
-            .then(res => res.json())
-            .then(data => {
-                this.clientId = data.client_id;
-                this.clientSecret = data.client_secret;
-            })
-        } catch (error) {
-            console.log(error);
-            alert("HomeService getAndSetClientIdAndSecret() No se ha podido contactar con la API.")
-                        
-        }
-    }
-
-    /**
-     * Navegar entre distintas rutas de la web.
-     */
-    private navigate(url: string): void {
-        this.router.navigateByUrl(url);
-    }
-
-    /**
-     * Compruebo que exista el parámetro code de la url en localStorage. 
-     * En caso de no existir, lo obtengo de la url y lo guardo en localStorage.
-     * 
-     * ! TODO: Mejorar este apartado para no ejecutar este método, desde el constructor, cada vez que el usuario pasa por homeComponent.
-     * En caso que haya obtenido el código anteriormente y el usuario se mueva entre las distintas urls de la web,
-     * lo obtengo de localStorage (porque la url va a cambiar).
-     */
-    private getcodeFromUrl(codeFromUrlKey: string): string {
-        const queryString = window.location.search;
-        let codeFromUrl: string = localStorage.getItem(gotCodeFromUrlKey)!;
-
-        if (codeFromUrl == "1"){
-            console.log("homeService.getCodeFromUrl(): El parámetro code existe.");
-            
-            return codeFromUrl;
-        }
-
-        try {
-            codeFromUrl = new URLSearchParams(queryString).get(codeFromUrlKey)!.toString();
-            localStorage.setItem(gotCodeFromUrlKey, "1");
-
-        } catch (error) {
-            localStorage.setItem(gotCodeFromUrlKey, "0");
-            alert("ERROR homeService.getCodeFromUrl(): No hay código en la URL.\nRedirigiendo a la página de login.");
-            this.navigate(loginUrl)
-        }
-        
-        return codeFromUrl;
-    }
-
-    private getRedirectUri(redirectUrlAux: string): string {
-        const redirectUri = localStorage.getItem(redirectUriKey)!;
-
-        if (redirectUri == null){
-            alert("No hay redirectUri. Te redirijo al login.");
-            this.navigate(redirectUrlAux);
-        }
-
-        return redirectUri;
-    }
-
-    /**
      * Busco en localstorace el valor de la clave access_token
      */
-    private veryfyAccessTokenFromLocalStorage(accessTokenKey: string): boolean{
+    private verifyAccessTokenFromLocalStorage(accessTokenKey: string): boolean{
         let semaforo: boolean = false;
         
         if(localStorage.getItem(accessTokenKey)) {
@@ -194,14 +131,63 @@ export class HomePageAuthService {
         let actualTime: number = new Date().getTime();
 
         if(actualTime - oldTime <= oneHourTimeStamp) {
+            // Usuario loggeado desde hace menos de 1 hora.
             semaforo = true;
-
-            console.log("HomeService.verifyAccessTime() -> semaforo =", semaforo, ". Usuario loggeado desde hace menos de 1 hora.");
+            // console.log("HomeService.verifyAccessTime() -> semaforo =", semaforo, ". Usuario loggeado desde hace menos de 1 hora.");
         }
 
         return semaforo;
     }
 
+    /**
+     * HTTP GET Request a mi API para obtener y guardar clientId y clientSecret.
+     */
+    private getAndSetClientIds(endpoint: string): void {
+        this.httpClient.get(endpoint)
+        .subscribe(
+            (response) => {
+                let data: any = response;
+                
+                this.clientId = data.client_id;
+                this.clientSecret = data.client_secret;
+            }
+        )
+    }
+
+    private navigate(url: string): void {
+        this.router.navigateByUrl(url);
+    }
+
+    /**
+     * Compruebo que exista el parámetro code de la url en localStorage. 
+     * En caso de no existir, lo obtengo de la url y lo guardo en localStorage.
+     */
+    private getcodeFromUrl(codeFromUrlKey: string): string {
+        const queryString = window.location.search;
+        let codeFromUrl: string = localStorage.getItem(gotCodeFromUrlKey)!;
+
+        if (codeFromUrl == "1"){
+            console.log("HomePageAuthService.getcodeFromUrl(): El parámetro code existe.");
+            
+            return codeFromUrl;
+        }
+
+        try {
+            codeFromUrl = new URLSearchParams(queryString).get(codeFromUrlKey)!.toString();
+            localStorage.setItem(gotCodeFromUrlKey, "1");
+
+        } 
+        // ! Gestión de errores cometidos por el usuario
+        catch (error) {
+            localStorage.setItem(gotCodeFromUrlKey, "0");
+            alert("ERROR HomePageAuthService.getcodeFromUrl(): No hay código en la URL.\nRedirigiendo a la página de login.");
+            this.navigate(loginUrl)
+        }
+        
+        return codeFromUrl;
+    }
+
+    /** Creo el objeto necesario para obtener un access_token de la api de spotify */
     private makeRequestOptionsObj(clientId: string, clientSecret: string, codeFromUrl: string, redirectUri: string): SpotifyAppDataInterface {
         let obj: SpotifyAppDataInterface = {
             clientId: clientId,
@@ -211,5 +197,20 @@ export class HomePageAuthService {
         }
 
         return obj
+    }
+
+    /**
+     * Obtener redirectUri de localstorage.
+     * Si no se puede, mando al usuario de vuelta a /login page
+     */
+    private getRedirectUri(redirectUrlAux: string): string {
+        const redirectUri = localStorage.getItem(redirectUriKey)!;
+        
+        if (redirectUri == null){
+            alert("HomePageAuthService.getRedirectUri() -> No hay redirectUri. Te redirijo al login.");
+            this.navigate(redirectUrlAux);
+        }
+
+        return redirectUri;
     }
 }
