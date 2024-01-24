@@ -12,16 +12,16 @@ import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
 export class AlbumCardComponent implements OnInit {
     @Input()
     public albumCards: AlbumCardsInterface[] = [
-        {grupo: "Linkin Park Linkin Park Linkin Park", img: "https://picsum.photos/id/1021/400/400", spotifyLink: "spotifyLink1", titulo: "One More Light One More Light One More Light", css: "background-color: rgb(255,255,255);"},
-        {grupo: "jon bobi ", img: "https://picsum.photos/id/1025/400/400", spotifyLink: "spotifyLink3", titulo: "its my life nigga", css: "background-color: rgb(255,255,255);"},
-        {grupo: "Linkin Park ", img: "https://picsum.photos/id/1024/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
-        {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1023/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
-        {grupo: "Linkin Park ", img: "https://picsum.photos/id/1022/400/400", spotifyLink: "spotifyLink2", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
-        {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1029/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
-        {grupo: "jon bobi ", img: "https://picsum.photos/id/1028/400/400", spotifyLink: "spotifyLink3", titulo: "its my life nigga", css: "background-color: rgb(255,255,255);"},
-        {grupo: "Linkin Park ", img: "https://picsum.photos/id/1031/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
-        {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1041/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
-        {grupo: "Linkin Park ", img: "https://picsum.photos/id/1033/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "Linkin Park Linkin Park Linkin Park", img: "https://picsum.photos/id/1021/400/400", spotifyLink: "spotifyLink1", titulo: "One More Light One More Light One More Light", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "jon bobi ", img: "https://picsum.photos/id/1025/400/400", spotifyLink: "spotifyLink3", titulo: "its my life nigga", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "Linkin Park ", img: "https://picsum.photos/id/1024/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1023/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "Linkin Park ", img: "https://picsum.photos/id/1022/400/400", spotifyLink: "spotifyLink2", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1029/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "jon bobi ", img: "https://picsum.photos/id/1028/400/400", spotifyLink: "spotifyLink3", titulo: "its my life nigga", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "Linkin Park ", img: "https://picsum.photos/id/1031/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1041/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
+        // {grupo: "Linkin Park ", img: "https://picsum.photos/id/1033/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
     ]
     
     // Lista que se carga en el html

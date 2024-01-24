@@ -2,11 +2,10 @@
     <article 
         class="d-flex justify-content-lg-start align-items-lg-center flex-lg-wrap gap-lg-1 gap-1 p-1"
         *ngFor="let item of artistList" 
-        (click)="navigateToSpotify(item.spotify_url)"
+        (click)="navigateToSpotify(item.apiId)"
         [style]="item.css">
         
         <img [src]="item.img" alt="imagen-artista"  [id]="item.img">
         <h1 class="d-flex justify-content-center align-items-center">{{item.name}}</h1>
-    
     </article>
 </main>

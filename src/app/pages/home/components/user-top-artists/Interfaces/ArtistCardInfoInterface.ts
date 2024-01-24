@@ -3,5 +3,6 @@ export interface ArtistCardInfoInterface {
     img: string,
     spotify_url: string,
     
+    apiId: string | null,
     css: string | null,
 }

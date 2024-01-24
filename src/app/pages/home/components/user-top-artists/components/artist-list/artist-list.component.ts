@@ -12,8 +12,8 @@ import { ArtistCardInfoInterface } from '../../Interfaces/ArtistCardInfoInterfac
 })
 export class ArtistListComponent implements OnInit {
     public artistList: ArtistCardInfoInterface[] = []
-
     private dataEmitterService: DataEmitterService;
+
 
     constructor(dataEmitterService: DataEmitterService) {
         this.dataEmitterService = dataEmitterService;
@@ -21,20 +21,28 @@ export class ArtistListComponent implements OnInit {
 
     ngOnInit() {
         this.getTopArtists();
-        setTimeout(() => {
-            this.setAlbumCardsCssProperty();
-        }, 200);
     }
 
+    /** 
+     * Me suscribo al emisor de artistas de dataEmitterService para obtener los 6 primeros artistas
+     * y les asigno el estilo personalizado, modificando el atributo 
+     */
     public getTopArtists() {
-        // Me suscribo al emisor de artistas de dataEmitterService
-        this.dataEmitterService.getArtistCardInfo().subscribe(info => this.artistList = info)
+        this.dataEmitterService.getArtistCardInfo()
+        .subscribe(artists => {
+            console.log("ArtistListComponent.getTopArtists() ->", artists);
+
+            this.artistList = artists;
+            this.setAlbumCardsCssProperty();
+        })
     }
 
     /**
      * Cambio la propiedad css de cada elemento de la lista de albums.
      */
     private setAlbumCardsCssProperty(): void {
+        console.log("ArtistListComponent.setAlbumCardsCssProperty() -> Asigno los estilos dinámicos a las cards de los artistas obtenidos");
+        
         for (let index = 0; index < this.artistList.length; index++) {
             this.setCardCssProperty(this.artistList[index], index);
         }
@@ -56,9 +64,10 @@ export class ArtistListComponent implements OnInit {
     }
 
     /**
-     * Cargar una imagen para obtener el color de un píxel específico de esa imagen
+     * Cargar un objeto HTMLImageElement, obtener el color de un píxel de la imagen
+     * y asignarlo como propiedad css background-color
      */
-    private setCss(imgElement: HTMLImageElement, albumCardsIndex: number): string {
+    private setCss(imgElement: HTMLImageElement, albumCardsIndex: number): void {
         let canvas: HTMLCanvasElement;
         let ctx: CanvasRenderingContext2D;
     
@@ -84,8 +93,6 @@ export class ArtistListComponent implements OnInit {
 
         // Cambio la propiedad css del album del cual se está obteniendo el color
         this.artistList[albumCardsIndex].css = "background-color: rgb(" + colours + ");";
-    
-        return color;
     }
 
     public navigateToSpotify(a: any) {
