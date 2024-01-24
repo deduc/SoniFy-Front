@@ -5,13 +5,17 @@ import { HomeComponent } from './home/home.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyPlaylistsComponent } from './my-playlists/my-playlists.component';
 // auth guard service
-import { AuthService } from '../core/auth-guards/auth.service';
+import { HomePageAuthService } from '../core/auth-guards/home-page-auth.service';
 
 
 const routes: Routes = [
-    { path: 'home', component: HomeComponent, canActivate: [AuthService] },
-    { path: 'my-playlists', component: MyPlaylistsComponent, canActivate: [AuthService] },
-    { path: 'my-profile', component: MyProfileComponent, canActivate: [AuthService] },
+    // Este routerMdoule está dentro de la dirección /me
+    { path: 'home', component: HomeComponent, canActivate: [HomePageAuthService] },
+    
+    // todo: implmementar otros authGuards para las otras rutas (canActivate: [XXXXAuthService])
+    
+    { path: 'my-playlists', component: MyPlaylistsComponent },
+    { path: 'my-profile', component: MyProfileComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
