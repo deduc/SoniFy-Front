@@ -33,69 +33,71 @@ export class ArtistListComponent implements OnInit {
             console.log("ArtistListComponent.getTopArtists() ->", artists);
 
             this.artistList = artists;
-            this.setAlbumCardsCssProperty();
+            this.setArtistsListCssProperty();
         })
     }
 
     /**
-     * Cambio la propiedad css de cada elemento de la lista de albums.
+     * Recorro la lista de artistas obtenida 
+     * y cambio la propiedad css de cada objeto.
      */
-    private setAlbumCardsCssProperty(): void {
-        console.log("ArtistListComponent.setAlbumCardsCssProperty() -> Asigno los estilos dinámicos a las cards de los artistas obtenidos");
+    private setArtistsListCssProperty(): void {
+        console.log("ArtistListComponent.setArtistsListCssProperty() -> Asigno los estilos dinámicos a las cards de los artistas obtenidos");
         
         for (let index = 0; index < this.artistList.length; index++) {
-            this.setCardCssProperty(this.artistList[index], index);
+            this.setArtistCssProperty(this.artistList[index], index);
         }
     }
 
     /**
-     * 
+     * Creo un elemento imagen html al que le asigno los atributos crossOrigin y source.
+     * Una vez haya cargado el objeto, se activa el evento onload() y edito su propiedad css.
      */
-    private setCardCssProperty(imageObject: ArtistCardInfoInterface, albumCardsIndex: number): void {
-        let imgElement = new Image();
-        
-        imgElement.onload = () => {
-            this.setCss(imgElement, albumCardsIndex);
-        };
-        
+    private setArtistCssProperty(imageObject: ArtistCardInfoInterface, artistCardsIndex: number): void {
+        let imgElement: HTMLImageElement = new Image();
+
         // Esto es para evitar problemas con las CORS
         imgElement.crossOrigin = "Anonymous";
         imgElement.src = imageObject.img;
+
+        imgElement.onload = () => {
+            this.setCss(imgElement, artistCardsIndex);
+        };
     }
 
     /**
      * Cargar un objeto HTMLImageElement, obtener el color de un píxel de la imagen
      * y asignarlo como propiedad css background-color
      */
-    private setCss(imgElement: HTMLImageElement, albumCardsIndex: number): void {
-        let canvas: HTMLCanvasElement;
-        let ctx: CanvasRenderingContext2D;
-    
-        let pixelData: Uint8ClampedArray;
-        let color: string;
-    
+    private setCss(imgElement: HTMLImageElement, artistCardsIndex: number): void {
+        // Obtengo las coordenadas (x,y) que suponen el centro de la imagen
         let x: number = imgElement.width / 2;
         let y: number = imgElement.width / 2;
-
-        let colours: number[];
     
-        canvas = document.createElement('canvas');
+        // Creo un objeto <canvas> con las dimensiones de la imagen obtenida
+        let canvas: HTMLCanvasElement = document.createElement('canvas');
         canvas.width = imgElement.width;
         canvas.height = imgElement.height;
     
-        ctx = canvas.getContext('2d')!;
+        // Creo el objeto canvas a partir del objeto HTMLImageElement y le hago dibujar la imagen 
+        // y que las coordenadas de inicio del dibujado de la foto empiecen en (0,0)
+        let ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
         ctx.drawImage(imgElement, 0, 0);
     
-        pixelData = ctx.getImageData(x, y, 1, 1).data;
-        color = `rgb(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
-
-        colours = [pixelData[0], pixelData[1], pixelData[2]]
+        // Obtengo los colores rgb del pixel (x,y) y dimensiones (1,1)
+        let pixelColoursData: Uint8ClampedArray = ctx.getImageData(x, y, 1, 1).data;
+        
+        let rgbColoursList: number[] = [pixelColoursData[0], pixelColoursData[1], pixelColoursData[2]]
 
         // Cambio la propiedad css del album del cual se está obteniendo el color
-        this.artistList[albumCardsIndex].css = "background-color: rgb(" + colours + ");";
+        this.artistList[artistCardsIndex].css = "background-color: rgb(" + rgbColoursList + ");";
     }
 
-    public navigateToSpotify(a: any) {
+    // TODO: llevar al usuario al link de spotify
+    // todo: hacer que el target sea _blank
+    // todo: añadir un icono para llevar al link de spotify
+    // todo: cuando el usuario clique en cualquier lado que no sea el icono mencionado antes, llevar a una nueva pagina con la info del artista, sus canciones y sus discos
+    public navigateToSpotify(a: any): void {
         window.location.href = a
     }
 
