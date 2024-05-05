@@ -1,0 +1,95 @@
+main {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+article {
+    width: 30%;
+
+    padding: 0.32rem;
+
+    border-radius: 5px;
+    background-color: rgb(255,255,255);
+
+    text-shadow: 1px 1px 3px rgb(29, 111, 29);
+    color: white;
+    
+    box-sizing: border-box;
+    border: 1px solid lightgray;
+
+    transition: 0.2s;
+}
+
+article:hover {
+    scale: 1.01;
+    cursor: pointer;
+}
+
+.btn-reproducir-musica {
+    width: 40px;
+    height: 40px;
+    
+    border: none;
+    background-color: greenyellow;
+    color: black;
+    
+    border-radius: 100%;
+}
+/* hacer visible un icono de play music */
+
+img {
+    width: 100px;
+    height: 100px;
+    
+    border-radius: 5px;
+}
+
+h1 {
+    font-size: large;
+    text-transform: capitalize;
+}
+
+.external-link-img {
+    width: 16px;
+    height: 16px;
+
+    border-radius: 0%;
+    opacity: 0.5;
+}
+
+.external-link-img:hover {
+    opacity: 1;
+}
+
+/* tablets */
+@media (max-width: 992px) {
+    article {
+        width: 49%;
+        height: auto;
+    }
+
+    img {
+        width: 100px;
+    }
+}
+
+
+/* moviles */
+@media (max-width: 576px) {
+    .external-link-img {
+        width: 12px;
+        height: 12px;
+    
+        border-radius: 0%;
+        opacity: 0.5;
+    }
+    
+    article {
+        width: 100%;
+        height: auto;
+    }
+
+    img {
+        width: 100px;
+    }
+}

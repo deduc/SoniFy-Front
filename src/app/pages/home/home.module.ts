@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { ArtistListComponent } from './components/user-top-artists/components/artist-list/artist-list.component';
 import { AlbumCardComponent } from './components/user-top-albums/components/album-card/album-card.component';
 import { HomeComponent } from './home.component';
 import { UserTopAlbumsComponent } from './components/user-top-albums/user-top-albums.component';
@@ -23,7 +22,6 @@ import { AudioReproducerBarComponent } from 'src/app/shared/audio-reproducer-bar
     exports: [],
     declarations: [
         AlbumCardComponent,
-        ArtistListComponent,
         AudioReproducerBarComponent,
         HomeComponent,
         UserTopAlbumsComponent,

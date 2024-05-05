@@ -15,15 +15,15 @@ import { AlbumInfoInterface } from '../../core/interfaces/AlbumInfoInterface';
 })
 export class BuscadorComponent {
     public albumsInfoList: AlbumInfoInterface[] = [];
-    // * Obtener el texto que hay en el input
+    // * Obtener el texto que hay en el input mediante ngModel y FormsModule desde shared-module
     public searchText: string = "";
     public next20AlbumsUrl: string = "";
-    public token: string;
+    public token: string = "";
 
     private buscadorService: BuscadorService;
     private dataEmitterService: DataEmitterService;
 
-    constructor(buscadorService: BuscadorService, dataEmitterService: DataEmitterService) { 
+    constructor(buscadorService: BuscadorService, dataEmitterService: DataEmitterService) {
         this.buscadorService = buscadorService;
         this.dataEmitterService = dataEmitterService;
 
@@ -40,23 +40,23 @@ export class BuscadorComponent {
      */
     public searchContent(): void {
         let searchText = this.searchText;
-        
+
         localStorage.setItem(lastSearchedKey, searchText);
 
         this.buscadorService.searchContent(searchText, this.token)
-        .subscribe(
-            async (response) => {
-                try {
-                    console.log('Respuesta de la búsqueda:', response);
-                    this.next20AlbumsUrl = response.albums.next;
-                    this.albumsInfoList = await this.formatAlbumsList(response.albums.items);
-                } 
-                catch (error) {
-                    // Puedes manejar el error aquí según tus necesidades
-                    console.error('Error en la búsqueda:', error);
+            .subscribe(
+                async (response) => {
+                    try {
+                        console.log('Respuesta de la búsqueda:', response);
+                        this.next20AlbumsUrl = response.albums.next;
+                        this.albumsInfoList = await this.formatAlbumsList(response.albums.items);
+                    }
+                    catch (error) {
+                        // Puedes manejar el error aquí según tus necesidades
+                        console.error('Error en la búsqueda:', error);
+                    }
                 }
-            }
-        )
+            )
     }
 
     /**
@@ -65,14 +65,14 @@ export class BuscadorComponent {
      */
     private async formatAlbumsList(albums: any) {
         let albumInfoList: AlbumInfoInterface[] = [];
-        
+
         /**
          * Recorro los albumes obtenidos y creo una
          * lista de albums con los datos de la interfaz AlbumInfoInterface
          */
         for (let index = 0; index < albums.length; index++) {
             const album: any = albums[index];
-            
+
             let albumInfoObj: AlbumInfoInterface = this.makeAlbumInfoInterfaceObject(album);
             albumInfoList[index] = albumInfoObj;
         }
@@ -80,7 +80,7 @@ export class BuscadorComponent {
         this.emitAlbumList(albumInfoList);
         return albumInfoList;
     }
-    
+
     private makeAlbumInfoInterfaceObject(album: any): AlbumInfoInterface {
         let albumInfoObj: AlbumInfoInterface = {
             album_type: album.album_type,
@@ -97,9 +97,9 @@ export class BuscadorComponent {
         return albumInfoObj;
     }
 
-    private emitAlbumList(albumInfoList: AlbumInfoInterface[]){
+    private emitAlbumList(albumInfoList: AlbumInfoInterface[]) {
         console.log("emitAlbumList()", albumInfoList);
-        
+
         this.dataEmitterService.emitAlbumInterface(albumInfoList)
     }
 }

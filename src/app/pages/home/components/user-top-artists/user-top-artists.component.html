@@ -1,4 +1,20 @@
-<article class="text-white">
+<div class="text-white">
     <h2>Tus artistas</h2>
-    <home-artist-list></home-artist-list>
-</article>
+    
+    <main class="d-flex justify-content-center flex-wrap gap-lg-2 gap-1">
+        <article class="d-flex flex-row justify-content-between" *ngFor="let item of artistCardInfo" [style]="item.css">
+            
+            <div class="d-flex flex-row justify-content-start gap-2">
+                <img [src]="item.img" alt="imagen-artista" [id]="item.img">
+                <h1 class="d-flex align-items-center">{{item.name}}</h1>
+            </div>
+    
+            <img 
+                (click)="navigateToSpotifyWeb(item.spotify_url)" 
+                class="external-link-img" 
+                src="/assets/external-link.png" 
+                alt="">
+    
+        </article>
+    </main>
+</div>

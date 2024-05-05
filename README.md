@@ -44,10 +44,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
             + searchContent()
             + showContent() TODO
         -> home-user-top-artists
-            -> home-artist-list
-                + this.getTopArtists()
-                    - suscribirme a dataEmitterService
-                    - cambiar css 
+            + this.getTopArtistsFromApi()
+            + setArtistsListCssProperties()
         -> home-user-top-albums
         -> shared-footer
         -> shared-audio-reproducer-bar
