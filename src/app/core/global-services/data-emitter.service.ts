@@ -22,6 +22,7 @@ export class DataEmitterService {
     // Información sobre los top artistas del usuario
     public artistInfoList = new Subject<ArtistCardInfoInterface[]>();
 
+
     public emitAlbumInterface(albumInfoList: AlbumInfoInterface[]) {
         // console.log("DataEmitterService.emitAlbumInterface() ->", albumInfoList);
         this.albumInfoList.next(albumInfoList);
@@ -36,6 +37,7 @@ export class DataEmitterService {
         this.artistInfoList.next(artistInfoList);
     }
 
+    // Me suscribo desde ArtistListComponent
     public getArtistCardInfo(): Observable<ArtistCardInfoInterface[]> {
         console.log("DataEmitterService.getArtistCardInfo() -> ", this.artistInfoList);
         return this.artistInfoList.asObservable();

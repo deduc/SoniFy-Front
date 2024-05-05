@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { SpotifyTopAlbums, accessTokenKey } from 'src/app/core/constants/constants';
 
-import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
+import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 import { UserTopAlbumsService } from './UserTopAlbums.service';
 
 

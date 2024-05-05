@@ -11,8 +11,14 @@ export const SpotifyTopAlbums: string = "https://api.spotify.com/v1/me/albums";
 
 
 //* API endpoints
-export const APIGetAuthParamsEndpoint: string = "https://localhost:7293/auth/getAuthParams";
-export const ApiGetClientIdAndSecretEndpoint: string = "https://localhost:7293/auth/getClientIdAndSecret";
+export const baseUrl: string = "http://localhost"
+// todo: esto todavia no funciona porque la api no soporta https
+export const baseUrlHttps: string = "https://localhost"
+export const ApiPort: string = "55555"
+// Url Ejemplo http://localhost:7296/auth/getAuthParams
+export const APIGetAuthParamsEndpoint: string = baseUrl + ":" + ApiPort + "/auth/getAuthParams";
+// Url Ejemplo http://localhost:7296/auth/getClientIdAndSecret
+export const ApiGetClientIdAndSecretEndpoint: string = baseUrl + ":" + ApiPort + "/auth/getClientIdAndSecret";
 
 
 //* Localhost urls

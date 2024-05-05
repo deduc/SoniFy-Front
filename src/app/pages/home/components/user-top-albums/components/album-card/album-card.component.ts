@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { AlbumCardsInterface } from './interfaces/AlbumCardsInterface';
-import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
+import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 
 
 @Component({

@@ -27,7 +27,7 @@ export class LoginComponent{
         localStorage.clear();
     }
     
-    // Se invoca este método desde login.component.html
+    // Se invoca desde login.component.html
     public async login(): Promise<void> {
         try {
             const authParams: AuthParamsInterface = await this.loginService.getAuthParams(this.getAuthParamsEndpoint);

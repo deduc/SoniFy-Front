@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { ArtistInterface } from 'src/app/core/interfaces/ArtistsInterface';
 import { TopArtistListInterface } from 'src/app/core/interfaces/TopArtistListInterface';
 
-import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
+import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
 
 

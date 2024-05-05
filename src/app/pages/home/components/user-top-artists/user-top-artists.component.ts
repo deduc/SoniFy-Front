@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { SpotifyTopArtists, accessTokenKey } from 'src/app/core/constants/constants';
 import { UserTopArtistsService } from './user-top-artists.service';
+import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
+
+import { SpotifyTopArtists, accessTokenKey } from 'src/app/core/constants/constants';
 import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
-import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
   styleUrls: ['./user-top-artists.component.css']
 })
 export class UserTopArtistsComponent implements OnInit {
-    public artistCardInfoInterface: ArtistCardInfoInterface[] = []
+    public artistCardInfo: ArtistCardInfoInterface[] = []
 
     private accessToken: string = "";
     private spotifyTopArtistsEndpoint: string;
@@ -30,19 +31,29 @@ export class UserTopArtistsComponent implements OnInit {
         this.accessToken = localStorage.getItem(accessTokenKey)!;
     }
 
-    ngOnInit() {
-        this.getTopArtists();
+    async ngOnInit(): Promise<void> {
+        this.artistCardInfo = await this.getTopArtists();
         
         setTimeout(() => {
-            this.emitArtistInfoList(this.artistCardInfoInterface);
-        }, 200);
+            this.emitArtistInfoList(this.artistCardInfo);
+        }, 400);
     }
 
-    private getTopArtists() {
+    private async getTopArtists(): Promise<ArtistCardInfoInterface[]> {
         console.log("UserTopArtistsComponent.getTopArtists() -> Invoco a this.userTopArtistsService.fetchUserTopArtistsList()");
-        let artistInfoList: Promise<ArtistCardInfoInterface[]> = this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
-        artistInfoList.then(res => this.artistCardInfoInterface = res);
+            
+        try {
+            const artistInfoList: ArtistCardInfoInterface[] = await this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
+            return artistInfoList;
+        } 
+        catch (error) {
+            console.error("Error al obtener la lista de artistas:", error);
+
+            // En caso de error, devolvemos una lista vacía
+            return [];
+        }
     }
+    
 
     private emitArtistInfoList(artistInfoList: ArtistCardInfoInterface[]){
         this.dataEmitterService.emitArtistCardInfo(artistInfoList);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
+import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 
 import { ArtistCardInfoInterface } from '../../Interfaces/ArtistCardInfoInterface';
 
@@ -25,21 +25,22 @@ export class ArtistListComponent implements OnInit {
 
     /** 
      * Me suscribo al emisor de artistas de dataEmitterService para obtener los 6 primeros artistas
-     * y les asigno el estilo personalizado, modificando el atributo 
+     * y les asigno el estilo personalizado, modificando atributos css
      */
     public getTopArtists() {
         this.dataEmitterService.getArtistCardInfo()
         .subscribe(artists => {
             console.log("ArtistListComponent.getTopArtists() ->", artists);
-
             this.artistList = artists;
-            this.setArtistsListCssProperty();
+            
+            setTimeout(() => {
+                this.setArtistsListCssProperty();
+            }, 100);
         })
     }
 
     /**
-     * Recorro la lista de artistas obtenida 
-     * y cambio la propiedad css de cada objeto.
+     * Recorro la lista de artistas obtenida y cambio la propiedad css de cada objeto.
      */
     private setArtistsListCssProperty(): void {
         console.log("ArtistListComponent.setArtistsListCssProperty() -> Asigno los estilos dinámicos a las cards de los artistas obtenidos");
@@ -93,12 +94,30 @@ export class ArtistListComponent implements OnInit {
         this.artistList[artistCardsIndex].css = "background-color: rgb(" + rgbColoursList + ");";
     }
 
-    // TODO: llevar al usuario al link de spotify
-    // todo: hacer que el target sea _blank
-    // todo: añadir un icono para llevar al link de spotify
-    // todo: cuando el usuario clique en cualquier lado que no sea el icono mencionado antes, llevar a una nueva pagina con la info del artista, sus canciones y sus discos
-    public navigateToSpotify(a: any): void {
-        window.location.href = a
+    // Usuario clica en 
+    public navigateToSpotifyWeb(spotifyLink: string): void {
+        window.open(spotifyLink, '_blank');
+    }
+
+    // Usuario clcia en boton de play
+    // todo: escuchar el top canciones del artista en cuestion
+    public reproduceAudio(apiId: string | null) {
+
+
+        // ! ejemplo de reproduccion de audio
+        const context = new AudioContext();
+        const audioSrc = '/assets/Never Gonna Give You Up.mp3';
+
+        fetch(audioSrc)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+        .then(audioBuffer => {
+            const source = context.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(context.destination);
+            source.start();
+        })
+        .catch(error => console.error('Error al decodificar audio:', error));
     }
 
     // fin clase

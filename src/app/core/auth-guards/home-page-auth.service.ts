@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 
-
+// constantes 
 import { ApiGetClientIdAndSecretEndpoint, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, gotCodeFromUrlKey, loginUrl, oneHourTimeStamp, redirectUriKey } from '../constants/constants';
+// navegación entre páginas
 import { Router } from '@angular/router';
-import { SpotifyAppDataInterface } from '../interfaces/SpotifyAppDataInterface';
-import { TokenService } from '../services/token.service';
+// peticiones http
 import { HttpClient } from '@angular/common/http';
+// interfaces
+import { SpotifyAppDataInterface } from '../interfaces/SpotifyAppDataInterface';
+// servicios
+import { TokenService } from '../global-services/token.service';
 
 
 @Injectable({
@@ -16,10 +20,13 @@ export class HomePageAuthService {
     private httpClient: HttpClient
     private tokenService: TokenService;
     
+    // datos de inicio de sesión
     private clientId: string = "null_clientId";
     private clientSecret: string = "null_clientSecret";
     private codeFromUrl: string = "null_codeFromUrl";
     private redirectUri: string = "null_redirectUri";
+    
+    // constantes 
     private spotifyTokenUrl: string = SpotifyTokenUrl;
     private loginUrl: string = loginUrl;
     private accessTokenKey: string = accessTokenKey;
@@ -49,6 +56,7 @@ export class HomePageAuthService {
      * y compruebo si el usuario tiene o necesita un access_token
      */
     public canActivate(): boolean | void {
+        // Pseudo-constructor que asigna algunos valores porque "no da tiempo" en el constructor()
         this.postConstructor();
         
         setTimeout(() => {

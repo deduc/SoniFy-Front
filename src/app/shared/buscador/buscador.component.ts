@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+
+
 import { BuscadorService } from './buscador.service';
+import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
+
 import { accessTokenKey, lastSearchedKey } from 'src/app/core/constants/constants';
 import { AlbumInfoInterface } from '../../core/interfaces/AlbumInfoInterface';
-import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
+
 
 @Component({
     selector: 'shared-buscador',
@@ -11,6 +15,7 @@ import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
 })
 export class BuscadorComponent {
     public albumsInfoList: AlbumInfoInterface[] = [];
+    // * Obtener el texto que hay en el input
     public searchText: string = "";
     public next20AlbumsUrl: string = "";
     public token: string;
@@ -44,7 +49,7 @@ export class BuscadorComponent {
                 try {
                     console.log('Respuesta de la búsqueda:', response);
                     this.next20AlbumsUrl = response.albums.next;
-                    await this.formatAlbumsList(response.albums.items);
+                    this.albumsInfoList = await this.formatAlbumsList(response.albums.items);
                 } 
                 catch (error) {
                     // Puedes manejar el error aquí según tus necesidades
@@ -58,7 +63,7 @@ export class BuscadorComponent {
      * Formateo los albumes obtenidos de la API de spotify.
      * Invocado por searchContent()
      */
-    private formatAlbumsList(albums: any) {
+    private async formatAlbumsList(albums: any) {
         let albumInfoList: AlbumInfoInterface[] = [];
         
         /**
@@ -72,8 +77,8 @@ export class BuscadorComponent {
             albumInfoList[index] = albumInfoObj;
         }
 
-        this.albumsInfoList = albumInfoList;
-        this.emitAlbumList(albumInfoList)
+        this.emitAlbumList(albumInfoList);
+        return albumInfoList;
     }
     
     private makeAlbumInfoInterfaceObject(album: any): AlbumInfoInterface {

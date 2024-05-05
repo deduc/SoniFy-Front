@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DataEmitterService } from 'src/app/core/services/data-emitter.service';
+import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,11 +1,32 @@
-<main class="d-flex justify-content-center flex-wrap gap-lg-2 gap-1">
-    <article 
-        class="d-flex justify-content-lg-start align-items-lg-center flex-lg-wrap gap-lg-1 gap-1 p-1"
-        *ngFor="let item of artistList" 
-        (click)="navigateToSpotify(item.spotify_url)"
+<!-- <main class="d-flex justify-content-center flex-wrap gap-lg-2 gap-1">
+    <article
+        class="d-flex flex-row align-items-center justify-content-between"
+        *ngFor="let item of artistList"
         [style]="item.css">
         
-        <img [src]="item.img" alt="imagen-artista" [id]="item.img">
-        <h1 class="d-flex justify-content-center align-items-center">{{item.name}}</h1>
+        <div class="d-flex flex-row gap-lg-2">
+            <img [src]="item.img" alt="imagen-artista" [id]="item.img">
+            <h1 class="d-flex align-items-center">{{item.name}}</h1>
+        </div>
+
+        <div class="contenedor-2-iconos">
+            <img (click)="navigateToSpotifyWeb(item.spotify_url)" class="external-link-img" src="/assets/external-link.png" alt="">
+            <mat-icon class="play-icon" (click)="reproduceAudio(item.apiId)">play_circle_filled</mat-icon>
+        </div>
+    </article>
+</main> -->
+
+<main class="d-flex justify-content-center flex-wrap gap-lg-2 gap-1">
+    <article class="d-flex flex-row justify-content-between" *ngFor="let item of artistList" [style]="item.css">
+        
+        <div class="d-flex flex-row justify-content-start">
+            <img [src]="item.img" alt="imagen-artista" [id]="item.img">
+            <h1 class="d-flex align-items-center">{{item.name}}</h1>
+        </div>
+
+        <div class="contenedor-2-iconos">
+            <img (click)="navigateToSpotifyWeb(item.spotify_url)" class="external-link-img" src="/assets/external-link.png" alt="">
+        </div>
+
     </article>
 </main>

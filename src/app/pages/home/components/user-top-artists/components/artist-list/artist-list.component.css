@@ -6,15 +6,16 @@ main {
 article {
     width: 30%;
 
+    padding: 0.32rem;
+
+    border-radius: 5px;
     background-color: rgb(255,255,255);
-    
-    box-sizing: border-box;
-    border: 1px solid lightgray;
 
     text-shadow: 1px 1px 3px rgb(29, 111, 29);
     color: white;
-
-    border-radius: 5px;
+    
+    box-sizing: border-box;
+    border: 1px solid lightgray;
 
     transition: 0.2s;
 }
@@ -23,6 +24,18 @@ article:hover {
     scale: 1.02;
     cursor: pointer;
 }
+
+.btn-reproducir-musica {
+    width: 40px;
+    height: 40px;
+    
+    border: none;
+    background-color: greenyellow;
+    color: black;
+    
+    border-radius: 100%;
+}
+/* hacer visible un icono de play music */
 
 img {
     width: 100px;
@@ -36,7 +49,23 @@ h1 {
     text-transform: capitalize;
 }
 
+.contenedor-2-iconos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+    gap: 50px;
+}
+
+.contenedor-2-iconos .external-link-img {
+    width: 16px;
+    height: 16px;
+
+    border-radius: 0%;
+    opacity: 0.5;
+}
+
+/* tablets */
 @media (max-width: 992px) {
     article {
         width: 49%;
@@ -49,7 +78,16 @@ h1 {
 }
 
 
+/* moviles */
 @media (max-width: 576px) {
+    .external-link-img {
+        width: 12px;
+        height: 12px;
+    
+        border-radius: 0%;
+        opacity: 0.5;
+    }
+    
     article {
         width: 100%;
         height: auto;

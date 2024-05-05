@@ -1,0 +1,38 @@
+article {
+    width: 100%;
+    height: 100px;
+
+    padding-left: 16px;
+    padding-right: 16px;
+    
+    background-color: yellow;
+    
+    position: fixed;
+    bottom: 0%;
+    left: 0%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 32px;
+}
+
+.artist-container {
+    height: 90%;
+    border: 1px solid black;
+}
+
+.audio-controls-container {
+    height: 48px;
+    border: 1px solid black;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.pito {
+    border: 1px solid black;
+}
