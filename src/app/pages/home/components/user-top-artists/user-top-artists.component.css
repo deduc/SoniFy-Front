@@ -61,6 +61,14 @@ h1 {
     opacity: 1;
 }
 
+
+.cargar-mas {
+    border: 1px solid rgba(211, 211, 211, 0.5);
+}
+.cargar-mas:hover {
+    cursor: pointer;
+}
+
 /* tablets */
 @media (max-width: 992px) {
     article {

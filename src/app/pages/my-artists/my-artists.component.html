@@ -1,0 +1,22 @@
+<section class="bg-black text-white">
+    <shared-header></shared-header>
+
+    <h1>Tus artistas favoritos</h1>
+
+    <main class="d-flex justify-content-center flex-wrap gap-lg-2 gap-1">
+        <article class="d-flex flex-row justify-content-between" *ngFor="let item of artistCardList" [style]="item.css">
+
+            <div class="d-flex flex-row gap-2">
+                <img [src]="item.img" alt="imagen-artista" [id]="item.img">
+                <h2 class="d-flex align-items-center">{{item.name}}</h2>
+            </div>
+
+            <img class="external-link-img" src="/assets/external-link.png" alt="">
+
+        </article>
+    </main>
+
+    <h2 *ngIf="nextArtistsUrl && nextArtistsUrl.length > 0" class="text-center mt-lg-3 cargar-mas" (click)="getMoreArtists()">- Cargar más -</h2>
+
+    <shared-footer></shared-footer>
+</section>

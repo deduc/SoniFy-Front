@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from '../pages/login/login.service';
 import { HomeModule } from './home/home.module';
+import { MyArtistsComponent } from './my-artists/my-artists.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { HomeModule } from './home/home.module';
     LoginComponent,
     MyPlaylistsComponent,
     MyProfileComponent,
+    MyArtistsComponent,
   ],
   imports: [
     CommonModule,

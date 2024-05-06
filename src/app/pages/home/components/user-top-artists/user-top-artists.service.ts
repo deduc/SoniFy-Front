@@ -1,10 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ArtistInterface } from 'src/app/core/interfaces/ArtistsInterface';
-import { TopArtistListInterface } from 'src/app/core/interfaces/TopArtistListInterface';
-
-import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
 
 
@@ -12,11 +8,9 @@ import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
     providedIn: 'root'
 })
 export class UserTopArtistsService {
-    private dataEmitterService: DataEmitterService;
     private httpClient: HttpClient;
 
-    constructor(dataEmitterService: DataEmitterService, httpClient: HttpClient) {
-        this.dataEmitterService = dataEmitterService;
+    constructor(httpClient: HttpClient) {
         this.httpClient = httpClient
     }
 
@@ -29,7 +23,7 @@ export class UserTopArtistsService {
         let artistInfoAux: ArtistCardInfoInterface;
 
         // Añado a la url el parámetro limit=6 para obtener como máximo 6 artistas tras hacer la petición a la api
-        apiUrl = apiUrl + "?limit=6";
+        apiUrl = apiUrl + `?limit=6`;
         
         // Peticion api para obtener informacion sobre los artistas
         this.httpClient.get(apiUrl, { headers: headers })
@@ -38,7 +32,7 @@ export class UserTopArtistsService {
 
             console.log("UserTopArtistsService.fetchUserTopArtistsList() ->", data);
             
-            
+            // Creo los objetos ArtistCardInfoInterface y los añado a la lista
             for (let index = 0; index < data.items.length; index++) {
                 artistInfoAux = {
                     name: data.items[index].name,

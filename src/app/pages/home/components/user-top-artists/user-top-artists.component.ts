@@ -6,6 +6,7 @@ import { DataEmitterService } from 'src/app/core/global-services/data-emitter.se
 
 import { SpotifyTopArtists, accessTokenKey } from 'src/app/core/constants/constants';
 import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,15 +17,15 @@ import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
 export class UserTopArtistsComponent implements OnInit {
     public artistCardInfo: ArtistCardInfoInterface[] = []
 
+    private router: Router;
     private accessToken: string = "";
     private spotifyTopArtistsEndpoint: string = SpotifyTopArtists;
     private userTopArtistsService: UserTopArtistsService;
-    private dataEmitterService: DataEmitterService;
 
 
-    constructor(userTopArtistsService: UserTopArtistsService, dataEmitterService: DataEmitterService) {
+    constructor(userTopArtistsService: UserTopArtistsService, router: Router) {
         this.userTopArtistsService = userTopArtistsService;
-        this.dataEmitterService = dataEmitterService
+        this.router = router;
         this.accessToken = localStorage.getItem(accessTokenKey)!;
     }
 
@@ -40,6 +41,16 @@ export class UserTopArtistsComponent implements OnInit {
     // Usuario clica en el icono para saltar a otra pagina
     public navigateToSpotifyWeb(spotifyLink: string): void {
         window.open(spotifyLink, '_blank');
+    }
+
+    public navigateToArtistsPage(){
+
+        this.router.navigateByUrl("my-artists");
+
+    }
+
+    public async loadMoreAlbumCards(moreArtists: number): Promise<void> {
+        this.artistCardInfo = await this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
     }
 
     // =============================================
@@ -60,11 +71,6 @@ export class UserTopArtistsComponent implements OnInit {
             return [];
         }
     }
-
-    private emitArtistInfoList(artistInfoList: ArtistCardInfoInterface[]) {
-        this.dataEmitterService.emitArtistCardInfo(artistInfoList);
-    }
-
 
     /**
      * Recorro la lista de artistas obtenida y cambio la propiedad css de cada objeto.
