@@ -14,32 +14,40 @@ export class DataEmitterService {
     public albumInfoList = new BehaviorSubject<AlbumInfoInterface[]>([]);
     public datosAlbumInfoList = this.albumInfoList.asObservable();
 
-    public topArtistList = new BehaviorSubject<TopArtistListInterface>(
-        {href: "", limit: 0, next: "", total: 0, items: []}
-    );
-    public datostopArtistList = this.topArtistList.asObservable();
+    public topArtistList = new BehaviorSubject<TopArtistListInterface>({ href: "", limit: 0, next: "", total: 0, items: [] });
+    public datosTopArtistList = this.topArtistList.asObservable();
 
     // Información sobre los top artistas del usuario
-    public artistInfoList = new Subject<ArtistCardInfoInterface[]>();
+    public artistCardInfoList = new BehaviorSubject<ArtistCardInfoInterface[]>([]);
+    public datosArtistCardInfoList = this.artistCardInfoList.asObservable();
 
+
+    // ========================
+    // ========Emisores========
+    // ========================
 
     public emitAlbumInterface(albumInfoList: AlbumInfoInterface[]) {
-        // console.log("DataEmitterService.emitAlbumInterface() ->", albumInfoList);
+        console.log("DataEmitterService.emitAlbumInterface() ->", albumInfoList);
         this.albumInfoList.next(albumInfoList);
     }
 
     public emitTopArtistListInterface(topArtistList: TopArtistListInterface) {
-        // console.log("DataEmitterService.emitTopArtistListInterface() ->", topArtistList);
+        console.log("DataEmitterService.emitTopArtistListInterface() ->", topArtistList);
         this.topArtistList.next(topArtistList);
     }
 
+    // Invocado desde MyArtistsComponent
     public emitArtistCardInfo(artistInfoList: ArtistCardInfoInterface[]) {
-        this.artistInfoList.next(artistInfoList);
+        this.artistCardInfoList.next(artistInfoList);
     }
+
+    // ====================================
+    // ============Suscriptores============
+    // ====================================
 
     // Me suscribo desde ArtistListComponent
     public getArtistCardInfo(): Observable<ArtistCardInfoInterface[]> {
-        console.log("DataEmitterService.getArtistCardInfo() -> ", this.artistInfoList);
-        return this.artistInfoList.asObservable();
+        console.log("DataEmitterService.getArtistCardInfo() -> ", this.artistCardInfoList);
+        return this.artistCardInfoList.asObservable();
     }
 }

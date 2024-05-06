@@ -3,6 +3,8 @@
 
     <h1>Tus artistas favoritos</h1>
 
+    <shared-filter-bar></shared-filter-bar>
+
     <main class="d-flex justify-content-center flex-wrap gap-lg-2 gap-1">
         <article class="d-flex flex-row justify-content-between" *ngFor="let item of artistCardList" [style]="item.css">
 
@@ -16,7 +18,7 @@
         </article>
     </main>
 
-    <h2 *ngIf="nextArtistsUrl && nextArtistsUrl.length > 0" class="text-center mt-lg-3 cargar-mas" (click)="getMoreArtists()">- Cargar más -</h2>
+    <!-- <h2 *ngIf="nextArtistsUrl && nextArtistsUrl.length > 0" class="text-center mt-lg-3 cargar-mas" (click)="getMoreArtists()">- Cargar más -</h2> -->
 
     <shared-footer></shared-footer>
 </section>

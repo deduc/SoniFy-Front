@@ -42,6 +42,7 @@ export const verifierKey: string = "verifier";
 //* Rutas de la aplicación
 export const homeUrl: string = "/me/home";
 export const loginUrl: string = "/login";
+export const myArtistsUrl: string = "/my-artists"
 
 
 //* Otras constantes

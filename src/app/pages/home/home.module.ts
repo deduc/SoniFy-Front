@@ -9,14 +9,11 @@ import { HomeComponent } from './home.component';
 import { UserTopAlbumsComponent } from './components/user-top-albums/user-top-albums.component';
 import { UserTopArtistsComponent } from './components/user-top-artists/user-top-artists.component';
 
-// modulo angular material
-import { MatIconModule } from '@angular/material/icon';
 import { AudioReproducerBarComponent } from 'src/app/shared/audio-reproducer-bar/audio-reproducer-bar.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        MatIconModule,
         SharedModule,
     ],
     exports: [],

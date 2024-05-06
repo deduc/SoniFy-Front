@@ -46,6 +46,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
         -> home-user-top-artists
             + this.getTopArtistsFromApi()
             + setArtistsListCssProperties()
+            * Usuario clica en Ver todos los artistas y se dirige a "/my-artists"
         -> home-user-top-albums
         -> shared-footer
         -> shared-audio-reproducer-bar
+
+<br>
+
+    pages/my-artists/my-artists.component
+        + ngOnInit
+            - fetchUserTopArtistsList()

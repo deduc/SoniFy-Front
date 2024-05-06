@@ -26,7 +26,7 @@ article {
 
 article:hover {
     scale: 1.05;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 img {

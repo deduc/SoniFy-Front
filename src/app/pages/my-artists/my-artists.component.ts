@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { ArtistCardInfoInterface } from '../home/components/user-top-artists/Interfaces/ArtistCardInfoInterface';
 import { SpotifyTopArtists, accessTokenKey } from 'src/app/core/constants/constants';
+import { DataEmitterService } from '../../core/global-services/data-emitter.service';
 
 
 @Component({
@@ -13,21 +14,26 @@ import { SpotifyTopArtists, accessTokenKey } from 'src/app/core/constants/consta
 export class MyArtistsComponent {
     public artistCardList: ArtistCardInfoInterface[] = [];
 
-    public nextArtistsUrl: string = "";
+    private accessToken: string;
+    private dataEmitterService: DataEmitterService;
+    private httpClient: HttpClient;
     private SpotifyTopArtistsUrl: string = SpotifyTopArtists;
 
-    private httpClient: HttpClient;
-    private accessToken: string;
 
-    constructor(httpClient: HttpClient) {
+    constructor(httpClient: HttpClient, dataEmitterService: DataEmitterService) {
         this.httpClient = httpClient;
+        this.dataEmitterService = dataEmitterService;
         this.accessToken = localStorage.getItem(accessTokenKey)!;
     }
 
     async ngOnInit(): Promise<void> {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
         this.artistCardList = await this.fetchUserTopArtistsList(this.SpotifyTopArtistsUrl, this.accessToken);
+        this.emitArtistCardList(this.artistCardList);
+    }
+
+    // * Emitir artistsCardList a DataEmitterService.
+    public emitArtistCardList(artistsList: ArtistCardInfoInterface[]): void {
+        this.dataEmitterService.emitArtistCardInfo(artistsList);
     }
 
     /**
@@ -38,17 +44,14 @@ export class MyArtistsComponent {
         let artistInfoList: ArtistCardInfoInterface[] = [];
         let artistInfoAux: ArtistCardInfoInterface;
 
-        // Añado a la url el parámetro limit=6 para obtener como máximo 6 artistas tras hacer la petición a la api
-        // apiUrl = apiUrl + `?limit=6`;
-
         // Peticion api para obtener informacion sobre los artistas
         this.httpClient.get(apiUrl, { headers: headers })
             .subscribe(response => {
                 let data: any = response;
+                let nextArtistsUrl: string = data.next;
 
-                // console.log("UserTopArtistsService.fetchUserTopArtistsList() ->", data);
-                this.nextArtistsUrl = data.next;
-
+                console.log("UserTopArtistsService.fetchUserTopArtistsList() ->", data);
+                
                 // Creo los objetos ArtistCardInfoInterface y los añado a la lista
                 for (let index = 0; index < data.items.length; index++) {
                     artistInfoAux = {
@@ -62,6 +65,11 @@ export class MyArtistsComponent {
 
                     artistInfoList.push(artistInfoAux);
                 }
+                
+                // Comprobar si quedan más artistas por obtener y obtenerlos con el enlace a los siguientes X objetos artistas.
+                if (nextArtistsUrl.length > 0) {
+                    this.fetchUserTopArtistsList(nextArtistsUrl, token);
+                }
             });
 
         setTimeout(() => {
@@ -71,26 +79,12 @@ export class MyArtistsComponent {
         return await artistInfoList;
     }
 
-    // Evento que se ejecuta cuando el usuario clica en "ver más artistas"
-    public async getMoreArtists(): Promise<void> {
-        const newData: ArtistCardInfoInterface[] = await this.fetchUserTopArtistsList(this.nextArtistsUrl, this.accessToken);
-
-        await new Promise(resolve => setTimeout(resolve, 200));
-
-        console.log(newData);
-
-        for (let index = 0; index < newData.length; index++) {
-            const element = newData[index];
-            this.artistCardList.push(element);
-        }
-    }
-
 
     /**
      * Recorro la lista de artistas obtenida y cambio la propiedad css de cada objeto.
      */
     private setArtistsListCssProperties(): void {
-        console.log("ArtistListComponent.setArtistsListCssProperties() -> Asigno los estilos dinámicos a las cards de los artistas obtenidos");
+        console.log("MyArtistsComponent.setArtistsListCssProperties() -> Asigno los estilos dinámicos a las cards de los artistas obtenidos");
 
         for (let index = 0; index < this.artistCardList.length; index++) {
             this.setArtistCssProperty(this.artistCardList[index], index);

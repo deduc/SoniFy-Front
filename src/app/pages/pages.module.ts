@@ -6,14 +6,17 @@ import { LoginComponent } from './login/login.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MyPlaylistsComponent } from './my-playlists/my-playlists.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyArtistsComponent } from './my-artists/my-artists.component';
 
 // mis modulos
 import { SharedModule } from '../shared/shared.module';
+import { HomeModule } from './home/home.module';
 // modulo http para usar el componente HttpClient
 import { HttpClientModule } from '@angular/common/http';
+// modulo angular material
+import { MatIconModule } from '@angular/material/icon';
+
 import { LoginService } from '../pages/login/login.service';
-import { HomeModule } from './home/home.module';
-import { MyArtistsComponent } from './my-artists/my-artists.component';
 
 
 @NgModule({
@@ -27,6 +30,7 @@ import { MyArtistsComponent } from './my-artists/my-artists.component';
   imports: [
     CommonModule,
     HomeModule,
+    MatIconModule,
     SharedModule,
     PagesRoutingModule,
     HttpClientModule,

@@ -2,7 +2,7 @@
     
     <div class="row d-flex justify-content-lg-start justify-content-center gap-lg-5 gap-md-4">
         
-        <article *ngFor="let item of loadedAlbumCards" class="col-sm-6 col-md-3 col-lg-2 col-xl-2" [style]="item.css">
+        <article *ngFor="let item of loadedAlbumCards" class="col-sm-6 col-md-3 col-lg-2 col-xl-2 cursor-pointer" [style]="item.css">
         
             <img class="card-img-top" [src]="item.img" alt="imagen-grupo"  [id]="item.img">
             

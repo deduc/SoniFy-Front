@@ -1,0 +1,11 @@
+<section class="d-flex justify-content-center align-items-center">
+    <div class="align-items-center">
+        <input type="text" name="toSearchArtist" id="toSearchArtist" [placeholder]=inputPlaceholder [ngModel]="toSearchArtist">
+        <button>Buscar</button>
+    </div>
+
+    <div class="d-flex align-items-center">
+        <button>1</button>
+        <mat-icon class="cursor-pointer" (click)="alterOrder()">{{ orderType }}</mat-icon>
+    </div>
+</section>

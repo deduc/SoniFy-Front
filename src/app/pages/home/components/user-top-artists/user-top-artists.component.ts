@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserTopArtistsService } from './user-top-artists.service';
 import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 
-import { SpotifyTopArtists, accessTokenKey } from 'src/app/core/constants/constants';
+import { SpotifyTopArtists, accessTokenKey, myArtistsUrl } from 'src/app/core/constants/constants';
 import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
 import { Router } from '@angular/router';
 
@@ -18,6 +18,7 @@ export class UserTopArtistsComponent implements OnInit {
     public artistCardInfo: ArtistCardInfoInterface[] = []
 
     private router: Router;
+    private myArtistsUrl: string = myArtistsUrl;
     private accessToken: string = "";
     private spotifyTopArtistsEndpoint: string = SpotifyTopArtists;
     private userTopArtistsService: UserTopArtistsService;
@@ -43,10 +44,8 @@ export class UserTopArtistsComponent implements OnInit {
         window.open(spotifyLink, '_blank');
     }
 
-    public navigateToArtistsPage(){
-
-        this.router.navigateByUrl("my-artists");
-
+    public navigateToArtistsPage() {
+        this.router.navigateByUrl(this.myArtistsUrl);
     }
 
     public async loadMoreAlbumCards(moreArtists: number): Promise<void> {
