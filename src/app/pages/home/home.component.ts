@@ -14,8 +14,9 @@ export class HomeComponent implements OnInit {
         // await fetchProfile(localStorage.getItem(accessTokenKey)!);
         
         
-        // todo para refrescar el access token cuando expire: https://developer.spotify.com/documentation/web-api/tutorials/refreshing-tokens
-        // todo intentar obtenre datos personales, pregunta a quien quieras yks
+        // todo: para refrescar el access token cuando expire: https://developer.spotify.com/documentation/web-api/tutorials/refreshing-tokens
+        // todo: intentar obtener datos personales y mostrarlos en la cabecera arriba a la derecha
+        // todo: poner boton de log out
     }
 
     // * Este método quizá no deba estar aqui, fue una prueba en algún momento para obtener la info del perfil de un usuario

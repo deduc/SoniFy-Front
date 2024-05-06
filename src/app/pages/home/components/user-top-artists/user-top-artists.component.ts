@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { UserTopArtistsService } from './user-top-artists.service';
-import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
-
 import { SpotifyTopArtists, accessTokenKey, myArtistsUrl } from 'src/app/core/constants/constants';
+
 import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
 import { Router } from '@angular/router';
+import { UserTopArtistsService } from './user-top-artists.service';
 
 
 @Component({
@@ -16,10 +15,11 @@ import { Router } from '@angular/router';
 })
 export class UserTopArtistsComponent implements OnInit {
     public artistCardInfo: ArtistCardInfoInterface[] = []
+    public numberOfElementsToRender: number = 6;
 
+    private accessToken: string = "";
     private router: Router;
     private myArtistsUrl: string = myArtistsUrl;
-    private accessToken: string = "";
     private spotifyTopArtistsEndpoint: string = SpotifyTopArtists;
     private userTopArtistsService: UserTopArtistsService;
 
@@ -31,11 +31,11 @@ export class UserTopArtistsComponent implements OnInit {
     }
 
     public async ngOnInit(): Promise<void> {
-        this.artistCardInfo = await this.getTopArtistsFromApi();
+        let artistCardInfo = await this.getTopArtistsFromApi();
 
         setTimeout(() => {
+            this.artistCardInfo = this.getRandomElementsFromList(artistCardInfo, this.numberOfElementsToRender);
             this.setArtistsListCssProperties();
-            // this.emitArtistInfoList(this.artistCardInfo);
         }, 400);
     }
 
@@ -53,8 +53,22 @@ export class UserTopArtistsComponent implements OnInit {
     }
 
     // =============================================
-    // ===============Métodos privados===============
+    // ===============Métodos privados==============
     // =============================================
+
+    private getRandomElementsFromList(list: ArtistCardInfoInterface[], numberOfElements: number): ArtistCardInfoInterface[] {
+        let returnList: ArtistCardInfoInterface[] = [];
+        let randomIndex: number = 0;
+
+        // Obtener los X elementos aleatorios de la lista de los artistas
+        for (let index = 0; index < numberOfElements; index++) {
+            randomIndex = Math.trunc(Math.random() * numberOfElements);
+            returnList.push(list[randomIndex]);
+            list.splice(randomIndex, 1);
+        }
+
+        return returnList;
+    }
 
     private async getTopArtistsFromApi(): Promise<ArtistCardInfoInterface[]> {
         console.log("UserTopArtistsComponent.getTopArtistsFromApi() -> Invoco a this.userTopArtistsService.fetchUserTopArtistsList()");
@@ -127,6 +141,7 @@ export class UserTopArtistsComponent implements OnInit {
     }
 
 
+    // todo
     // Usuario clcia en boton de play
     // todo: escuchar el top canciones del artista en cuestion
     private reproduceAudio(apiId: string | null) {

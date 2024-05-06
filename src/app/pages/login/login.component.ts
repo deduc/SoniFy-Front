@@ -24,7 +24,7 @@ export class LoginComponent{
     ngOnInit(): void {
         // todo
         // ! Temporal, borrar cuando esté a punto
-        // localStorage.clear();
+        localStorage.clear();
     }
     
     // Se invoca desde login.component.html
