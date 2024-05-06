@@ -35,12 +35,25 @@ export class FilterBarComponent implements OnInit {
             });
     }
 
+    /** Invocado desde filter-bar.component.html. Invierte el orden de filtrado */
     public alterOrder(): void {
-        if (this.orderType == this.orderDesc) {
-            this.orderType = this.orderAsc
-        }
-        else {
-            this.orderType = this.orderDesc
-        }
+        let orderType: string = this.orderType;
+        let orderDesc: string = this.orderDesc;
+        let orderAsc: string = this.orderAsc;
+
+        this.orderType = this.toggleOrderIcon(orderType, orderDesc, orderAsc);
+        this.artistCardList = this.sortArtistCardInfo(this.artistCardList, orderType);
+    }
+
+    /** Intercambiar el icono de ordenación (ascendente o descendente) */
+    private toggleOrderIcon(orderType: string, orderDesc: string, orderAsc: string): string {
+        // Condicion ? expresion true : expresion false
+        return orderType === orderDesc ? orderAsc : orderDesc;
+    }
+
+    // todo
+    /** Ordenar los artistas alfabeticamente */
+    private sortArtistCardInfo(artistCardInfo: ArtistCardInfoInterface[], orderType: string): ArtistCardInfoInterface[] {
+        return artistCardInfo;
     }
 }

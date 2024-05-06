@@ -23,7 +23,7 @@ export class UserTopArtistsService {
         let artistInfoAux: ArtistCardInfoInterface;
 
         // Añado a la url el parámetro limit=6 para obtener como máximo 6 artistas tras hacer la petición a la api
-        apiUrl = apiUrl + `?limit=6`;
+        // apiUrl = apiUrl + `?limit=6`;
         
         // Peticion api para obtener informacion sobre los artistas
         this.httpClient.get(apiUrl, { headers: headers })
