@@ -31,32 +31,3 @@ Run `ng e2e` to execute the end-to-end tveests via a platform of your choice. To
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 <hr>
-
-# Estructura de componentes en orden de uso
-
-    pages/login/login.component
-    * Usuario clica en boton de login
-        + loginService.getAuthParams()
-        + localStorage.setItem(redirectUri)
-        * redireccionar usuario al login OAuth2.0 y mandarlo a home.component
-
-<br>
-
-    pages/home/home.component
-        -> shared-header (usuario navega entre links)
-        -> shared-buscador (usuario escribe qué quiere)
-            + searchContent()
-            + showContent() TODO
-        -> home-user-top-artists
-            + this.getTopArtistsFromApi()
-            + setArtistsListCssProperties()
-            * Usuario clica en Ver todos los artistas y se dirige a "/my-artists"
-        -> home-user-top-albums
-        -> shared-footer
-        -> shared-audio-reproducer-bar
-
-<br>
-
-    pages/my-artists/my-artists.component
-        + ngOnInit
-            - fetchUserTopArtistsList()
