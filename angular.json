@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "spotify-clon": {
+    "SoniFy-Front": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/spotify-clon",
+            "outputPath": "dist/SoniFy-Front",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "spotify-clon:build:production"
+              "browserTarget": "SoniFy-Front:build:production"
             },
             "development": {
-              "browserTarget": "spotify-clon:build:development"
+              "browserTarget": "SoniFy-Front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "spotify-clon:build"
+            "browserTarget": "SoniFy-Front:build"
           }
         },
         "test": {
