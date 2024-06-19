@@ -13,13 +13,14 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 const routes: Routes = [
     // Este routerMdoule está dentro de la dirección /me
     { path: 'home', component: HomeComponent, canActivate: [HomePageAuthService] },
-    
+
     // todo: implmementar otros authGuards para las otras rutas (canActivate: [XXXXAuthService])
 
     { path: 'my-artists', component: MyArtistsComponent },
     { path: 'my-playlists', component: MyPlaylistsComponent },
     { path: 'my-profile', component: MyProfileComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@ export const ApiResourceGetClientIdAndSecret: string = "/getClientIdAndSecret"
 
 
 
-// * API endpoints
+//* API endpoints
 export const APIGetAuthParamsEndpoint: string = `${ApiBaseUrl}:${ApiPort}${ApiPathAuth}${ApiResourceGetAuthParams}`;
 export const ApiGetClientIdAndSecretEndpoint: string = `${ApiBaseUrl}:${ApiPort}${ApiPathAuth}${ApiResourceGetClientIdAndSecret}`;
 // Ejemplo http://localhost:7296/auth/getAuthParams
@@ -36,7 +36,7 @@ export const accessTokenTimestampKey: string = "accessTokenTimestamp";
 export const clientIdKey: string = "clientId";
 export const clientSecretKey: string = "clientSecret";
 export const codeVerifierKey: string = "code_verifier";
-// En la url hay un parámetro llamado code. Importante no cambiar su nombre.
+//! En la url hay un parámetro llamado code. Importante no cambiar su nombre.
 export const codeFromUrlKey: string = "code";
 export const gotCodeFromUrlKey: string = "gotCodeFromUrl";
 export const lastSearchedKey: string = "lastSearch";
