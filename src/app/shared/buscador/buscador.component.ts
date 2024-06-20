@@ -39,6 +39,8 @@ export class BuscadorComponent {
      * 
      */
     public searchContent(): void {
+        if (this.searchText.length == 0) return
+
         let searchText = this.searchText;
 
         localStorage.setItem(lastSearchedKey, searchText);
@@ -56,7 +58,12 @@ export class BuscadorComponent {
                         console.error('Error en la búsqueda:', error);
                     }
                 }
-            )
+            );
+    }
+
+    // todo
+    public getItemInfoPage(index: number){
+        console.log(this.albumsInfoList[index]);
     }
 
     /**

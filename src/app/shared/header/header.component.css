@@ -1,5 +1,6 @@
-header, nav {
-    background-color: rgb(0, 128, 32);
+header,
+nav {
+    background-color: rgb(0, 161, 40);
 }
 
 .app-tittle {
@@ -12,35 +13,53 @@ header, nav {
     border: none;
 }
 
-.header-flex{
+.app-tittle:hover {
+    cursor: pointer;
+}
+
+.header-flex-start-center {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     gap: 2rem;
 }
 
-.invertir-color{
+.header-flex-space-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.invertir-color {
     filter: invert();
 }
 
-.my-btn{
+.my-btn {
     color: white;
 }
 
-.my-btn:hover{
+.my-btn:hover {
     background-color: #20a000;
 }
 
-.my-btn:focus{
+.my-btn:focus {
     color: white;
 }
 
 .sm-nav-button {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     justify-content: space-evenly;
 
     border: 2px solid rgb(32, 138, 59);
+}
+
+.profile-img {
+    width: 48px;
+    border-radius: 100%;
 }
 
 @media (min-width: 993px) {

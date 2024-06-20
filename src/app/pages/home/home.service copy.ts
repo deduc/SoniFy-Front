@@ -11,11 +11,11 @@ import { Observable, map } from 'rxjs';
 })
 export class HomeService {
     public spotifyApiUrl: string = SpotifyMe;
-    public myUserInfoObj: MyUserInfoInterface;
 
     private accessTokenKey: string = accessTokenKey;
     private token: string;
     private httpClient: HttpClient;
+    private myUserInfoObj: MyUserInfoInterface;
     private httpHeaders: any;
 
     constructor(httpClient: HttpClient) {
@@ -23,7 +23,7 @@ export class HomeService {
         this.myUserInfoObj = { displayName: "", externalUrl: "", ApiEndpointUserData: "", Userid: "", profileImageUrl: "", followers: 0, country: "", email: "" };
         this.httpClient = httpClient;
         this.httpHeaders = { method: "GET", headers: { Authorization: `Bearer ${this.token}` } };
-        
+
         this.getTokenAndUserData(this.spotifyApiUrl, this.token, this.httpHeaders);
     }
 
@@ -32,9 +32,9 @@ export class HomeService {
 
         this.loadTokenFromLocalStorage();
 
-        await this.getMyUserProfileDataFromAPI(spotifyApiUrl, token, httpHeaders)
+        await this.getMyUserProfileDataFromAPI(this.spotifyApiUrl, this.token, this.httpHeaders)
             .subscribe(response => {
-                console.log("HomeService.getTokenAndUserData() -> Obtener información del usuario", response);
+                console.log("HomeService.getTokenAndUserData() -> ", response);
 
                 let userInfoObj: MyUserInfoInterface = {
                     displayName: response.display_name,
@@ -48,7 +48,15 @@ export class HomeService {
                 };
 
                 this.myUserInfoObj = userInfoObj;
+                console.log(111111, this.myUserInfoObj);
             });
+
+        await console.log(22222, this.myUserInfoObj);
+
+        setTimeout(() => {
+            console.log(22222, this.myUserInfoObj);
+        }, 1000);
+
     }
 
     public loadTokenFromLocalStorage(): string {
@@ -60,7 +68,8 @@ export class HomeService {
             if (token.length < 1) {
                 console.error("HomeService.loadTokenFromLocalStorage() -> ERROR: No se ha podido obtener el token de acceso");
                 token = "null_string";
-            } else { console.log("HomeService.loadTokenFromLocalStorage() -> Hay token de acceso."); }
+            }
+            else { console.log("HomeService.loadTokenFromLocalStorage() -> Hay token de acceso."); }
         }
         catch (error) { token = "null_string"; }
 

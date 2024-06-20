@@ -16,13 +16,13 @@ import { UserTopArtistsService } from './user-top-artists.service';
 export class UserTopArtistsComponent implements OnInit {
     public artistCardInfo: ArtistCardInfoInterface[] = []
     public numberOfElementsToRender: number = 6;
-
-    private accessToken: string = "";
     private router: Router;
-    private myArtistsUrl: string = myArtistsUrl;
-    private spotifyTopArtistsEndpoint: string = SpotifyTopArtists;
     private userTopArtistsService: UserTopArtistsService;
 
+    private accessToken: string = "";
+    private accessTokenKey: string = accessTokenKey;
+    private myArtistsUrl: string = myArtistsUrl;
+    private spotifyTopArtistsEndpoint: string = SpotifyTopArtists;
 
     constructor(userTopArtistsService: UserTopArtistsService, router: Router) {
         this.userTopArtistsService = userTopArtistsService;

@@ -13,6 +13,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 const routes: Routes = [
     // Este routerMdoule está dentro de la dirección /me
     { path: 'home', component: HomeComponent, canActivate: [HomePageAuthService] },
+    // { path: 'home', component: HomeComponent },
 
     // todo: implmementar otros authGuards para las otras rutas (canActivate: [XXXXAuthService])
 

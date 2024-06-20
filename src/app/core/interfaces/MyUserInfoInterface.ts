@@ -1,8 +1,8 @@
 export interface MyUserInfoInterface {
-    display_name: string,
+    displayName: string,
     externalUrl: string,
     ApiEndpointUserData: string,
-    id: string,
+    Userid: string,
     profileImageUrl: string,
     followers: number,
     country: string,

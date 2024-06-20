@@ -1,9 +1,15 @@
 <!-- ! Cabecera para dispositivos lg y xl -->
-<header class="container-fluid bg-success py-2 header-flex visualizar-xl-lg">
-    <button class="app-tittle">{{ appName }}</button>
-    <button class="btn my-btn" (click)="navigate('home')">Home</button>
-    <button class="btn my-btn" (click)="navigate('my-playlists')">Mis playlists</button>
-    <button class="btn my-btn" (click)="navigate('my-profile')">Mi perfil</button>
+<header class="container-fluid py-2 header-flex-space-between visualizar-xl-lg">
+    <div class="header-flex-start-center">
+        <button class="app-tittle" (click)="navigate('home')">{{ appName }}</button>
+        <button class="btn my-btn" (click)="navigate('home')">Home</button>
+        <button class="btn my-btn" (click)="navigate('my-playlists')">Playlists</button>
+    </div>
+    <div>
+        <button class="btn my-btn" (click)="navigate('my-profile')">
+            <img class="profile-img" [src]="myProfileImg" alt="Mi perfil">
+        </button>
+    </div>
 </header>
 
 
@@ -11,16 +17,17 @@
 <nav class="navbar navbar-expand-lg bg-success visualizar-md-sm">
     <div class="container-fluid">
         <button class="app-tittle">{{ appName }}</button>
-        
-        <button class="navbar-toggler invertir-color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+
+        <button class="navbar-toggler invertir-color" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <button class="btn my-btn nav-link" (click)="navigate('home')">Home</button>
-                <button class="btn my-btn nav-link" (click)="navigate('my-playlists')">Mis playlists</button>
-                <button class="btn my-btn nav-link" (click)="navigate('my-profile')">Mi perfil o inicio de sesion</button>
+                <button class="btn my-btn nav-link" (click)="navigate('my-playlists')">playlists</button>
+                <button class="btn my-btn nav-link" (click)="navigate('my-profile')">Mi perfil</button>
             </div>
         </div>
     </div>

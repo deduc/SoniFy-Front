@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
         this.accessToken = localStorage.getItem(this.accessTokenKey)!;
         this.homeService = homeService;
         
-        this.homeService.loadTokenFromLocalStorage();
+        // this.accessToken = this.homeService.loadTokenFromLocalStorage();
     }
 
     public ngOnInit(): void {
