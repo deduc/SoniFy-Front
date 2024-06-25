@@ -11,12 +11,12 @@ import { HomeService } from './home.service';
 export class HomeComponent implements OnInit {
     private accessToken: string = "";
     private accessTokenKey: string;
-    private homeService: HomeService;
+    // private homeService: HomeService;
     
-    constructor(homeService: HomeService) {
+    // constructor(homeService: HomeService) {
+    constructor() {
         this.accessTokenKey = accessTokenKey;
         this.accessToken = localStorage.getItem(this.accessTokenKey)!;
-        this.homeService = homeService;
         
         // this.accessToken = this.homeService.loadTokenFromLocalStorage();
     }

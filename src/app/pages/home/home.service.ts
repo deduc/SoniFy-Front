@@ -24,7 +24,7 @@ export class HomeService {
         this.httpClient = httpClient;
         this.httpHeaders = { method: "GET", headers: { Authorization: `Bearer ${this.token}` } };
         
-        this.getTokenAndUserData(this.spotifyApiUrl, this.token, this.httpHeaders);
+        // this.getTokenAndUserData(this.spotifyApiUrl, this.token, this.httpHeaders);
     }
 
     public async getTokenAndUserData(spotifyApiUrl: string, token: string, httpHeaders: any): Promise<void> {
@@ -66,6 +66,12 @@ export class HomeService {
 
         return token;
     }
+
+
+
+
+    
+    // todo: mejorar estos 2 metodos de abajo
 
     private getMyUserProfileDataFromAPI2(spotifyApiUrl: string, token: string, httpHeaders: any): Observable<MyUserInfoInterface> {
         return this.httpClient.get(spotifyApiUrl, httpHeaders)

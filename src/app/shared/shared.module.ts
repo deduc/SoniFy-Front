@@ -14,6 +14,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DialogErrorComponent } from './dialog-error/dialog-error.component';
 
+// modulo httpclient para hacer peticiones http
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
     declarations: [
         BuscadorComponent,
@@ -34,6 +37,7 @@ import { DialogErrorComponent } from './dialog-error/dialog-error.component';
         FormsModule,
         MatIconModule,
         MatDialogModule,
+        HttpClientModule,
     ]
 })
 export class SharedModule { }

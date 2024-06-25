@@ -76,7 +76,7 @@ export class TokenService {
 
                 this.dataEmitterService.emitAccessToken(data.access_token);
 
-                this.reloadHomePage();
+                // this.reloadHomePage();
             });
     }
 

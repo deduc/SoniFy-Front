@@ -1,24 +1,30 @@
 import { Injectable } from '@angular/core';
 
 // constantes 
-import { ApiGetClientIdAndSecretEndpoint, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, gotCodeFromUrlKey, loginUrl, oneHourTimeStamp, redirectUriKey } from '../constants/constants';
+import { ApiGetClientIdAndSecretEndpoint, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, gotCodeFromUrlKey, loginUrl, oneHourTimeStamp, redirectUriKey } from 'src/app/core/constants/constants';
 // navegación entre páginas
 import { Router } from '@angular/router';
 // peticiones http
 import { HttpClient } from '@angular/common/http';
 // interfaces
-import { SpotifyAppDataInterface } from '../interfaces/SpotifyAppDataInterface';
+import { SpotifyAppDataInterface } from 'src/app/core/interfaces/SpotifyAppDataInterface';
 // servicios
-import { TokenService } from '../global-services/token.service';
+import { TokenService } from 'src/app/core/global-services/token.service';
+
+// angular material
+import { MatDialog } from '@angular/material/dialog';
+import { DialogErrorComponent } from 'src/app/shared/dialog-error/dialog-error.component';
+
 
 
 @Injectable({
     providedIn: 'root',
 })
-export class HomePageAuthService {
+export class AuthService {
     private router: Router;
     private httpClient: HttpClient
     private tokenService: TokenService;
+    private dialog: MatDialog;
 
     // datos de inicio de sesión
     private clientId: string = "null_clientId";
@@ -26,27 +32,25 @@ export class HomePageAuthService {
     private codeFromUrl: string = "null_codeFromUrl";
     private redirectUri: string = "null_redirectUri";
 
-    // constantes 
+    // constantes. Keys de localstorage
     private accessTokenTimestampKey: string = accessTokenTimestampKey;
     private accessTokenKey: string = accessTokenKey;
     private codeFromUrlKey: string = codeFromUrlKey;
     private gotCodeFromUrlKey: string = gotCodeFromUrlKey;
+    
+    // otras constantes
+    private apiGetClientIdAndSecretEndpoint: string = ApiGetClientIdAndSecretEndpoint;
     private loginUrl: string = loginUrl;
     private oneHourTimeStamp: number = oneHourTimeStamp;
     private spotifyTokenUrl: string = SpotifyTokenUrl;
 
-
-    constructor(router: Router, tokenService: TokenService, httpClient: HttpClient) {
+    constructor(router: Router, tokenService: TokenService, httpClient: HttpClient, dialog: MatDialog) {
         this.router = router;
         this.tokenService = tokenService;
         this.httpClient = httpClient;
-    }
+        this.dialog = dialog;
 
-    /** Pseudo-constructor que asigna algunos valores porque "no da tiempo" en el constructor() */
-    private postConstructor() {
-        console.log("HomePageAuthService.postConstructor() -> Obtengo los codigos de la API, el codigo de la url y la redirect uri.");
-
-        this.getAndSetClientIdsFromAPI(ApiGetClientIdAndSecretEndpoint);
+        this.getAndSetClientIdsFromAPI(this.apiGetClientIdAndSecretEndpoint);
         this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey, this.gotCodeFromUrlKey);
         this.redirectUri = this.getRedirectUri(this.loginUrl);
 
@@ -54,12 +58,35 @@ export class HomePageAuthService {
     }
 
     /**
-     * ! Este método se activa en primer lugar a la hora de gestionar permisos en pages-routing.module
-     * ! Retorna True o False para indicar si el usuario puede activar la ruta
-     * 
-     * Inicializo algunos datos que no puede inicializar el constructor 
-     * y compruebo si el usuario tiene o necesita un access_token
+     * todo: aaaaaaaaaaaaaaaaaaaaaaaa
+     * comprobar code from url, redirect uri, access_token y su caducidad
      */
+    public autenticateUser(): boolean {
+        let semaforo: boolean = false;
+
+        console.log(
+            this.getAndSetClientIdsFromAPI(this.apiGetClientIdAndSecretEndpoint)
+        );
+        
+
+        return semaforo;
+    }
+
+    /** Pseudo-constructor que asigna algunos valores porque "no da tiempo" en el constructor() */
+    private postConstructor() {
+        console.log("AuthService.postConstructor() -> Obtengo los codigos de la API, el codigo de la url y la redirect uri.");
+
+        this.getAndSetClientIdsFromAPI(this.apiGetClientIdAndSecretEndpoint);
+        this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey, this.gotCodeFromUrlKey);
+        this.redirectUri = this.getRedirectUri(this.loginUrl);
+
+        localStorage.setItem(this.codeFromUrlKey, this.codeFromUrl);
+    }
+
+    /* 
+    * Inicializo algunos datos que no puede inicializar el constructor 
+    * y compruebo si el usuario tiene o necesita un access_token
+    */
     public canActivate(): boolean | void {
         // Pseudo-constructor que asigna algunos valores porque "no da tiempo" en el constructor()
         this.postConstructor();
@@ -77,11 +104,11 @@ export class HomePageAuthService {
         let semaforo: boolean = false;
 
         if (!userNeedsNewToken) {
-            console.log("HomePageAuthService.checkIfUserNeedsNewToken() -> hay access_token.");
+            console.log("AuthService.checkIfUserNeedsNewToken() -> hay access_token.");
             semaforo = true;
         }
         else {
-            console.log("HomePageAuthService.checkIfUserNeedsNewToken() -> No hay access_token, procedo a obtenerlo.");
+            console.log("AuthService.checkIfUserNeedsNewToken() -> No hay access_token, procedo a obtenerlo.");
             this.getAccessToken();
         }
 
@@ -112,11 +139,11 @@ export class HomePageAuthService {
         let semaforo: boolean = false;
 
         if (!accessTokenExists || !notMoreThan1Hour) {
-            console.log("HomePageAuthService.checkIfUserNeedsNewToken() -> Usuario necesita un nuevo token");
+            console.log("AuthService.checkIfUserNeedsNewToken() -> Usuario necesita un nuevo token");
             semaforo = true;
         }
         else {
-            console.log("HomePageAuthService.checkIfUserNeedsNewToken() -> Usuario no necesita un nuevo token");
+            console.log("AuthService.checkIfUserNeedsNewToken() -> Usuario no necesita un nuevo token");
             semaforo = false;
         }
 
@@ -198,7 +225,7 @@ export class HomePageAuthService {
 
         // existe el codigo y su valor es 1
         if (gotCodeFromUrl == "1" && typeof (gotCodeFromUrl) != null) {
-            console.log("HomePageAuthService.getcodeFromUrl(): El parámetro code existe en localStorage y su valor es 1.");
+            console.log("AuthService.getcodeFromUrl(): El parámetro code existe en localStorage y su valor es 1.");
 
             codeFromUrl = localStorage.getItem(codeFromUrlKey)!;
         }
@@ -211,7 +238,7 @@ export class HomePageAuthService {
             }
             catch (error) {
                 localStorage.setItem(gotCodeFromUrlKey, "0");
-                alert("ERROR HomePageAuthService.getcodeFromUrl(): No hay código en la URL.\nRedirigiendo a la página de login.");
+                this.openDialog("ERROR AuthService.getcodeFromUrl(): No hay código en la URL.\nRedirigiendo a la página de login.");
                 this.router.navigateByUrl(loginUrl)
             }
         }
@@ -239,10 +266,17 @@ export class HomePageAuthService {
         const redirectUri = localStorage.getItem(redirectUriKey)!;
 
         if (redirectUri == null) {
-            alert("HomePageAuthService.getRedirectUri() -> No hay redirectUri. Te redirijo al login.");
+            let mensajeError: string = "AuthService.getRedirectUri() -> No hay redirectUri. Te redirijo al login.";
+            this.openDialog(mensajeError)
             this.router.navigateByUrl(redirectUrlAux);
         }
 
         return redirectUri;
     }
+
+    private openDialog(error: string): void {
+        let infoError = { data: error }
+        this.dialog.open(DialogErrorComponent, infoError);
+    }
+
 }
