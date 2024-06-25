@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { accessTokenKey, accessTokenTimestampKey, homeUrl, oneHourTimeStamp } from 'src/app/core/constants/constants';
+import { accessTokenKey, accessTokenRefreshKey, accessTokenTimestampKey, homeUrl, oneHourTimeStamp } from 'src/app/core/constants/constants';
 import { SpotifyAppDataInterface } from '../interfaces/SpotifyAppDataInterface';
 import { DataEmitterService } from './data-emitter.service';
+import { Router } from '@angular/router';
 
 
 /**
@@ -11,15 +12,18 @@ import { DataEmitterService } from './data-emitter.service';
  */
 @Injectable({ providedIn: 'root' })
 export class TokenService {
-    private homeUrl: string;
-    private http: HttpClient;
+    private accessTokenKey: string = accessTokenKey;
+    private accessTokenRefreshKey: string = accessTokenRefreshKey;
     private dataEmitterService: DataEmitterService;
+    private homeUrl: string = homeUrl;
+    private http: HttpClient;
+    private router: Router;
 
 
-    constructor(http: HttpClient, dataEmitterService: DataEmitterService) {
-        this.homeUrl = homeUrl;
+    constructor(http: HttpClient, dataEmitterService: DataEmitterService, router: Router) {
         this.http = http;
         this.dataEmitterService = dataEmitterService;
+        this.router = router;
     }
 
     /**
@@ -30,7 +34,6 @@ export class TokenService {
         let requestOptions: any = this.makeRequestOptionsObj(spotifyAppData);
 
         console.log("TokenService.getToken() -> Obtengo el token y lo guardo en localstorage");
-        
         this.getAndSaveToken(spotifyTokenUrl, requestOptions);
     }
 
@@ -71,12 +74,13 @@ export class TokenService {
 
                 console.log("TokenService.getAndSaveToken() access token object:", data);
 
-                localStorage.setItem(accessTokenKey, data.access_token);
+                localStorage.setItem(this.accessTokenKey, data.access_token);
+                localStorage.setItem(this.accessTokenRefreshKey, data.refresh_token);
                 this.setTimeStampWhenAccessTokenWasTaken();
 
                 this.dataEmitterService.emitAccessToken(data.access_token);
 
-                // this.reloadHomePage();
+                this.router.navigateByUrl(this.homeUrl)
             });
     }
 
@@ -87,10 +91,5 @@ export class TokenService {
         let actualTime: string = new Date().getTime().toString();
 
         localStorage.setItem(accessTokenTimestampKey, actualTime);
-    }
-
-    /** Refresco la página Home */
-    private reloadHomePage() {
-        location.href = this.homeUrl;
     }
 }

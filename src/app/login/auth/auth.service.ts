@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 // constantes 
-import { ApiGetClientIdAndSecretEndpoint, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, gotCodeFromUrlKey, loginUrl, oneHourTimeStamp, redirectUriKey } from 'src/app/core/constants/constants';
+import { ApiGetClientIdAndSecretEndpoint, SpotifyTokenUrl, accessTokenKey, accessTokenTimestampKey, codeFromUrlKey, loginUrl, oneHourTimeStamp, redirectUriKey } from 'src/app/core/constants/constants';
 // navegación entre páginas
 import { Router } from '@angular/router';
 // peticiones http
@@ -14,6 +14,8 @@ import { TokenService } from 'src/app/core/global-services/token.service';
 // angular material
 import { MatDialog } from '@angular/material/dialog';
 import { DialogErrorComponent } from 'src/app/shared/dialog-error/dialog-error.component';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ClientIdAndSecretInterface } from './interfaces/ClientIdAndSecretInterface';
 
 
 
@@ -27,8 +29,6 @@ export class AuthService {
     private dialog: MatDialog;
 
     // datos de inicio de sesión
-    private clientId: string = "null_clientId";
-    private clientSecret: string = "null_clientSecret";
     private codeFromUrl: string = "null_codeFromUrl";
     private redirectUri: string = "null_redirectUri";
 
@@ -36,8 +36,7 @@ export class AuthService {
     private accessTokenTimestampKey: string = accessTokenTimestampKey;
     private accessTokenKey: string = accessTokenKey;
     private codeFromUrlKey: string = codeFromUrlKey;
-    private gotCodeFromUrlKey: string = gotCodeFromUrlKey;
-    
+
     // otras constantes
     private apiGetClientIdAndSecretEndpoint: string = ApiGetClientIdAndSecretEndpoint;
     private loginUrl: string = loginUrl;
@@ -49,76 +48,51 @@ export class AuthService {
         this.tokenService = tokenService;
         this.httpClient = httpClient;
         this.dialog = dialog;
-
-        this.getAndSetClientIdsFromAPI(this.apiGetClientIdAndSecretEndpoint);
-        this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey, this.gotCodeFromUrlKey);
-        this.redirectUri = this.getRedirectUri(this.loginUrl);
-
-        localStorage.setItem(this.codeFromUrlKey, this.codeFromUrl);
     }
 
     /**
-     * todo: aaaaaaaaaaaaaaaaaaaaaaaa
      * comprobar code from url, redirect uri, access_token y su caducidad
      */
     public autenticateUser(): boolean {
-        let semaforo: boolean = false;
-
-        console.log(
-            this.getAndSetClientIdsFromAPI(this.apiGetClientIdAndSecretEndpoint)
-        );
-        
-
-        return semaforo;
-    }
-
-    /** Pseudo-constructor que asigna algunos valores porque "no da tiempo" en el constructor() */
-    private postConstructor() {
-        console.log("AuthService.postConstructor() -> Obtengo los codigos de la API, el codigo de la url y la redirect uri.");
-
-        this.getAndSetClientIdsFromAPI(this.apiGetClientIdAndSecretEndpoint);
-        this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey, this.gotCodeFromUrlKey);
+        this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey);
         this.redirectUri = this.getRedirectUri(this.loginUrl);
-
-        localStorage.setItem(this.codeFromUrlKey, this.codeFromUrl);
+        
+        return this.checkToken();
     }
 
-    /* 
-    * Inicializo algunos datos que no puede inicializar el constructor 
-    * y compruebo si el usuario tiene o necesita un access_token
-    */
-    public canActivate(): boolean | void {
-        // Pseudo-constructor que asigna algunos valores porque "no da tiempo" en el constructor()
-        this.postConstructor();
-
-        setTimeout(() => {
-            let semaforo: boolean = this.checkToken();
-            return semaforo;
-        }, 400);
-
-        // return true;
-    }
-
+    /**
+     * Comprobar si el usuario necesita un token (si se invoca este servicio es porque lo necesita pero por si las moscas)
+     * si no tiene token, crearlo
+     */
     private checkToken(): boolean {
-        const userNeedsNewToken: boolean = this.checkIfUserNeedsNewToken(this.accessTokenKey, this.accessTokenTimestampKey, this.oneHourTimeStamp);
-        let semaforo: boolean = false;
+        if (!this.checkIfUserNeedsNewToken(this.accessTokenKey, this.accessTokenTimestampKey, this.oneHourTimeStamp)) {
+            console.log("AuthService.checkToken() -> Sí hay access_token.");
 
-        if (!userNeedsNewToken) {
-            console.log("AuthService.checkIfUserNeedsNewToken() -> hay access_token.");
-            semaforo = true;
+            return true;
         }
         else {
-            console.log("AuthService.checkIfUserNeedsNewToken() -> No hay access_token, procedo a obtenerlo.");
-            this.getAccessToken();
-        }
+            console.log("AuthService.checkToken() -> No hay access_token, procedo a obtenerlo.");
 
-        return semaforo;
+            return this.getAccessTokenFromSpotifyAPI();
+        }
     }
 
-    private getAccessToken(): void {
-        const spotifyAppData: SpotifyAppDataInterface = this.getRequestOptionsObj(this.clientId, this.clientSecret, this.codeFromUrl, this.redirectUri);
+    private getAccessTokenFromSpotifyAPI(): boolean {
+        this.getAndSaveClientDataFromApi(this.apiGetClientIdAndSecretEndpoint)
+            .subscribe((clientData: ClientIdAndSecretInterface) => {
+                let spotifyAppData: SpotifyAppDataInterface = {
+                    clientId: clientData.client_id,
+                    clientSecret: clientData.client_secret,
+                    codeFromUrl: this.codeFromUrl,
+                    redirectUri: this.redirectUri
+                }
 
-        this.tokenService.getToken(this.spotifyTokenUrl, spotifyAppData);
+                console.log("AuthService.getAccessTokenFromSpotifyAPI() ->", spotifyAppData);
+
+                return this.tokenService.getToken(this.spotifyTokenUrl, spotifyAppData);
+            });
+
+        return false;
     }
 
     /**
@@ -139,11 +113,11 @@ export class AuthService {
         let semaforo: boolean = false;
 
         if (!accessTokenExists || !notMoreThan1Hour) {
-            console.log("AuthService.checkIfUserNeedsNewToken() -> Usuario necesita un nuevo token");
+            console.log("AuthService.checkIfUserNeedsNewToken() -> Usuario sí necesita un nuevo access_token");
             semaforo = true;
         }
         else {
-            console.log("AuthService.checkIfUserNeedsNewToken() -> Usuario no necesita un nuevo token");
+            console.log("AuthService.checkIfUserNeedsNewToken() -> Usuario no necesita un nuevo access_token");
             semaforo = false;
         }
 
@@ -180,7 +154,7 @@ export class AuthService {
         return semaforo;
     }
 
-    public getAccessTokenLength(accessTokenKey: string): number {
+    public getAccessTokenFromSpotifyAPILength(accessTokenKey: string): number {
         let tokenLength: number = 0;
 
         try {
@@ -196,70 +170,34 @@ export class AuthService {
     /**
      * HTTP GET Request a mi API para obtener y guardar clientId y clientSecret.
      */
-    private getAndSetClientIdsFromAPI(endpoint: string): void {
-        this.httpClient.get(endpoint)
-            .subscribe(
-                (response) => {
-                    let data: any = response;
-
-                    try {
-                        this.clientId = data.client_id;
-                        this.clientSecret = data.client_secret;
-                    }
-                    catch (error) {
-                        alert("ERROR: No se ha podido obtener los códigos pertinentes de la API. Vuelve al login");
-                        this.router.navigateByUrl(this.loginUrl);
-                    }
-                }
-            );
+    private getAndSaveClientDataFromApi(apiEndpoint: string): Observable<ClientIdAndSecretInterface> {
+        return this.httpClient.get<ClientIdAndSecretInterface>(apiEndpoint);
     }
 
-    /**
-     * Compruebo que exista el parámetro code de la url en localStorage. 
-     * En caso de no existir, lo obtengo de la url y lo guardo en localStorage.
-     */
-    private getcodeFromUrl(codeFromUrlKey: string, gotCodeFromUrlKey: string): string {
-        const queryString = window.location.search;
+    private getcodeFromUrl(codeFromUrlKey: string): string {
+        const urlParams = window.location.search;
         let codeFromUrl: string = "";
-        let gotCodeFromUrl: string | null = localStorage.getItem(gotCodeFromUrlKey)!;
 
-        // existe el codigo y su valor es 1
-        if (gotCodeFromUrl == "1" && typeof (gotCodeFromUrl) != null) {
-            console.log("AuthService.getcodeFromUrl(): El parámetro code existe en localStorage y su valor es 1.");
+        // obtengo el codigo del parametro code de la url
+        codeFromUrl = new URLSearchParams(urlParams).get(codeFromUrlKey)!;
 
-            codeFromUrl = localStorage.getItem(codeFromUrlKey)!;
+        if (codeFromUrl != null && codeFromUrl.length > 1) {
+            localStorage.setItem(codeFromUrlKey, codeFromUrl);
+
+            return codeFromUrl;
         }
-        // podria no existir el codigo o su valor no es 1
         else {
-            try {
-                // obtengo el codigo del parametro code de la url
-                codeFromUrl = new URLSearchParams(queryString).get(codeFromUrlKey)!;
-                localStorage.setItem(gotCodeFromUrlKey, "1");
-            }
-            catch (error) {
-                localStorage.setItem(gotCodeFromUrlKey, "0");
-                this.openDialog("ERROR AuthService.getcodeFromUrl(): No hay código en la URL.\nRedirigiendo a la página de login.");
-                this.router.navigateByUrl(loginUrl)
-            }
+            let mensajeError = "ERROR AuthService.getcodeFromUrl(): No existe el parámetro code en la URL.";
+            // this.openDialog(mensajeError);
+            // this.router.navigateByUrl(this.loginUrl);
+            console.log(mensajeError);
         }
 
         return codeFromUrl;
     }
 
-    /** Creo el objeto necesario para obtener un access_token de la api de spotify */
-    private getRequestOptionsObj(clientId: string, clientSecret: string, codeFromUrl: string, redirectUri: string): SpotifyAppDataInterface {
-        let obj: SpotifyAppDataInterface = {
-            clientId: clientId,
-            clientSecret: clientSecret,
-            codeFromUrl: codeFromUrl,
-            redirectUri: redirectUri
-        }
-
-        return obj;
-    }
-
     /**
-     * Obtener redirectUri de localstorage.
+     * Obtener redirectUri de localstorage (se obtiene en LoginComponent y con una llamada a SoniFy-API).
      * Si no se puede, mando al usuario de vuelta a /login page
      */
     private getRedirectUri(redirectUrlAux: string): string {
@@ -278,5 +216,4 @@ export class AuthService {
         let infoError = { data: error }
         this.dialog.open(DialogErrorComponent, infoError);
     }
-
 }

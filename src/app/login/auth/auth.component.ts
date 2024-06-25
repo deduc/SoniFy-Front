@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { homeUrl } from 'src/app/core/constants/constants';
 
 @Component({
     selector: 'app-auth',
@@ -8,20 +11,23 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
     private authService: AuthService;
+    private homeUrl: string = homeUrl;
+    private router: Router;
     
-    constructor(authService: AuthService) {
+    constructor(authService: AuthService, router: Router) {
         // localStorage.clear();
         this.authService = authService;
+        this.router = router;
     }
 
     ngOnInit() {
-        let semaforo: boolean = false;
+        console.log("AuthComponent -> comprobar autenticidad del usuario");
         
-        // TODO
-        semaforo = this.authService.autenticateUser();
+        let semaforo: boolean = this.authService.autenticateUser();
 
-        console.log(semaforo);
-        
+        if (semaforo == true) {
+            this.router.navigateByUrl(this.homeUrl)
+        }
     }
 
 }

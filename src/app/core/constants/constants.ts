@@ -22,7 +22,6 @@ export const RedirectUri: string = "http://localhost:4200/me/home";
 export const SpotifyAuthUrl: URL = new URL("https://accounts.spotify.com/authorize");
 export const SpotifyTokenUrl: string = "https://accounts.spotify.com/api/token";
 
-
 //* Spotify Endpoints
 export const SpotifyMe: string = "https://api.spotify.com/v1/me";
 export const SpotifySearch: string = "https://api.spotify.com/v1/search";
@@ -32,13 +31,13 @@ export const SpotifyTopAlbums: string = "https://api.spotify.com/v1/me/albums";
 
 //* LocalStorage keys
 export const accessTokenKey: string = "access_token";
+export const accessTokenRefreshKey: string = "refresh_access_token";
 export const accessTokenTimestampKey: string = "accessTokenTimestamp";
 export const clientIdKey: string = "clientId";
 export const clientSecretKey: string = "clientSecret";
 export const codeVerifierKey: string = "code_verifier";
 //! En la url hay un parámetro llamado code. Importante no cambiar su nombre.
 export const codeFromUrlKey: string = "code";
-export const gotCodeFromUrlKey: string = "gotCodeFromUrl";
 export const lastSearchedKey: string = "lastSearch";
 export const redirectUriKey: string = "redirectUri";
 export const verifierKey: string = "verifier";
@@ -47,6 +46,7 @@ export const verifierKey: string = "verifier";
 //* Rutas de la aplicación
 export const homeUrl: string = "/me/home";
 export const loginUrl: string = "/login";
+export const loginAuthUrl: string = "/login/auth";
 export const myArtistsUrl: string = "/my-artists"
 
 
