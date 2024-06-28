@@ -38,6 +38,28 @@ export class TokenService {
     }
 
     /**
+     * Hago una peticion HTTP POST al endpoint de spotify, 
+     * obtengo un token de acceso de tipo "Authorization Code"
+     * y refresco la página una vez obtenido y guardado el token de acceso.
+     */
+    private getAndSaveToken(url: string, requestOptions: any): void {
+        this.http.post(url, requestOptions.body, { headers: requestOptions.headers, })
+            .subscribe(response => {
+                let data: any = { ...response };
+
+                console.log("TokenService.getAndSaveToken() access token object:", data);
+
+                localStorage.setItem(this.accessTokenKey, data.access_token);
+                localStorage.setItem(this.accessTokenRefreshKey, data.refresh_token);
+                this.setTimeStampWhenAccessTokenWasTaken();
+
+                this.dataEmitterService.emitAccessToken(data.access_token);
+
+                this.router.navigateByUrl(this.homeUrl)
+            });
+    }
+
+    /**
      * Creo un objeto que contiene el header y body necesarios 
      * para hacer una llamada HTTP POST al endpoint de spotify /api/token
      */
@@ -60,28 +82,6 @@ export class TokenService {
         };
 
         return requestOptions;
-    }
-
-    /**
-     * Hago una peticion HTTP POST al endpoint de spotify, 
-     * obtengo un token de acceso de tipo "Authorization Code"
-     * y refresco la página una vez obtenido y guardado el token de acceso.
-     */
-    private getAndSaveToken(url: string, requestOptions: any): void {
-        this.http.post(url, requestOptions.body, { headers: requestOptions.headers, })
-            .subscribe(response => {
-                let data: any = { ...response };
-
-                console.log("TokenService.getAndSaveToken() access token object:", data);
-
-                localStorage.setItem(this.accessTokenKey, data.access_token);
-                localStorage.setItem(this.accessTokenRefreshKey, data.refresh_token);
-                this.setTimeStampWhenAccessTokenWasTaken();
-
-                this.dataEmitterService.emitAccessToken(data.access_token);
-
-                this.router.navigateByUrl(this.homeUrl)
-            });
     }
 
     /**

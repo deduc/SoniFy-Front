@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 
 import { appName } from './core/constants/constants';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
 
 
 @Component({

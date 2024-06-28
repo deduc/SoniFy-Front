@@ -1,10 +1,10 @@
 export interface MyUserInfoInterface {
-    displayName: string,
-    externalUrl: string,
     ApiEndpointUserData: string,
+    country: string,
+    displayName: string,
+    email: string
+    externalUrl: string,
+    followers: number,
     Userid: string,
     profileImageUrl: string,
-    followers: number,
-    country: string,
-    email: string
 }

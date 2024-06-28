@@ -56,7 +56,7 @@ export class AuthService {
     public autenticateUser(): boolean {
         this.codeFromUrl = this.getcodeFromUrl(this.codeFromUrlKey);
         this.redirectUri = this.getRedirectUri(this.loginUrl);
-        
+
         return this.checkToken();
     }
 
@@ -75,24 +75,6 @@ export class AuthService {
 
             return this.getAccessTokenFromSpotifyAPI();
         }
-    }
-
-    private getAccessTokenFromSpotifyAPI(): boolean {
-        this.getAndSaveClientDataFromApi(this.apiGetClientIdAndSecretEndpoint)
-            .subscribe((clientData: ClientIdAndSecretInterface) => {
-                let spotifyAppData: SpotifyAppDataInterface = {
-                    clientId: clientData.client_id,
-                    clientSecret: clientData.client_secret,
-                    codeFromUrl: this.codeFromUrl,
-                    redirectUri: this.redirectUri
-                }
-
-                console.log("AuthService.getAccessTokenFromSpotifyAPI() ->", spotifyAppData);
-
-                return this.tokenService.getToken(this.spotifyTokenUrl, spotifyAppData);
-            });
-
-        return false;
     }
 
     /**
@@ -124,34 +106,22 @@ export class AuthService {
         return semaforo;
     }
 
-    /**
-     * Busco en localstorace el valor de la clave access_token
-     */
-    private verifyAccessTokenFromLocalStorage(accessTokenKey: string): boolean {
-        let semaforo: boolean = false;
-        let token: string = localStorage.getItem(accessTokenKey)!;
+    private getAccessTokenFromSpotifyAPI(): boolean {
+        this.httpClient.get(this.apiGetClientIdAndSecretEndpoint)
+            .subscribe((res: any) => {
+                let spotifyAppData: SpotifyAppDataInterface = {
+                    clientId: res.client_id,
+                    clientSecret: res.client_secret,
+                    codeFromUrl: this.codeFromUrl,
+                    redirectUri: this.redirectUri
+                }
 
-        if (token && token.length > 0) { semaforo = true; }
+                console.log("AuthService.getAccessTokenFromSpotifyAPI() ->", spotifyAppData);
 
-        return semaforo;
-    }
+                return this.tokenService.getToken(this.spotifyTokenUrl, spotifyAppData);
+            });
 
-    /**
-     * Comprobar que el día y la hora actual del sistema no superan en 1 hora (3600 segundos) el momento
-     * donde se consiguió el token de acceso.
-     */
-    private verifyAccessTime(accessTokenTimestampKey: string, oneHourTimeStamp: number): boolean {
-        let semaforo: boolean = false;
-        let oldTime: number = parseInt(localStorage.getItem(accessTokenTimestampKey)!);
-        let actualTime: number = new Date().getTime();
-
-        // Usuario loggeado desde hace menos de 1 hora.
-        if ((actualTime - oldTime) <= oneHourTimeStamp) {
-            semaforo = true;
-            console.log("HomeService.verifyAccessTime() -> semaforo =", semaforo, ". Usuario loggeado desde hace menos de 1 hora.");
-        }
-
-        return semaforo;
+        return false;
     }
 
     public getAccessTokenFromSpotifyAPILength(accessTokenKey: string): number {
@@ -165,13 +135,6 @@ export class AuthService {
         }
 
         return tokenLength;
-    }
-
-    /**
-     * HTTP GET Request a mi API para obtener y guardar clientId y clientSecret.
-     */
-    private getAndSaveClientDataFromApi(apiEndpoint: string): Observable<ClientIdAndSecretInterface> {
-        return this.httpClient.get<ClientIdAndSecretInterface>(apiEndpoint);
     }
 
     private getcodeFromUrl(codeFromUrlKey: string): string {
@@ -210,6 +173,37 @@ export class AuthService {
         }
 
         return redirectUri;
+    }
+
+
+    /**
+     * Busco en localstorace el valor de la clave access_token
+     */
+    private verifyAccessTokenFromLocalStorage(accessTokenKey: string): boolean {
+        let semaforo: boolean = false;
+        let token: string = localStorage.getItem(accessTokenKey)!;
+
+        if (token && token.length > 0) { semaforo = true; }
+
+        return semaforo;
+    }
+
+    /**
+     * Comprobar que el día y la hora actual del sistema no superan en 1 hora (3600 segundos) el momento
+     * donde se consiguió el token de acceso.
+     */
+    private verifyAccessTime(accessTokenTimestampKey: string, oneHourTimeStamp: number): boolean {
+        let semaforo: boolean = false;
+        let oldTime: number = parseInt(localStorage.getItem(accessTokenTimestampKey)!);
+        let actualTime: number = new Date().getTime();
+
+        // Usuario loggeado desde hace menos de 1 hora.
+        if ((actualTime - oldTime) <= oneHourTimeStamp) {
+            semaforo = true;
+            console.log("HomeService.verifyAccessTime() -> semaforo =", semaforo, ". Usuario loggeado desde hace menos de 1 hora.");
+        }
+
+        return semaforo;
     }
 
     private openDialog(error: string): void {

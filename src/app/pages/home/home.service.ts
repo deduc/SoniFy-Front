@@ -1,9 +1,9 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { SpotifyMe, accessTokenKey } from '../../core/constants/constants';
 import { MyUserInfoInterface } from 'src/app/core/interfaces/MyUserInfoInterface';
-import { HttpClient, HttpEvent } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -11,43 +11,49 @@ import { Observable, map } from 'rxjs';
 })
 export class HomeService {
     public spotifyApiUrl: string = SpotifyMe;
-    public myUserInfoObj: MyUserInfoInterface;
+
+    private userInfoSubject = new BehaviorSubject<MyUserInfoInterface | null>(null);
+    public userInfo$ = this.userInfoSubject.asObservable();
+
+    public httpHeaders: any;
 
     private accessTokenKey: string = accessTokenKey;
     private token: string;
     private httpClient: HttpClient;
-    private httpHeaders: any;
 
     constructor(httpClient: HttpClient) {
         this.token = localStorage.getItem(accessTokenKey)!;
-        this.myUserInfoObj = { displayName: "", externalUrl: "", ApiEndpointUserData: "", Userid: "", profileImageUrl: "", followers: 0, country: "", email: "" };
+
+        // Inicializar myUserInfoSubject
+        let myUserInfo = { displayName: "", externalUrl: "", ApiEndpointUserData: "", Userid: "", profileImageUrl: "", followers: 0, country: "", email: "" };
+        this.userInfoSubject.next(myUserInfo);
+
         this.httpClient = httpClient;
         this.httpHeaders = { method: "GET", headers: { Authorization: `Bearer ${this.token}` } };
-        
-        // this.getTokenAndUserData(this.spotifyApiUrl, this.token, this.httpHeaders);
+
+        this.loadUserDataFromAPI(this.spotifyApiUrl, this.httpHeaders);
+        this.loadTokenFromLocalStorage();
     }
 
-    public async getTokenAndUserData(spotifyApiUrl: string, token: string, httpHeaders: any): Promise<void> {
-        console.log("HomeService.getTokenAndUserData() -> Obtengo el token de localstorage y los datos del perfil del usuario");
+    public loadUserDataFromAPI(spotifyApiUrl: string, httpHeaders: any): void {
+        console.log("HomeService.loadUserDataFromAPI() -> Obtengo el token de localstorage y los datos del perfil del usuario");
 
-        this.loadTokenFromLocalStorage();
-
-        await this.getMyUserProfileDataFromAPI(spotifyApiUrl, token, httpHeaders)
-            .subscribe(response => {
-                console.log("HomeService.getTokenAndUserData() -> Obtener información del usuario", response);
+        this.httpClient.get(spotifyApiUrl, httpHeaders)
+            .subscribe((response: any) => {
+                console.log("HomeService.loadUserDataFromAPI() -> Obtener información del usuario", response);
 
                 let userInfoObj: MyUserInfoInterface = {
                     displayName: response.display_name,
                     externalUrl: response.external_urls.spotify,
                     ApiEndpointUserData: response.href,
                     Userid: response.id,
-                    profileImageUrl: response.images[1]?.url || '',
+                    profileImageUrl: response.images[1].url,
                     followers: response.followers.total,
                     country: response.country,
                     email: response.email
                 };
 
-                this.myUserInfoObj = userInfoObj;
+                this.userInfoSubject.next(userInfoObj);
             });
     }
 
@@ -67,35 +73,7 @@ export class HomeService {
         return token;
     }
 
-
-
-
-    
-    // todo: mejorar estos 2 metodos de abajo
-
-    private getMyUserProfileDataFromAPI2(spotifyApiUrl: string, token: string, httpHeaders: any): Observable<MyUserInfoInterface> {
-        return this.httpClient.get(spotifyApiUrl, httpHeaders)
-            .pipe(
-                map((response: any) => {
-                    console.log("HomeService.getMyUserProfileDataFromAPI() -> ", response);
-
-                    let userInfoObj: MyUserInfoInterface = {
-                        displayName: response.display_name,
-                        externalUrl: response.external_urls.spotify,
-                        ApiEndpointUserData: response.href,
-                        Userid: response.id,
-                        profileImageUrl: response.images[1]?.url || '',
-                        followers: response.followers.total,
-                        country: response.country,
-                        email: response.email
-                    };
-
-                    return userInfoObj;
-                })
-            );
-    }
-
-    private getMyUserProfileDataFromAPI(spotifyApiUrl: string, token: string, httpHeaders: any): Observable<any> {
+    public getMyUserProfileDataFromAPI(spotifyApiUrl: string, httpHeaders: any): Observable<any> {
         return this.httpClient.get<any>(spotifyApiUrl, httpHeaders);
     }
 }

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { appName } from 'src/app/core/constants/constants';
 import { DataEmitterService } from '../../core/global-services/data-emitter.service';
+import { HomeService } from '../../pages/home/home.service';
+import { MyUserInfoInterface } from 'src/app/core/interfaces/MyUserInfoInterface';
 
 @Component({
     selector: 'shared-header',
@@ -13,11 +15,13 @@ export class HeaderComponent implements OnInit {
     public router: Router;
     public appName: string = appName;
     public myProfileImg: string = "";
-    
-    private dataEmitterService: DataEmitterService;
 
-    constructor(router: Router, dataEmitterService: DataEmitterService) {
+    private dataEmitterService: DataEmitterService;
+    private homeService: HomeService;
+
+    constructor(router: Router, dataEmitterService: DataEmitterService, homeService: HomeService) {
         this.router = router;
+        this.homeService = homeService;
         this.dataEmitterService = dataEmitterService;
     }
 
@@ -30,10 +34,9 @@ export class HeaderComponent implements OnInit {
     }
 
     private getMyProfileImage() {
-        setTimeout(() => {
-            // todo: ya no existe homeservice, hazlo de otra manera porque no mola que los componentes invoquen cosas raras de fuera
-            // console.log(this.homeService.myUserInfoObj.profileImageUrl);
-            // this.myProfileImg = this.homeService.myUserInfoObj.profileImageUrl;
-        }, 200);
+        this.homeService.userInfo$.subscribe((userData: any) => {
+            let userDataAux: MyUserInfoInterface = { ...userData };
+            this.myProfileImg = userDataAux.profileImageUrl;
+        });
     }
 }

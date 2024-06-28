@@ -5,28 +5,22 @@ import { DataEmitterService } from 'src/app/core/global-services/data-emitter.se
 
 
 @Component({
-  selector: 'user-top-albums-album-card',
-  templateUrl: './album-card.component.html',
-  styleUrls: ['./album-card.component.css']
+    selector: 'user-playlists-cards',
+    templateUrl: './playlists-card.component.html',
+    styleUrls: ['./playlists-card.component.css']
 })
-export class AlbumCardComponent implements OnInit {
-    @Input()
+export class PlaylistsCardComponent implements OnInit {
     public albumCards: AlbumCardsInterface[] = [
-        // {grupo: "Linkin Park Linkin Park Linkin Park", img: "https://picsum.photos/id/1021/400/400", spotifyLink: "spotifyLink1", titulo: "One More Light One More Light One More Light", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "jon bobi ", img: "https://picsum.photos/id/1025/400/400", spotifyLink: "spotifyLink3", titulo: "its my life nigga", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "Linkin Park ", img: "https://picsum.photos/id/1024/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1023/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "Linkin Park ", img: "https://picsum.photos/id/1022/400/400", spotifyLink: "spotifyLink2", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1029/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "jon bobi ", img: "https://picsum.photos/id/1028/400/400", spotifyLink: "spotifyLink3", titulo: "its my life nigga", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "Linkin Park ", img: "https://picsum.photos/id/1031/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "gambas con fimosis", img: "https://picsum.photos/id/1041/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);"},
-        // {grupo: "Linkin Park ", img: "https://picsum.photos/id/1033/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);"},
+        { grupo: "Linkin Park Linkin Park Linkin Park", img: "https://picsum.photos/id/1021/400/400", spotifyLink: "spotifyLink1", titulo: "One More Light One More Light One More Light", css: "background-color: rgb(255,255,255);" },
+        { grupo: "jon bobi ", img: "https://picsum.photos/id/1025/400/400", spotifyLink: "spotifyLink3", titulo: "its my life nigga", css: "background-color: rgb(255,255,255);" },
+        { grupo: "Linkin Park ", img: "https://picsum.photos/id/1024/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);" },
+        { grupo: "gambas con fimosis", img: "https://picsum.photos/id/1041/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);" },
+        { grupo: "Linkin Park ", img: "https://picsum.photos/id/1033/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);" },
     ]
-    
+
     // Lista que se carga en el html
     public loadedAlbumCards: AlbumCardsInterface[] = [];
-    
+
     private contador: number = 0;
     private dataEmitterService: DataEmitterService;
 
@@ -34,7 +28,7 @@ export class AlbumCardComponent implements OnInit {
     constructor(dataEmitterService: DataEmitterService) {
         this.dataEmitterService = dataEmitterService;
     }
-    
+
     ngOnInit() {
         setTimeout(() => {
             this.searchTopAlbums();
@@ -43,11 +37,11 @@ export class AlbumCardComponent implements OnInit {
         }, 200);
     }
 
-    public navigateAlbum(link: string){
+    public navigateAlbum(link: string) {
         alert(1);
     }
 
-    public playAlbum(){
+    public playAlbum() {
         alert(2);
     }
 
@@ -67,39 +61,39 @@ export class AlbumCardComponent implements OnInit {
 
     private setCardCssProperty(imageObject: AlbumCardsInterface, albumCardsIndex: number): void {
         let imgElement = new Image();
-        
+
         // Esto es para algo de las CORS
         imgElement.crossOrigin = "Anonymous";
-    
+
         imgElement.onload = () => {
-            this.setCss(imgElement, albumCardsIndex);
+            this.setCssBgColor(imgElement, albumCardsIndex);
         };
-        
+
         imgElement.src = imageObject.img;
     }
 
     /**
      * Cargar una imagen para obtener el color de un píxel específico de esa imagen
      */
-    private setCss(imgElement: HTMLImageElement, albumCardsIndex: number): string {
+    private setCssBgColor(imgElement: HTMLImageElement, albumCardsIndex: number): string {
         let canvas: HTMLCanvasElement;
         let ctx: CanvasRenderingContext2D;
-    
+
         let pixelData: Uint8ClampedArray;
         let color: string;
-    
+
         let x: number = imgElement.width / 2;
         let y: number = imgElement.width / 2;
 
         let colours: number[];
-    
+
         canvas = document.createElement('canvas');
         canvas.width = imgElement.width;
         canvas.height = imgElement.height;
-    
+
         ctx = canvas.getContext('2d')!;
         ctx.drawImage(imgElement, 0, 0);
-    
+
         pixelData = ctx.getImageData(x, y, 1, 1).data;
         color = `rgb(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
 
@@ -109,7 +103,7 @@ export class AlbumCardComponent implements OnInit {
 
         // Cambio la propiedad css del album del cual se está obteniendo el color
         this.albumCards[albumCardsIndex].css = "background-color: rgb(" + colours + ");";
-    
+
         return color;
     }
 

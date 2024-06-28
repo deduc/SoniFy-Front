@@ -1,21 +1,19 @@
 <!-- ! Cabecera para dispositivos lg y xl -->
 <header class="container-fluid py-2 header-flex-space-between visualizar-xl-lg">
     <div class="header-flex-start-center">
-        <button class="app-tittle" (click)="navigate('home')">{{ appName }}</button>
-        <button class="btn my-btn" (click)="navigate('home')">Home</button>
-        <button class="btn my-btn" (click)="navigate('my-playlists')">Playlists</button>
+        <button class="app-tittle" (click)="navigate('me/home')">{{ appName }}</button>
+        <button class="my-btn btn" (click)="navigate('me/home')">Home</button>
+        <button class="my-btn btn" (click)="navigate('me/my-playlists')">Playlists</button>
     </div>
-    <div>
-        <button class="btn my-btn" (click)="navigate('my-profile')">
-            <img class="profile-img" [src]="myProfileImg" alt="Mi perfil">
-        </button>
-    </div>
+    <button class="my-profile-btn" (click)="navigate('me/my-profile')">
+        <img class="profile-img" [src]="myProfileImg" alt="profile-image">
+    </button>
 </header>
 
 
 <!-- ! Cabecera para dispositivos md sm xs -->
-<nav class="navbar navbar-expand-lg bg-success visualizar-md-sm">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg visualizar-md-sm">
+    <section class="container-fluid">
         <button class="app-tittle">{{ appName }}</button>
 
         <button class="navbar-toggler invertir-color" type="button" data-bs-toggle="collapse"
@@ -23,12 +21,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <button class="btn my-btn nav-link" (click)="navigate('home')">Home</button>
-                <button class="btn my-btn nav-link" (click)="navigate('my-playlists')">playlists</button>
-                <button class="btn my-btn nav-link" (click)="navigate('my-profile')">Mi perfil</button>
-            </div>
-        </div>
-    </div>
+        <article class="collapse navbar-collapse navbar-nav" id="navbarNavAltMarkup">
+            <button class="btn my-btn nav-link" (click)="navigate('me/home')">Home</button>
+            <button class="btn my-btn nav-link" (click)="navigate('me/my-playlists')">playlists</button>
+            <button class="btn my-btn nav-link" (click)="navigate('me/my-profile')">Mi perfil</button>
+        </article>
+    </section>
 </nav>

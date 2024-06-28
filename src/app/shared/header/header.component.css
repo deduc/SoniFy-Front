@@ -11,6 +11,7 @@ nav {
 
     background-color: rgba(255, 255, 255, 0);
     border: none;
+    transition: 0.2s;
 }
 
 .app-tittle:hover {
@@ -37,15 +38,19 @@ nav {
 }
 
 .my-btn {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
     color: white;
+    font-size: 16px;
 }
-
 .my-btn:hover {
-    background-color: #20a000;
+    background-color: rgb(0, 255, 26);
+    color: black;
 }
 
-.my-btn:focus {
-    color: white;
+.my-profile-btn {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
 }
 
 .sm-nav-button {
