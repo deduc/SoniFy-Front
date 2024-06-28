@@ -27,7 +27,7 @@ export class UserTopArtistsComponent implements OnInit {
     constructor(userTopArtistsService: UserTopArtistsService, router: Router) {
         this.userTopArtistsService = userTopArtistsService;
         this.router = router;
-        this.accessToken = localStorage.getItem(accessTokenKey)!;
+        this.accessToken = localStorage.getItem(this.accessTokenKey)!;
     }
 
     public async ngOnInit(): Promise<void> {
@@ -48,14 +48,6 @@ export class UserTopArtistsComponent implements OnInit {
         this.router.navigateByUrl(this.myArtistsUrl);
     }
 
-    public async loadMoreAlbumCards(moreArtists: number): Promise<void> {
-        this.artistCardInfo = await this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
-    }
-
-    // =============================================
-    // ===============Métodos privados==============
-    // =============================================
-
     private getRandomElementsFromList(list: ArtistCardInfoInterface[], numberOfElements: number): ArtistCardInfoInterface[] {
         let returnList: ArtistCardInfoInterface[] = [];
         let randomIndex: number = 0;
@@ -72,9 +64,30 @@ export class UserTopArtistsComponent implements OnInit {
 
     private async getTopArtistsFromApi(): Promise<ArtistCardInfoInterface[]> {
         console.log("UserTopArtistsComponent.getTopArtistsFromApi() -> Invoco a this.userTopArtistsService.fetchUserTopArtistsList()");
+        let artistInfoList: ArtistCardInfoInterface[] = [];
+        let artistInfoAux: ArtistCardInfoInterface;
 
         try {
-            const artistInfoList: ArtistCardInfoInterface[] = await this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
+            // const artistInfoList: ArtistCardInfoInterface[] = await this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
+            this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken)
+                .subscribe(response => {
+                    let data: any = response
+
+                    console.log("UserTopArtistsService.fetchUserTopArtistsList() ->", data);
+
+                    // Creo los objetos ArtistCardInfoInterface y los añado a la lista
+                    for (let index = 0; index < data.items.length; index++) {
+                        artistInfoAux = {
+                            name: data.items[index].name,
+                            img: data.items[index].images[0].url,
+                            spotify_url: data.items[index].external_urls.spotify,
+                            apiId: data.items[index].id,
+                            css: ""
+                        };
+
+                        artistInfoList.push(artistInfoAux);
+                    }
+                });
             return artistInfoList;
         }
         catch (error) {

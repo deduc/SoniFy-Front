@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ArtistCardInfoInterface } from './Interfaces/ArtistCardInfoInterface';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -17,35 +18,15 @@ export class UserTopArtistsService {
     /**
      * Hago petición a la api para obtener información sobre los top artistas de spotify del usuario.
      */
-    public async fetchUserTopArtistsList(apiUrl: string, token: string): Promise<ArtistCardInfoInterface[]> {
-        const headers = new HttpHeaders({"Authorization": "Bearer " + token});
+    public fetchUserTopArtistsList(apiUrl: string, token: string): Observable<any> {
+        const headers = new HttpHeaders({ "Authorization": "Bearer " + token });
         let artistInfoList: ArtistCardInfoInterface[] = [];
         let artistInfoAux: ArtistCardInfoInterface;
 
         // Añado a la url el parámetro limit=6 para obtener como máximo 6 artistas tras hacer la petición a la api
         // apiUrl = apiUrl + `?limit=6`;
-        
+
         // Peticion api para obtener informacion sobre los artistas
-        this.httpClient.get(apiUrl, { headers: headers })
-        .subscribe(response => {
-            let data: any = response
-
-            console.log("UserTopArtistsService.fetchUserTopArtistsList() ->", data);
-            
-            // Creo los objetos ArtistCardInfoInterface y los añado a la lista
-            for (let index = 0; index < data.items.length; index++) {
-                artistInfoAux = {
-                    name: data.items[index].name,
-                    img: data.items[index].images[0].url,
-                    spotify_url: data.items[index].external_urls.spotify,
-                    apiId: data.items[index].id,
-                    css: ""
-                };
-
-                artistInfoList.push(artistInfoAux);
-            }
-        });
-
-        return await artistInfoList;
+        return this.httpClient.get(apiUrl, { headers: headers });
     }
 }
