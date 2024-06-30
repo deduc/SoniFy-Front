@@ -6,14 +6,14 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ArtistCardInfoInterface } from 'src/app/pages/home/components/user-top-artists/Interfaces/ArtistCardInfoInterface';
 import { accessTokenKey } from '../constants/constants';
 import { TopArtistListInterface } from '../interfaces/TopArtistListInterface';
-import { PlaylistDataInterface } from '../interfaces/PlaylistDataInterface';
+import { AlbumDataInterface } from '../interfaces/AlbumDataInterface';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class DataEmitterService {
-    public albumInfoList = new BehaviorSubject<PlaylistDataInterface[]>([]);
+    public albumInfoList = new BehaviorSubject<AlbumDataInterface[]>([]);
     public datosAlbumInfoList = this.albumInfoList.asObservable();
 
     public topArtistList = new BehaviorSubject<TopArtistListInterface>({ href: "", limit: 0, next: "", total: 0, items: [] });
@@ -32,7 +32,7 @@ export class DataEmitterService {
     // ========Emisores========
     // ========================
 
-    public emitAlbumInterface(albumInfoList: PlaylistDataInterface[]) {
+    public emitAlbumInterface(albumInfoList: AlbumDataInterface[]) {
         // console.log("DataEmitterService.emitAlbumInterface() ->", albumInfoList);
         this.albumInfoList.next(albumInfoList);
     }
