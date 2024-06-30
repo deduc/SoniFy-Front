@@ -1,4 +1,19 @@
 <section class="text-white">
     <h2>Tus playlists</h2>
-    <user-playlists-cards></user-playlists-cards>
+
+    <article class="flex-row-flex-start">
+        <a href="" target="_blank">
+            <div class="flex-column-space-evenly-center">
+                <!-- heart icon -->
+                <span>&#10084;</span>
+                <p>Tus canciones favoritas</p>
+            </div>
+        </a>
+
+        <div class="playlist-container" *ngFor="let item of userPlaylists$ | async">
+            <img src={{item.imageUrl}} alt="">
+            <p class="my-3">{{item.name}}</p>
+            <p>{{item.description}}</p>
+        </div>
+    </article>
 </section>

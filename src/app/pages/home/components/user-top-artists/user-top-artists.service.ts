@@ -17,8 +17,9 @@ export class UserTopArtistsService {
 
     /**
      * Hago petición a la api para obtener información sobre los top artistas de spotify del usuario.
+     * getTopArtists
      */
-    public fetchUserTopArtistsList(apiUrl: string, token: string): Observable<any> {
+    public getTopArtists(apiUrl: string, token: string): Observable<any> {
         const headers = new HttpHeaders({ "Authorization": "Bearer " + token });
         let artistInfoList: ArtistCardInfoInterface[] = [];
         let artistInfoAux: ArtistCardInfoInterface;

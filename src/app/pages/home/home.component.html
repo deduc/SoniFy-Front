@@ -5,10 +5,19 @@
 
     <main class="container-fluid">
         <home-user-top-artists></home-user-top-artists>
-        <home-user-playlists></home-user-playlists>
+        <div class="row">
+            <div class="col-lg-6">
+                <home-user-playlists></home-user-playlists>
+            </div>
+            <div class="col-lg-6">
+                <home-user-albums></home-user-albums>
+            </div>
+        </div>
     </main>
 
-    <shared-footer></shared-footer>
+    <footer>
+        <shared-footer></shared-footer>
 
-    <shared-audio-reproducer-bar></shared-audio-reproducer-bar>
+        <shared-audio-reproducer-bar></shared-audio-reproducer-bar>
+    </footer>
 </div>

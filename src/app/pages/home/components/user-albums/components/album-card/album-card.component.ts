@@ -4,19 +4,15 @@ import { AlbumCardsInterface } from './interfaces/AlbumCardsInterface';
 import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 
 
+
 @Component({
-    selector: 'user-playlists-cards',
-    templateUrl: './playlists-card.component.html',
-    styleUrls: ['./playlists-card.component.css']
+    selector: 'home-album-cards',
+    templateUrl: './album-card.component.html',
+    styleUrls: ['./album-card.component.css']
 })
-export class PlaylistsCardComponent implements OnInit {
-    public albumCards: AlbumCardsInterface[] = [
-        { grupo: "Linkin Park Linkin Park Linkin Park", img: "https://picsum.photos/id/1021/400/400", spotifyLink: "spotifyLink1", titulo: "One More Light One More Light One More Light", css: "background-color: rgb(255,255,255);" },
-        { grupo: "jon bobi ", img: "https://picsum.photos/id/1025/400/400", spotifyLink: "spotifyLink3", titulo: "its my life nigga", css: "background-color: rgb(255,255,255);" },
-        { grupo: "Linkin Park ", img: "https://picsum.photos/id/1024/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);" },
-        { grupo: "gambas con fimosis", img: "https://picsum.photos/id/1041/400/400", spotifyLink: "spotifyLink3", titulo: "sexo con abuelas putas", css: "background-color: rgb(255,255,255);" },
-        { grupo: "Linkin Park ", img: "https://picsum.photos/id/1033/400/400", spotifyLink: "spotifyLink3", titulo: "One More Light", css: "background-color: rgb(255,255,255);" },
-    ]
+export class AlbumCardComponent implements OnInit {
+    @Input()
+    public playlistCards: AlbumCardsInterface[] = []
 
     // Lista que se carga en el html
     public loadedAlbumCards: AlbumCardsInterface[] = [];
@@ -31,7 +27,7 @@ export class PlaylistsCardComponent implements OnInit {
 
     ngOnInit() {
         setTimeout(() => {
-            this.searchTopAlbums();
+            this.doGetUserAlbums();
             this.setAlbumCardsCssProperty();
             this.loadAlbumCards(5);
         }, 200);
@@ -45,7 +41,8 @@ export class PlaylistsCardComponent implements OnInit {
         alert(2);
     }
 
-    public searchTopAlbums() {
+    public doGetUserAlbums() {
+        // todo
         // Me suscribo al emisor de albumes de dataEmitterService
         // this.dataEmitterService.topArtistList.subscribe();
     }
@@ -54,8 +51,8 @@ export class PlaylistsCardComponent implements OnInit {
      * Cambio la propiedad css de cada elemento de la lista de albums.
      */
     private setAlbumCardsCssProperty(): void {
-        for (let index = 0; index < this.albumCards.length; index++) {
-            this.setCardCssProperty(this.albumCards[index], index);
+        for (let index = 0; index < this.playlistCards.length; index++) {
+            this.setCardCssProperty(this.playlistCards[index], index);
         }
     }
 
@@ -102,7 +99,7 @@ export class PlaylistsCardComponent implements OnInit {
         // console.log(colours);
 
         // Cambio la propiedad css del album del cual se está obteniendo el color
-        this.albumCards[albumCardsIndex].css = "background-color: rgb(" + colours + ");";
+        this.playlistCards[albumCardsIndex].css = "background-color: rgb(" + colours + ");";
 
         return color;
     }
@@ -111,13 +108,13 @@ export class PlaylistsCardComponent implements OnInit {
         this.contador += newIndex;
 
         // Compruebo que el usuario no se pase de listo e intente cargar más albums de los que existen.
-        if (this.contador >= this.albumCards.length) {
-            this.contador = this.albumCards.length
+        if (this.contador >= this.playlistCards.length) {
+            this.contador = this.playlistCards.length
         }
 
         // Agrego albums a la lista de albumes que se imprimirán en el html
         for (let index = 0; index < this.contador; index++) {
-            this.loadedAlbumCards[index] = this.albumCards[index]
+            this.loadedAlbumCards[index] = this.playlistCards[index]
         }
     }
 }

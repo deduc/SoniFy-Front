@@ -1,5 +1,10 @@
 main {
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
 }

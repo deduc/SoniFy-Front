@@ -63,17 +63,17 @@ export class UserTopArtistsComponent implements OnInit {
     }
 
     private async getTopArtistsFromApi(): Promise<ArtistCardInfoInterface[]> {
-        console.log("UserTopArtistsComponent.getTopArtistsFromApi() -> Invoco a this.userTopArtistsService.fetchUserTopArtistsList()");
+        console.log("UserTopArtistsComponent.getTopArtistsFromApi() -> Invoco a this.userTopArtistsService.getTopArtists()");
         let artistInfoList: ArtistCardInfoInterface[] = [];
         let artistInfoAux: ArtistCardInfoInterface;
 
         try {
-            // const artistInfoList: ArtistCardInfoInterface[] = await this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken);
-            this.userTopArtistsService.fetchUserTopArtistsList(this.spotifyTopArtistsEndpoint, this.accessToken)
+            // const artistInfoList: ArtistCardInfoInterface[] = await this.userTopArtistsService.getTopArtists(this.spotifyTopArtistsEndpoint, this.accessToken);
+            this.userTopArtistsService.getTopArtists(this.spotifyTopArtistsEndpoint, this.accessToken)
                 .subscribe(response => {
                     let data: any = response
 
-                    console.log("UserTopArtistsService.fetchUserTopArtistsList() ->", data);
+                    console.log("UserTopArtistsService.getTopArtists() ->", data);
 
                     // Creo los objetos ArtistCardInfoInterface y los añado a la lista
                     for (let index = 0; index < data.items.length; index++) {

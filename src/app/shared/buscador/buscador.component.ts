@@ -5,7 +5,7 @@ import { BuscadorService } from './buscador.service';
 import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 
 import { accessTokenKey, lastSearchedKey } from 'src/app/core/constants/constants';
-import { PlaylistDataInterface } from 'src/app/core/interfaces/PlaylistDataInterface';
+import { AlbumDataInterface } from 'src/app/core/interfaces/AlbumDataInterface';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { PlaylistDataInterface } from 'src/app/core/interfaces/PlaylistDataInter
     styleUrls: ['./buscador.component.css']
 })
 export class BuscadorComponent {
-    public albumsInfoList: PlaylistDataInterface[] = [];
+    public albumsInfoList: AlbumDataInterface[] = [];
     // * Obtener el texto que hay en el input mediante ngModel y FormsModule desde shared-module
     public searchText: string = "";
     public next20AlbumsUrl: string = "";
@@ -71,16 +71,16 @@ export class BuscadorComponent {
      * Invocado por searchContent()
      */
     private async formatAlbumsList(albums: any) {
-        let albumInfoList: PlaylistDataInterface[] = [];
+        let albumInfoList: AlbumDataInterface[] = [];
 
         /**
          * Recorro los albumes obtenidos y creo una
-         * lista de albums con los datos de la interfaz PlaylistDataInterface
+         * lista de albums con los datos de la interfaz AlbumDataInterface
          */
         for (let index = 0; index < albums.length; index++) {
             const album: any = albums[index];
 
-            let albumInfoObj: PlaylistDataInterface = this.makePlaylistDataInterfaceObject(album);
+            let albumInfoObj: AlbumDataInterface = this.makeAlbumDataInterfaceObject(album);
             albumInfoList[index] = albumInfoObj;
         }
 
@@ -88,8 +88,8 @@ export class BuscadorComponent {
         return albumInfoList;
     }
 
-    private makePlaylistDataInterfaceObject(album: any): PlaylistDataInterface {
-        let albumInfoObj: PlaylistDataInterface = {
+    private makeAlbumDataInterfaceObject(album: any): AlbumDataInterface {
+        let albumInfoObj: AlbumDataInterface = {
             album_type: album.album_type,
             api_href: album.href,
             api_id: album.id,
@@ -104,7 +104,7 @@ export class BuscadorComponent {
         return albumInfoObj;
     }
 
-    private emitAlbumList(albumInfoList: PlaylistDataInterface[]) {
+    private emitAlbumList(albumInfoList: AlbumDataInterface[]) {
         console.log("emitAlbumList()", albumInfoList);
 
         this.dataEmitterService.emitAlbumInterface(albumInfoList)

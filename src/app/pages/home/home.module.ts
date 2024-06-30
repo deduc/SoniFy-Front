@@ -9,12 +9,13 @@ import { UserTopArtistsComponent } from './components/user-top-artists/user-top-
 
 import { AudioReproducerBarComponent } from 'src/app/shared/audio-reproducer-bar/audio-reproducer-bar.component';
 import { UserPlaylistsComponent } from './components/user-playlists/user-playlists.component';
-import { PlaylistsCardComponent } from './components/user-playlists/components/album-card/playlists-card.component';
+import { UserAlbumsModule } from './components/user-albums/user-albums.module';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
+        UserAlbumsModule,
     ],
     exports: [],
     declarations: [
@@ -22,8 +23,6 @@ import { PlaylistsCardComponent } from './components/user-playlists/components/a
         HomeComponent,
         UserTopArtistsComponent,
         UserPlaylistsComponent,
-        PlaylistsCardComponent,
-        
     ],
     providers: [],
 })

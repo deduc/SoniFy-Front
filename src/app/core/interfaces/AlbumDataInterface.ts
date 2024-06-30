@@ -1,4 +1,4 @@
-export interface PlaylistDataInterface {
+export interface AlbumDataInterface {
     album_type: string,
     api_href: string,
     api_id: string,
