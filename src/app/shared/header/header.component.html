@@ -6,6 +6,7 @@
         <button class="my-btn btn" (click)="navigate('me/my-playlists')">Playlists</button>
     </div>
     <button class="my-profile-btn" (click)="navigate('me/my-profile')">
+        <b>{{myUserName}}</b>
         <img class="profile-img" [src]="myProfileImg" alt="profile-image">
     </button>
 </header>

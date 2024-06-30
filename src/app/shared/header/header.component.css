@@ -51,6 +51,12 @@ nav {
 .my-profile-btn {
     background-color: rgba(0, 0, 0, 0);
     border: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .sm-nav-button {

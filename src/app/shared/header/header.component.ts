@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
     public router: Router;
     public appName: string = appName;
     public myProfileImg: string = "";
+    public myUserName: string = "";
 
     private dataEmitterService: DataEmitterService;
     private homeService: HomeService;
@@ -26,17 +27,18 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getMyProfileImage();
+        this.getUserNameAndProfileImage();
     }
 
     public navigate(url: string): void {
         this.router.navigateByUrl(url);
     }
 
-    private getMyProfileImage() {
+    private getUserNameAndProfileImage() {
         this.homeService.userInfo$.subscribe((userData: any) => {
             let userDataAux: MyUserInfoInterface = { ...userData };
             this.myProfileImg = userDataAux.profileImageUrl;
+            this.myUserName = userDataAux.displayName;
         });
     }
 }

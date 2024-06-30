@@ -1,66 +1,51 @@
-h2 {
-    color: white;
-}
+/* * {
+    outline: 1px solid red;
+    box-sizing: border-box;
+} */
 
-main {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+a {
+    min-height: 150px;
+    color: white;
+    text-decoration: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 article {
-    min-height: 220px;
-    
-    border: 1px solid lightgray;
-    
-    text-shadow: 1px 1px 3px rgb(29, 111, 29);
-    color: white;
-
-    border-radius: 5px;
+    width: 200px;
+    height: 250px;
     padding: 8px;
 
-    transition: 0.2s;
-}
-
-article:hover {
-    scale: 1.05;
-    cursor: pointer;
-}
-
-img {
-    border-radius: 5px;
-    width: 100%;
-}
-
-button {
-    width: 50px;
-    height: 50px;
-    
-    border-radius: 100%;
-    border: 1px solid gray;
-    background-color: rgb(0, 193, 48);
+    border: 1px solid rgba(211, 211, 211, 0.6);
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    transition: 0.2s;
 }
 
-button:hover {
-    background-color: rgb(0, 255, 64);
+article img {
+    width: 50%;
 }
 
-i {
-    font-size: 30px;
-    color: white;
+article span {
+    font-size: 48px;
 }
 
 h2 {
-    cursor: pointer;
-    transition: 0.2s;
+    color: white;
 }
 
-section .margin-padding-custom {
-    margin-top: 32px;
-    padding-bottom: 64px;
+p {
+    color: white;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 8px;
 }

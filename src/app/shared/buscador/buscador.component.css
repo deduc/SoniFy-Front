@@ -1,4 +1,62 @@
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-buscador {
+    width: 50%;
+    color: white;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 4px;
+}
+
+.contenedor-buscador input {
+    color: gray;
+}
+
+
+.contenedor-elementos {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+}
 .music-input {
     padding: 10px;
-    border-radius: 100px;
+    border-radius: 8px;
+}
+
+/* tablets */
+@media (max-width: 993px) {
+    article {
+        width: 80%;
+    }
+}
+
+/* moviles */
+@media (max-width: 580px) {
+    article {
+        width: 100%;
+
+        padding: 8px;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
+    article input {
+        width: 100%
+    }
+
+    button {
+        width: 100%;
+    }
 }

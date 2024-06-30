@@ -1,9 +1,11 @@
-<section class="text-white my-lg-4">
-    <h2>Tus artistas favoritos</h2>
+<main>
+    <header>
+        <h2>Tus artistas favoritos</h2>
+        <h2 class="view-all-artists" (click)="navigateToArtistsPage()">Ver todos</h2>
+    </header>
 
-    <main class="d-flex justify-content-center flex-wrap gap-lg-2 gap-1">
-        <article class="d-flex flex-row justify-content-between" *ngFor="let item of artistCardInfo" [style]="item.css">
-
+    <section>
+        <article *ngFor="let item of artistCardInfo" [style]="item.css">
             <div class="contenedor-artista-texto">
                 <img [src]="item.img" alt="imagen-artista" [id]="item.img">
                 <h1>{{item.name}}</h1>
@@ -11,10 +13,10 @@
 
             <img (click)="navigateToSpotifyWeb(item.spotify_url)" class="external-link-img"
                 src="/assets/external-link.png" alt="">
-
         </article>
+    </section>
 
-        <h2 class="cargar-mas" (click)="navigateToArtistsPage()">- Ver todos -</h2>
-    </main>
+    <h2 class="cargar-mas display-mobile-tablets" (click)="navigateToArtistsPage()">- Ver todos -</h2>
 
-</section>
+
+</main>

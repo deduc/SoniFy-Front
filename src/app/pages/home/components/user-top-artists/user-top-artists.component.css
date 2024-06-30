@@ -4,25 +4,63 @@ main {
 
 article {
     width: 30%;
-
-    padding: 0.32rem;
+    padding: 4px;
 
     border-radius: 5px;
     background-color: rgb(255, 255, 255);
 
     text-shadow: 1px 1px 3px rgb(29, 111, 29);
     color: white;
+    transition: 0.2s;
 
     box-sizing: border-box;
     border: 1px solid lightgray;
 
-    transition: 0.2s;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 article:hover {
     scale: 1.01;
     cursor: pointer;
 }
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 16px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+
+    border-radius: 5px;
+}
+
+h1 {
+    font-size: large;
+    text-transform: capitalize;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.view-all-artists {
+    font-size: 14px;
+    text-decoration: dashed;
+}
+
+.view-all-artists:hover {
+    cursor: pointer;
+}
+
 
 .btn-reproducir-musica {
     width: 40px;
@@ -52,32 +90,6 @@ article:hover {
     align-items: center;
 }
 
-/* hacer visible un icono de play music */
-
-img {
-    width: 100px;
-    height: 100px;
-
-    border-radius: 5px;
-}
-
-h1 {
-    font-size: large;
-    text-transform: capitalize;
-}
-
-.external-link-img {
-    width: 16px;
-    height: 16px;
-
-    border-radius: 0%;
-    opacity: 0.5;
-}
-
-.external-link-img:hover {
-    opacity: 1;
-}
-
 
 .cargar-mas {
     width: 30%;
@@ -90,15 +102,30 @@ h1 {
     cursor: pointer;
 }
 
+.external-link-img {
+    width: 1rem;
+    height: 1rem;
+
+    border-radius: 0%;
+    opacity: 0.5;
+}
+
+.external-link-img:hover {
+    opacity: 1;
+}
+
+/* pc */
+@media (min-width: 993px) {
+    .display-mobile-tablets {
+        display: none;
+    }
+}
+
 /* tablets */
 @media (max-width: 992px) {
     article {
         width: 49%;
         height: auto;
-    }
-
-    img {
-        width: 100px;
     }
 
     .cargar-mas {
@@ -110,8 +137,8 @@ h1 {
 /* moviles */
 @media (max-width: 576px) {
     .external-link-img {
-        width: 12px;
-        height: 12px;
+        width: 1rem;
+        height: 1rem;
 
         border-radius: 0%;
         opacity: 0.5;
@@ -120,10 +147,6 @@ h1 {
     article {
         width: 100%;
         height: auto;
-    }
-
-    img {
-        width: 100px;
     }
 
     .cargar-mas {

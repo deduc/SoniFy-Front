@@ -27,11 +27,11 @@ export const SpotifyTokenUrl: string = "https://accounts.spotify.com/api/token";
 
 //* Spotify Endpoints
 export const SpotifyMe: string = "https://api.spotify.com/v1/me";
-export const SpotifySearch: string = "https://api.spotify.com/v1/search";
 export const SpotifyTopArtists: string = "https://api.spotify.com/v1/me/top/artists";
+export const SpotifySearch: string = "https://api.spotify.com/v1/search";
 export const SpotifyUserAlbums: string = "https://api.spotify.com/v1/me/albums";
-export const SpotifyUserPlaylists: string = "https://api.spotify.com/v1/me/playlists";
 export const SpotifyUserLikedSongs: string = "https://api.spotify.com/v1/me/tracks";
+export const SpotifyUserPlaylists: string = "https://api.spotify.com/v1/me/playlists";
 
 
 
@@ -53,7 +53,7 @@ export const verifierKey: string = "verifier";
 export const homeUrl: string = "/me/home";
 export const loginUrl: string = "/login";
 export const loginAuthUrl: string = "/login/auth";
-export const myArtistsUrl: string = "/my-artists"
+export const myArtistsUrl: string = "/me/my-artists"
 
 
 //* Otras constantes

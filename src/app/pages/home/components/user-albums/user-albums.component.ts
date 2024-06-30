@@ -9,7 +9,7 @@ import { AlbumCardsInterface } from './interfaces/AlbumCardsInterface';
     templateUrl: './user-albums.component.html',
     styleUrls: ['./user-albums.component.css']
 })
-export class UserAlbumsComponent implements OnInit {
+export class UserAlbumsComponent {
     public albumCardsList: AlbumCardsInterface[] = []
 
     // Lista que se carga en el html
@@ -20,12 +20,10 @@ export class UserAlbumsComponent implements OnInit {
 
     constructor(private userAlbumsService: UserAlbumsService) {
         this.userAlbumsService.albumCardsList$.subscribe((res: AlbumCardsInterface[]) => {
-            this.setAlbumCardsCssProperty(res)
             this.loadedAlbumCards = res;
         });
     }
 
-    ngOnInit() {}
 
     public navigateAlbum(link: string) {
         alert(1);
@@ -35,74 +33,76 @@ export class UserAlbumsComponent implements OnInit {
         alert(2);
     }
 
-    /**
-     * Cambio la propiedad css de cada elemento de la lista de albums.
-     */
-    private setAlbumCardsCssProperty(albumCardsList: AlbumCardsInterface[]): void {
-        for (let index = 0; index < albumCardsList.length; index++) {
-            this.setCardCssProperty(albumCardsList[index], index);
-        }
-    }
 
-    private setCardCssProperty(imageObject: AlbumCardsInterface, albumCardsIndex: number): void {
-        let imgElement = new Image();
+    
+    // /**
+    //  * Cambio la propiedad css de cada elemento de la lista de albums.
+    //  */
+    // private setAlbumCardsCssProperty(albumCardsList: AlbumCardsInterface[]): void {
+    //     for (let index = 0; index < albumCardsList.length; index++) {
+    //         this.setCardCssProperty(albumCardsList[index], index);
+    //     }
+    // }
 
-        // Esto es para algo de las CORS
-        imgElement.crossOrigin = "Anonymous";
+    // private setCardCssProperty(imageObject: AlbumCardsInterface, albumCardsIndex: number): void {
+    //     let imgElement = new Image();
 
-        imgElement.onload = () => {
-            this.setCssBgColor(imgElement, albumCardsIndex);
-        };
+    //     // Esto es para algo de las CORS
+    //     imgElement.crossOrigin = "Anonymous";
 
-        imgElement.src = imageObject.img;
-    }
+    //     imgElement.onload = () => {
+    //         this.setCssBgColor(imgElement, albumCardsIndex);
+    //     };
 
-    /**
-     * Cargar una imagen para obtener el color de un píxel específico de esa imagen
-     */
-    private setCssBgColor(imgElement: HTMLImageElement, albumCardsIndex: number): string {
-        let canvas: HTMLCanvasElement;
-        let ctx: CanvasRenderingContext2D;
+    //     imgElement.src = imageObject.img;
+    // }
 
-        let pixelData: Uint8ClampedArray;
-        let color: string;
+    // /**
+    //  * Cargar una imagen para obtener el color de un píxel específico de esa imagen
+    //  */
+    // private setCssBgColor(imgElement: HTMLImageElement, albumCardsIndex: number): string {
+    //     let canvas: HTMLCanvasElement;
+    //     let ctx: CanvasRenderingContext2D;
 
-        let x: number = imgElement.width / 2;
-        let y: number = imgElement.width / 2;
+    //     let pixelData: Uint8ClampedArray;
+    //     let color: string;
 
-        let colours: number[];
+    //     let x: number = imgElement.width / 2;
+    //     let y: number = imgElement.width / 2;
 
-        canvas = document.createElement('canvas');
-        canvas.width = imgElement.width;
-        canvas.height = imgElement.height;
+    //     let colours: number[];
 
-        ctx = canvas.getContext('2d')!;
-        ctx.drawImage(imgElement, 0, 0);
+    //     canvas = document.createElement('canvas');
+    //     canvas.width = imgElement.width;
+    //     canvas.height = imgElement.height;
 
-        pixelData = ctx.getImageData(x, y, 1, 1).data;
-        color = `rgb(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
+    //     ctx = canvas.getContext('2d')!;
+    //     ctx.drawImage(imgElement, 0, 0);
 
-        colours = [pixelData[0], pixelData[1], pixelData[2]]
+    //     pixelData = ctx.getImageData(x, y, 1, 1).data;
+    //     color = `rgb(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
 
-        // console.log(colours);
+    //     colours = [pixelData[0], pixelData[1], pixelData[2]]
 
-        // Cambio la propiedad css del album del cual se está obteniendo el color
-        this.albumCardsList[albumCardsIndex].css = "background-color: rgb(" + colours + ");";
+    //     // console.log(colours);
 
-        return color;
-    }
+    //     // Cambio la propiedad css del album del cual se está obteniendo el color
+    //     this.albumCardsList[albumCardsIndex].css = "background-color: rgb(" + colours + ");";
 
-    public loadAlbumCards(newIndex: number = 5) {
-        this.contador += newIndex;
+    //     return color;
+    // }
 
-        // Compruebo que el usuario no se pase de listo e intente cargar más albums de los que existen.
-        if (this.contador >= this.albumCardsList.length) {
-            this.contador = this.albumCardsList.length
-        }
+    // public loadAlbumCards(newIndex: number = 5) {
+    //     this.contador += newIndex;
 
-        // Agrego albums a la lista de albumes que se imprimirán en el html
-        for (let index = 0; index < this.contador; index++) {
-            this.loadedAlbumCards[index] = this.albumCardsList[index]
-        }
-    }
+    //     // Compruebo que el usuario no se pase de listo e intente cargar más albums de los que existen.
+    //     if (this.contador >= this.albumCardsList.length) {
+    //         this.contador = this.albumCardsList.length
+    //     }
+
+    //     // Agrego albums a la lista de albumes que se imprimirán en el html
+    //     for (let index = 0; index < this.contador; index++) {
+    //         this.loadedAlbumCards[index] = this.albumCardsList[index]
+    //     }
+    // }
 }
