@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SpotifyUserAlbums, accessTokenKey } from 'src/app/core/constants/constants';
-import { AlbumCardsInterface } from './components/album-card/interfaces/AlbumCardsInterface';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AlbumCardsInterface } from './interfaces/AlbumCardsInterface';
 
 @Injectable({
     providedIn: 'root'
