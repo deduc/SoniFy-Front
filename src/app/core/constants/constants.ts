@@ -1,5 +1,8 @@
 //* API base elements
-export const ApiBaseUrl: string = "https://localhost"
+// ! Desarrollo
+// export const ApiBaseUrl: string = "https://localhost"
+// ! Pre-produccion (contenedor Docker). Falta certificado SSL para usar https. Solo es válido http
+export const ApiBaseUrl: string = "http://localhost"
 export const ApiPort: string = "7296"
 export const ApiPathAuth: string = "/auth"
 export const ApiResourceGetAuthParams: string = "/getAuthParams"
@@ -28,6 +31,8 @@ export const SpotifySearch: string = "https://api.spotify.com/v1/search";
 export const SpotifyTopArtists: string = "https://api.spotify.com/v1/me/top/artists";
 export const SpotifyUserAlbums: string = "https://api.spotify.com/v1/me/albums";
 export const SpotifyUserPlaylists: string = "https://api.spotify.com/v1/me/playlists";
+export const SpotifyUserLikedSongs: string = "https://api.spotify.com/v1/me/tracks";
+
 
 
 //* LocalStorage keys
