@@ -18,7 +18,6 @@ import { UserAlbumsComponent } from './components/user-albums/user-albums.compon
     ],
     exports: [],
     declarations: [
-        AudioReproducerBarComponent,
         HomeComponent,
         UserAlbumsComponent,
         UserTopArtistsComponent,

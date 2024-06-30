@@ -18,7 +18,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
-        // HomeComponent,
         MyPlaylistsComponent,
         MyProfileComponent,
         MyArtistsComponent,

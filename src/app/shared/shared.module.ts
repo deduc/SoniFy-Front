@@ -16,9 +16,11 @@ import { DialogErrorComponent } from './dialog-error/dialog-error.component';
 
 // modulo httpclient para hacer peticiones http
 import { HttpClientModule } from '@angular/common/http';
+import { AudioReproducerBarComponent } from './audio-reproducer-bar/audio-reproducer-bar.component';
 
 @NgModule({
     declarations: [
+        AudioReproducerBarComponent,
         BuscadorComponent,
         DialogErrorComponent,
         FilterBarComponent,
@@ -26,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
         HeaderComponent,
     ],
     exports: [
+        AudioReproducerBarComponent,
         BuscadorComponent,
         DialogErrorComponent,
         FilterBarComponent,
