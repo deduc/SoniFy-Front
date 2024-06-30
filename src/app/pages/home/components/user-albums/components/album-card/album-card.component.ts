@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { AlbumCardsInterface } from './interfaces/AlbumCardsInterface';
 import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
+import { UserAlbumsService } from '../../user-albums.service';
 
 
 
@@ -19,15 +20,20 @@ export class AlbumCardComponent implements OnInit {
 
     private contador: number = 0;
     private dataEmitterService: DataEmitterService;
+    private userAlbumsService: UserAlbumsService;
 
 
-    constructor(dataEmitterService: DataEmitterService) {
+    constructor(dataEmitterService: DataEmitterService, userAlbumsService: UserAlbumsService) {
         this.dataEmitterService = dataEmitterService;
+        this.userAlbumsService = userAlbumsService;
+
+        // this.userAlbumsService.albumCardsList$.subscribe((res: any) => {
+        //     this.playlistCards = res;
+        // });
     }
 
     ngOnInit() {
         setTimeout(() => {
-            this.doGetUserAlbums();
             this.setAlbumCardsCssProperty();
             this.loadAlbumCards(5);
         }, 200);
@@ -39,12 +45,6 @@ export class AlbumCardComponent implements OnInit {
 
     public playAlbum() {
         alert(2);
-    }
-
-    public doGetUserAlbums() {
-        // todo
-        // Me suscribo al emisor de albumes de dataEmitterService
-        // this.dataEmitterService.topArtistList.subscribe();
     }
 
     /**

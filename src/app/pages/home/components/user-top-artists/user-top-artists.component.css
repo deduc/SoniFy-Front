@@ -80,8 +80,10 @@ h1 {
 
 
 .cargar-mas {
+    width: 30%;
     border: 1px solid rgba(211, 211, 211, 0.5);
     margin-top: 32px;
+    text-align: center;
 }
 
 .cargar-mas:hover {
@@ -97,6 +99,10 @@ h1 {
 
     img {
         width: 100px;
+    }
+
+    .cargar-mas {
+        width: 100%;
     }
 }
 
@@ -118,5 +124,9 @@ h1 {
 
     img {
         width: 100px;
+    }
+
+    .cargar-mas {
+        width: 100%;
     }
 }

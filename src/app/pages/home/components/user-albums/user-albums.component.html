@@ -1,5 +1,21 @@
-<section>
+<section class="margin-padding-custom">
     <h2>Tus albums</h2>
 
-    <home-album-cards [playlistCards]="playlistCards"></home-album-cards>
+    <main class="container-fluid">
+        <section class="d-flex justify-content-lg-start justify-content-center">
+
+            <article [style]="item.css" *ngFor="let item of loadedAlbumCards">
+                <img [src]="item.img" alt="imagen-grupo" [id]="item.img">
+                <h5>{{item.titulo}}</h5>
+                <p>{{item.grupo}}</p>
+
+                <!-- <button (click)="playAlbum()">
+                    <i class="material-icons">play_arrow</i>
+                </button> -->
+            </article>
+
+        </section>
+
+        <h2 class="text-center mt-lg-3" (click)="loadAlbumCards(5)">- Cargar más -</h2>
+    </main>
 </section>

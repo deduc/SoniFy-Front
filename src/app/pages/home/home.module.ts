@@ -9,18 +9,18 @@ import { UserTopArtistsComponent } from './components/user-top-artists/user-top-
 
 import { AudioReproducerBarComponent } from 'src/app/shared/audio-reproducer-bar/audio-reproducer-bar.component';
 import { UserPlaylistsComponent } from './components/user-playlists/user-playlists.component';
-import { UserAlbumsModule } from './components/user-albums/user-albums.module';
+import { UserAlbumsComponent } from './components/user-albums/user-albums.component';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
-        UserAlbumsModule,
     ],
     exports: [],
     declarations: [
         AudioReproducerBarComponent,
         HomeComponent,
+        UserAlbumsComponent,
         UserTopArtistsComponent,
         UserPlaylistsComponent,
     ],
