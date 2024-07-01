@@ -38,7 +38,7 @@ export class HomeService {
     public loadUserDataFromAPI(spotifyApiUrl: string, httpHeaders: any): void {
         this.httpClient.get(spotifyApiUrl, httpHeaders)
             .subscribe((response: any) => {
-                console.log("HomeService.loadUserDataFromAPI() -> Obtener información del usuario", response);
+                // console.log("HomeService.loadUserDataFromAPI() -> Obtener información del usuario", response);
 
                 let userInfoObj: MyUserInfoInterface = {
                     displayName: response.display_name,
@@ -62,9 +62,11 @@ export class HomeService {
             token = localStorage.getItem(this.accessTokenKey)!;
 
             if (token.length < 1) {
-                console.error("HomeService.loadTokenFromLocalStorage() -> ERROR: No se ha podido obtener el token de acceso");
+                // console.error("HomeService.loadTokenFromLocalStorage() -> ERROR: No se ha podido obtener el token de acceso");
                 token = "null_string";
-            } else { console.log("HomeService.loadTokenFromLocalStorage() -> Se ha cargado el token de acceso."); }
+            } else { 
+                // console.log("HomeService.loadTokenFromLocalStorage() -> Se ha cargado el token de acceso."); 
+            }
         }
         catch (error) { token = "null_string"; }
 

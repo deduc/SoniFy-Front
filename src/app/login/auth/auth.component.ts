@@ -13,7 +13,7 @@ export class AuthComponent implements OnInit {
     private authService: AuthService;
     private homeUrl: string = homeUrl;
     private router: Router;
-    
+
     constructor(authService: AuthService, router: Router) {
         // localStorage.clear();
         this.authService = authService;
@@ -22,11 +22,11 @@ export class AuthComponent implements OnInit {
 
     ngOnInit() {
         console.log("AuthComponent -> comprobar autenticidad del usuario");
-        
+
         let semaforo: boolean = this.authService.autenticateUser();
 
         if (semaforo == true) {
-            this.router.navigateByUrl(this.homeUrl)
+            this.router.navigateByUrl(this.homeUrl);
         }
     }
 

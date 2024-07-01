@@ -33,7 +33,7 @@ export class TokenService {
     public getToken(spotifyTokenUrl: string, spotifyAppData: SpotifyAppDataInterface): void {
         let requestOptions: any = this.makeRequestOptionsObj(spotifyAppData);
 
-        console.log("TokenService.getToken() -> Obtengo el token y lo guardo en localstorage");
+        // console.log("TokenService.getToken() -> Obtengo el token y lo guardo en localstorage");
         this.getAndSaveToken(spotifyTokenUrl, requestOptions);
     }
 
@@ -47,7 +47,7 @@ export class TokenService {
             .subscribe(response => {
                 let data: any = { ...response };
 
-                console.log("TokenService.getAndSaveToken() access token object:", data);
+                // console.log("TokenService.getAndSaveToken() access token object:", data);
 
                 localStorage.setItem(this.accessTokenKey, data.access_token);
                 localStorage.setItem(this.accessTokenRefreshKey, data.refresh_token);
