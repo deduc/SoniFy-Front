@@ -63,7 +63,7 @@ export class UserTopArtistsComponent implements OnInit {
     }
 
     private async getTopArtistsFromApi(): Promise<ArtistCardInfoInterface[]> {
-        console.log("UserTopArtistsComponent.getTopArtistsFromApi() -> Invoco a this.userTopArtistsService.getTopArtists()");
+        // console.log("UserTopArtistsComponent.getTopArtistsFromApi() -> Invoco a this.userTopArtistsService.getTopArtists()");
         let artistInfoList: ArtistCardInfoInterface[] = [];
         let artistInfoAux: ArtistCardInfoInterface;
 
@@ -73,7 +73,7 @@ export class UserTopArtistsComponent implements OnInit {
                 .subscribe(response => {
                     let data: any = response
 
-                    console.log("UserTopArtistsService.getTopArtists() ->", data);
+                    // console.log("UserTopArtistsService.getTopArtists() ->", data);
 
                     // Creo los objetos ArtistCardInfoInterface y los añado a la lista
                     for (let index = 0; index < data.items.length; index++) {
@@ -91,7 +91,7 @@ export class UserTopArtistsComponent implements OnInit {
             return artistInfoList;
         }
         catch (error) {
-            console.error("Error al obtener la lista de artistas:", error);
+            // console.error("Error al obtener la lista de artistas:", error);
 
             // En caso de error, devolvemos una lista vacía
             return [];
