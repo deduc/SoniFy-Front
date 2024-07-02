@@ -1,6 +1,0 @@
-// obtener datos de un album en concreto
-curl -X GET "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy" -H "Authorization: Bearer token"
-
-
-// obtener mis datos personales
-curl -X GET "https://api.spotify.com/v1/me" -H "Authorization: Bearer token"

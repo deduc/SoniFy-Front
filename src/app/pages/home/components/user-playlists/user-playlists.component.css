@@ -49,3 +49,15 @@ section {
     align-items: flex-start;
     gap: 8px;
 }
+
+@media (max-width: 993px) {
+    article {
+        min-width: 200px;
+        min-height: 200px;
+    }
+
+    section {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}

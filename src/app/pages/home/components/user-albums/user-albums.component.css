@@ -49,3 +49,11 @@ section {
     align-items: flex-start;
     gap: 8px;
 }
+
+@media (max-width: 993px) {
+    section {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+    }
+}
