@@ -22,7 +22,11 @@
         "lib": [
             "ES2022",
             "dom"
-        ]
+        ],
+        "typeRoots": [
+            "node_modules/@types",
+            "node_modules/@types/spotify-web-playback-sdk"
+        ],
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
