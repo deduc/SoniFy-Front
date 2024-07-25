@@ -1,5 +1,20 @@
-<article>
-    <h1>Spotify Web Playback SDK Quick Start</h1>
-    <button (click)="play()">Play</button>
-    <button (click)="pause()">Pause</button>
-</article>
+<section class="custom-fixed-position">
+    <article>
+        <span>{{spotifySdkPlayerName}}</span>
+        <div>
+            <button (click)="play()">Play</button>
+            <button (click)="pause()">Pause</button>
+            <button (click)="nextTrack()">Siguiente</button>
+            <button (click)="previousTrack()">Anterior</button>
+        </div>
+    </article>
+
+    <article class="contenedor-dispositivos-reproduccion">
+        <label for="dispositivo">Dispositivo/s de reproducción</label>
+        <select name="dispositivo" id="dispositivo" (change)="onDeviceChange($event)">
+            <option value="" disabled selected>Selecciona un dispositivo</option>
+            <option *ngFor="let item of mediaPlayerDevices" [value]="item">{{item.name}}</option>
+        </select>
+    </article>
+    
+</section>
