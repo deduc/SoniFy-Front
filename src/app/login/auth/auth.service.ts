@@ -168,7 +168,7 @@ export class AuthService {
 
         if (redirectUri == null) {
             let mensajeError: string = "AuthService.getRedirectUri() -> No hay redirectUri. Te redirijo al login.";
-            this.openDialog(mensajeError)
+            this.openDialog(mensajeError);
             this.router.navigateByUrl(redirectUrlAux);
         }
 
