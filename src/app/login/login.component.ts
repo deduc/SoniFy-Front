@@ -4,6 +4,7 @@ import { APIGetAuthParamsEndpoint, SpotifyAuthUrl, appName, redirectUriKey } fro
 import { AuthParamsInterface } from './interfaces/AuthParamsInterface';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogErrorComponent } from 'src/app/shared/dialog-error/dialog-error.component';
+import { DialogErrorDataInterface } from '../core/interfaces/DialogErrorDataInterface';
 
 
 @Component({
@@ -12,14 +13,14 @@ import { DialogErrorComponent } from 'src/app/shared/dialog-error/dialog-error.c
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-    public appName: string;
-    public redirectUriKey: string;
+    public appName: string = appName;
+    public redirectUriKey: string = redirectUriKey;
 
+    private dialog: MatDialog;
     private getAuthParamsEndpoint: string = APIGetAuthParamsEndpoint;
 
-    constructor(private dialog: MatDialog) {
-        this.appName = appName
-        this.redirectUriKey = redirectUriKey
+    constructor(dialog: MatDialog) {
+        this.dialog = dialog;
     }
 
     ngOnInit(): void {
@@ -41,22 +42,27 @@ export class LoginComponent {
             window.location.href = SpotifyAuthUrl.toString();
         }
         catch (err: any) {
-            console.log(err);
+            console.log("LoginComponent.login() ->", err);
             this.openDialog(err.message);
         }
-
-        // fin metodo
     }
 
     public openDialog(error: string): void {
-        let infoError = { data: error }
-        this.dialog.open(DialogErrorComponent, infoError);
+        let errorData = {
+            data: {
+                tittle: "Error de conexión",
+                error: error,
+                description: "La API está apagada o su url y puertos son incorrectos."
+            }
+        };
+
+        this.dialog.open(DialogErrorComponent, errorData);
     }
 
     private async getAuthParams(getAuthParamsEndpoint: string): Promise<AuthParamsInterface> {
         try {
             let authParamsAux: AuthParamsInterface = await this.getAuthParamsFromApi(getAuthParamsEndpoint);
-            
+
             console.log("LoginService.getAuthParams() -> authParams:", authParamsAux);
 
             return authParamsAux;
