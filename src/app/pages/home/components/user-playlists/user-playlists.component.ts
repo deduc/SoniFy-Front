@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { UserPlaylistsService } from './user-playlists.service';
 import { PlaylistDataInterface } from './interfaces/PlaylistsDataInterface';
 import { UserLikedSongs } from './interfaces/UserLikedSongs';
+import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 
 
 @Component({
@@ -23,7 +24,12 @@ export class UserPlaylistsComponent implements OnInit {
     private spotifyUserAlbumsEndpoint: string = SpotifyUserPlaylists;
     private spotifyUserLikedSongs: string = SpotifyUserLikedSongs;
 
-    constructor(private userPlaylistsService: UserPlaylistsService) {
+    private dataEmiterService: DataEmitterService;
+    private userPlaylistsService: UserPlaylistsService;
+
+    constructor(dataEmiterService: DataEmitterService, userPlaylistsService: UserPlaylistsService) {
+        this.dataEmiterService = dataEmiterService;
+        this.userPlaylistsService = userPlaylistsService;
         this.accessToken = localStorage.getItem(accessTokenKey)!;
     }
 
@@ -62,7 +68,7 @@ export class UserPlaylistsComponent implements OnInit {
         playlistDataList.songsObjList = apiResponse.items;
         playlistDataList.SpotifyApiNextSongsUrl = apiResponse.next;
         playlistDataList.SpotifyApiEndpoint = apiResponse.href;
-        
+
         return playlistDataList;
     }
 
@@ -73,14 +79,20 @@ export class UserPlaylistsComponent implements OnInit {
     private getUserLikedSongs(userLikedSongsEndpoint: string, token: string): void {
         this.userPlaylistsService.getUserPlaylists(userLikedSongsEndpoint, token)
             .subscribe((apiResponse: any) => {
-                this.userLikedSongs.next(this.doBuildUserLikedSongs(apiResponse));
+                let userLikedSongs: UserLikedSongs = this.doBuildUserLikedSongs(apiResponse);
+                
+                this.userLikedSongs.next(userLikedSongs);
+                this.dataEmiterService.emitUserLikedSongs(userLikedSongs);
             });
     }
 
     private getUserPlaylists(userPlaylistsEndpoint: string, token: string): void {
         this.userPlaylistsService.getUserPlaylists(userPlaylistsEndpoint, token)
             .subscribe((apiResponse: any) => {
-                this.userPlaylists.next(this.doBuildUserPlaylistsList(apiResponse));
+                let userPlaylists: PlaylistDataInterface[] = this.doBuildUserPlaylistsList(apiResponse);
+                
+                this.userPlaylists.next(userPlaylists);
+                this.dataEmiterService.emitUserPlaylistData(userPlaylists);
             });
     }
 }

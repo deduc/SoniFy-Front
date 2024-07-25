@@ -131,6 +131,10 @@ section {
     .cargar-mas {
         width: 100%;
     }
+
+    .view-all-artists {
+        display: none;
+    }
 }
 
 
@@ -152,4 +156,9 @@ section {
     .cargar-mas {
         width: 100%;
     }
+
+    .view-all-artists {
+        display: none;
+    }
+
 }

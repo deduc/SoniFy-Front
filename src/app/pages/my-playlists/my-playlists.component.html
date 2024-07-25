@@ -1,5 +1,24 @@
 <shared-header></shared-header>
-<p>
-  my-playlists works!
-</p>
+
+<main>
+    <h1>TODO HACER PETICION A LA API</h1>
+    <article>
+        <a href="" target="_blank">
+            <!-- heart icon -->
+            <span>&#10084;</span>
+            <p>Tus canciones favoritas</p>
+        </a>
+    </article>
+
+    <article *ngFor="let item of userPlaylistData">
+        <a href="" target="_blank">
+            <img src={{item.imageUrl}} alt="imagen-playlist">
+            <div>
+                <p>{{item.name}}</p>
+                <p>{{item.description}}</p>
+            </div>
+        </a>
+    </article>
+</main>
+
 <shared-footer></shared-footer>

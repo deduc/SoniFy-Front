@@ -32,6 +32,7 @@ export const SpotifySearch: string = "https://api.spotify.com/v1/search";
 export const SpotifyUserAlbums: string = "https://api.spotify.com/v1/me/albums";
 export const SpotifyUserLikedSongs: string = "https://api.spotify.com/v1/me/tracks";
 export const SpotifyUserPlaylists: string = "https://api.spotify.com/v1/me/playlists";
+export const SpotifyPlayerDevices: string = "https://api.spotify.com/v1/me/player/devices";
 
 
 
@@ -42,7 +43,7 @@ export const accessTokenTimestampKey: string = "accessTokenTimestamp";
 export const clientIdKey: string = "clientId";
 export const clientSecretKey: string = "clientSecret";
 export const codeVerifierKey: string = "code_verifier";
-//! En la url hay un parámetro llamado code. Importante no cambiar su nombre.
+// En la url hay un parámetro llamado code. Importante no cambiar su nombre.
 export const codeFromUrlKey: string = "code";
 export const lastSearchedKey: string = "lastSearch";
 export const redirectUriKey: string = "redirectUri";
@@ -61,6 +62,7 @@ export const appName: string = "SoniFy";
 export const githubLink: string = "https://github.com/deduc";
 export const email: string = "deductivegoose@outlook.es";
 export const oneHourTimeStamp: number = 3600000;
+export const spotifySdkPlayerName: string = "Reproductor de sonido " + appName;
 
 
 // curl -X GET "https://api.spotify.com/v1/me" -H "Authorization: Bearer token"

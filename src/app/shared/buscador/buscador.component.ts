@@ -39,7 +39,7 @@ export class BuscadorComponent {
      * 
      */
     public searchContent(): void {
-        if (this.searchText.length == 0) return
+        if (this.searchText.length == 0) return;
 
         let searchText = this.searchText;
 
@@ -61,8 +61,8 @@ export class BuscadorComponent {
             );
     }
 
-    // todo
-    public getItemInfoPage(index: number){
+    // todo: creo que queria, en el pasado, obtener una pagina con la info del item concreto clicado por el usuario
+    public getItemInfoPage(index: number) {
         console.log(this.albumsInfoList[index]);
     }
 

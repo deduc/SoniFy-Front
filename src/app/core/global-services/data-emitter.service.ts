@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 
-import { ArtistCardInfoInterface } from 'src/app/pages/home/components/user-top-artists/Interfaces/ArtistCardInfoInterface';
-import { accessTokenKey } from '../constants/constants';
-import { TopArtistListInterface } from '../interfaces/TopArtistListInterface';
 import { AlbumDataInterface } from '../interfaces/AlbumDataInterface';
+import { ArtistCardInfoInterface } from 'src/app/pages/home/components/user-top-artists/Interfaces/ArtistCardInfoInterface';
+import { PlaylistDataInterface } from 'src/app/pages/home/components/user-playlists/interfaces/PlaylistsDataInterface';
+import { TopArtistListInterface } from '../interfaces/TopArtistListInterface';
+import { UserLikedSongs } from 'src/app/pages/home/components/user-playlists/interfaces/UserLikedSongs';
 
 
 @Injectable({
@@ -26,7 +27,11 @@ export class DataEmitterService {
     public accessToken = new BehaviorSubject<string>("access_token_null_value");
     public datosAccessToken = this.accessToken.asObservable();
 
-    private accessTokenKey: string = accessTokenKey;
+    public userPlaylistData = new BehaviorSubject<PlaylistDataInterface[]>([]);
+    public dataUserPlaylists = this.userPlaylistData.asObservable();
+
+    public userLikedSongs = new BehaviorSubject<UserLikedSongs>({ numberOfSongs: 0, songsObjList: [], SpotifyApiNextSongsUrl: "", SpotifyApiEndpoint: "" });
+    public dataUserLikedSongs = this.userLikedSongs.asObservable();
 
     // ========================
     // ========Emisores========
@@ -54,6 +59,14 @@ export class DataEmitterService {
         this.accessToken.next(token);
     }
 
+    public emitUserLikedSongs(userLikedSongs: UserLikedSongs) {
+        this.userLikedSongs.next(userLikedSongs);
+    }
+
+    public emitUserPlaylistData(playlistData: PlaylistDataInterface[]) {
+        this.userPlaylistData.next(playlistData);
+    }
+
     // ====================================
     // ============Suscriptores============
     // ====================================
@@ -67,5 +80,12 @@ export class DataEmitterService {
     public getAccessToken(): Observable<string> {
         // console.log("DataEmitterService.getAccessToken() ->", this.accessToken);
         return this.accessToken.asObservable();
+    }
+
+    public getUserPlaylistData(): Observable<PlaylistDataInterface[]>{
+        return this.userPlaylistData.asObservable();
+    }
+    public getUserLikedSongs(): Observable<UserLikedSongs>{
+        return this.userLikedSongs.asObservable();
     }
 }

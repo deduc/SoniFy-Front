@@ -9,17 +9,16 @@ import { SpotifySearch } from 'src/app/core/constants/constants';
     providedIn: 'root'
 })
 export class BuscadorService {
-    private apiUrl = 'https://api.spotify.com/v1';
+    private spotifySearch: string = SpotifySearch;
 
     constructor(private http: HttpClient) { }
 
     /**
      * Invocado por BuscadorComponent.searchContent().
-     * Hago una petición a la api de spotify.
+     * Hago una petición a la api de spotify preguntando por el valor de searchQuery
      */
-    public searchContent(query: string, token: string): Observable<any> {
-        const searchQuery = query;
-        const url = `${SpotifySearch}?q=${searchQuery}&type=album`;
+    public searchContent(searchQuery: string, token: string): Observable<any> {
+        const url = `${this.spotifySearch}?q=${searchQuery}&type=album`;
 
         const headers = new HttpHeaders({
             'Authorization': 'Bearer ' + token

@@ -3,3 +3,7 @@ div {
     height: auto;
     padding: 16px;
 }
+
+div * {
+    color: black;
+}
