@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { accessTokenKey, SpotifyPlayerDevices, spotifySdkPlayerName } from "../constants/constants";
 import { BehaviorSubject } from "rxjs";
 import { MediaPlayerDevice } from "src/app/shared/audio-reproducer-bar/interfaces/MediaPlayerDevice.interface";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { HttpHeadersSoniFy } from "../interfaces/HttpHeadersSoniFy.interface";
 
 
@@ -11,13 +11,15 @@ import { HttpHeadersSoniFy } from "../interfaces/HttpHeadersSoniFy.interface";
     providedIn: "root",
 })
 export class SpotifySdkWebPlayerService {
+    public accessToken: string = localStorage.getItem(accessTokenKey)!;
+    
     public mediaPlayerDevicesSubject = new BehaviorSubject<MediaPlayerDevice[]>([]);
     public mediaPlayerDevices$ = this.mediaPlayerDevicesSubject.asObservable();
 
     private angularSpotifyPlayerName: string = spotifySdkPlayerName;
-    public accessToken: string = localStorage.getItem(accessTokenKey)!;
     private httpClient: HttpClient;
     private httpHeaders: HttpHeadersSoniFy;
+    // ! IMPORTANTE NO TOCAR
     private spotifyMediaPlayer: Spotify.Player | null = null;
     private spotifyPlayerDevices: string = SpotifyPlayerDevices;
 
@@ -97,25 +99,21 @@ export class SpotifySdkWebPlayerService {
     // todo
     public playOnThisDevice(trackUri: string, idDevice: string): void {
         const accessToken = this.accessToken;
-        const url: string = `https://api.spotify.com/v1/me/player/play?device_id=${idDevice}`;
-        let prueba: string = "spotify:track:7wgxq27uOvfydLunYkcmAU"
-        const httpHeaders = {
-            method: "PUT",
-            headers: {
-                "Authorization": `Bearer ${accessToken}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                // "context_uri": "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr",
-                "context_uri": trackUri,
-                "offset": {
-                    "position": 5
-                },
-                "position_ms": 0
-            })
+
+        const url: string = `https://api.spotify.com/v1/me/player/play`;
+
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        });
+
+        const body = {
+            uris: [trackUri]
         };
 
-        fetch(url, httpHeaders)
+        const params = { device_id: idDevice };
+
+        this.httpClient.put(url, body, { headers, params }).subscribe(res => { console.log("Reproduciendo música..."); });
     }
 
     public previousTrack() {

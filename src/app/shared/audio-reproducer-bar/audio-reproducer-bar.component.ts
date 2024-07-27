@@ -13,16 +13,16 @@ import { MediaPlayerDevice } from './interfaces/MediaPlayerDevice.interface';
 export class AudioReproducerBarComponent implements OnInit {
     public idDevice: string = "";
     public mediaPlayerDevices: MediaPlayerDevice[] = [];
-    public spotifySdkPlayerName: string = spotifySdkPlayerName;
     public trackUri: string = "";
-    
+    public spotifySdkPlayerName: string = spotifySdkPlayerName;
     private spotifyService: SpotifySdkWebPlayerService;
     private sonifyMediaName: string = spotifySdkPlayerName;
     private lastPlayedTrackUri: string = "";
 
+    public algoyks: any = "pito";
+
     constructor(spotifyService: SpotifySdkWebPlayerService) {
         this.spotifyService = spotifyService;
-        
         setTimeout(async () => {
             this.loadMediaPlayerDevices();
             this.lastPlayedTrackUri = await this.spotifyService.getLastPlayedTrack();
@@ -31,7 +31,7 @@ export class AudioReproducerBarComponent implements OnInit {
 
     ngOnInit(): void { }
 
-    onDeviceChange(event: Event): void {
+    public onDeviceChange(event: Event): void {
         const selectElement = event.target as HTMLSelectElement;
         // resto 1 para evitar seleccionar la opción "Selecciona un dispositivo"
         const selectedIndex = selectElement.selectedIndex - 1;
@@ -39,23 +39,24 @@ export class AudioReproducerBarComponent implements OnInit {
         if (selectedIndex >= 0) {
             const selectedItem: MediaPlayerDevice = this.mediaPlayerDevices[selectedIndex];
             this.idDevice = selectedItem.id;
+            // this.play();
         }
+    }
+
+    public prueba(item: MediaPlayerDevice) {
+        console.log("AudioReproducerBarComponent.prueba()", 111111, item);
+        this.play();
     }
 
     public play(): void {
         let id: string = this.idDevice;
+        let trackUri: string = this.lastPlayedTrackUri;
 
-        if (id != null) {
-            this.spotifyService.playOnThisDevice(this.trackUri, id);
-        }
-        else if (this.idDevice != null) {
-            this.spotifyService.playOnThisDevice(this.trackUri, this.idDevice);
-        }
-        else {
-            console.error("ERROR: No se ha podido obtener el ID del reproductor de sonido.");
-        }
+        console.log(111, trackUri);
+        
 
-        this.spotifyService.play();
+        this.spotifyService.playOnThisDevice(trackUri, id);
+        // this.spotifyService.play();
     }
 
     public pause(): void {
