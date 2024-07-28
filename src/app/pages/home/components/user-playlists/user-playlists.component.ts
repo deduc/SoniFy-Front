@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
+// constantes
 import { SpotifyUserLikedSongs, SpotifyUserPlaylists, accessTokenKey } from 'src/app/core/constants/constants';
+
+// rxjs
 import { BehaviorSubject, Observable } from 'rxjs';
+
+// servicios
 import { UserPlaylistsService } from './user-playlists.service';
-import { PlaylistDataInterface } from './interfaces/PlaylistsDataInterface';
-import { UserLikedSongs } from './interfaces/UserLikedSongs';
 import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
+
+// interfaces y clases
+import { UserLikedSongs } from './interfaces/UserLikedSongs';
+import { PlaylistDataInterface } from 'src/app/core/interfaces/PlaylistsDataInterface';
 
 
 @Component({
