@@ -1,9 +1,13 @@
 section {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    gap: 64px;
 }
+
 
 .contenedor-buscador {
     width: 50%;
@@ -29,6 +33,23 @@ section {
 .music-input {
     padding: 10px;
     border-radius: 8px;
+}
+
+.contenedor-resultados {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+}
+.contenedor-resultados {
+    width: 100%;
+    border: 1px solid gray;
+
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+}
+.contenedor-resultados img {
+    width: 100px;
 }
 
 /* tablets */
