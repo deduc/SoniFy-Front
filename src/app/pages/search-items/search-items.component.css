@@ -1,79 +1,49 @@
-/* * {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-} */
-
 body {
     background-color: black;
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
 }
 
 main {
-    margin-bottom: 32px;
-
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-main section article {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 8px;
-}
-main section article img {
-    width: 80px;
-}
-
-main section article div {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.contenedor-canciones {
-    width: 100%;
-    padding-top: 16px;
-    padding-bottom: 16px;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-.contenedor-canciones article {
-    width: 250px;
-    height: 100px;
-    padding: 8px;
-    outline: 1px solid gray;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.contenedor-artistas-albums {
-    width: 100%;
-    margin-top: 32px;
-    padding: 16px;
-    
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 32px;
 }
-.contenedor-artistas-albums article {
-    width: 100%;
-    border: 1px solid red;
+
+.contenedor-canciones {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.contenedor-canciones h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor-canciones div {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+
+.contenedor-artistas-playlist-albums {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.contenedor-artistas {
+    padding: 16px;
+    border: 1px solid rgba(128, 128, 128, 0.6);
+}
+
+.contenedor-playlist-albums {
+    width: 40%;
+    padding: 160px;
+    border: 1px solid rgba(128, 128, 128, 0.6);
 }

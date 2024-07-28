@@ -4,8 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { itemSearchTextKey, SpotifySearch } from 'src/app/core/constants/constants';
 // servicios
 import { SearchItemsService } from './search-items.service';
-// rxjs
-import { BehaviorSubject, Observable } from 'rxjs';
 // interfaces
 import { AlbumDataInterface } from 'src/app/core/interfaces/AlbumDataInterface';
 import { ArtistInterface } from 'src/app/core/interfaces/ArtistsInterface';
@@ -27,7 +25,6 @@ export class SearchItemsComponent implements OnInit {
     public artists: ArtistInterface[] = [];
     public albums: AlbumDataInterface[] = [];
     public playlists: PlaylistDataInterface[] = [];
-    // public tracks: BehaviorSubject<TrackInfoInterface[]> = new BehaviorSubject<TrackInfoInterface[]>([]);
     public tracks: TrackInfoInterface[] = [];
 
     private searchItemsService: SearchItemsService;
@@ -45,23 +42,24 @@ export class SearchItemsComponent implements OnInit {
         this.doSearchContentFromSpotifyAPI();
     }
 
+
     public doSearchContentFromSpotifyAPI() {
         this.doUpdateItemSearchText();
 
         this.searchItemsService.doSearchContentFromSpotifyAPI(this.searchSpotifyEndpoint)
             .subscribe((apiResponse: any) => {
-                // AlbumData: [],
-                // Artist: [],
-                // PlaylistData: [],
-                // this.tracks.next(this.searchItemsService.loadAndBuildTracks(apiResponse.tracks));
+                console.log(111, apiResponse);
+
+                // this.albums = this.searchItemsService.loadAndBuildAlbums(apiResponse.albums);
+                this.artists = this.searchItemsService.loadAndBuildArtists(apiResponse.artists);
+                this.playlists = this.searchItemsService.loadAndBuildPlaylists(apiResponse.playlists);
                 this.tracks = this.searchItemsService.loadAndBuildTracks(apiResponse.tracks);
-
-                this.tracks.forEach((el: TrackInfoInterface) => {
-                    console.log(el.tittle);
-                })
-
             });
     }
+
+    // * metodos privados
+    // * metodos privados
+    // * metodos privados
 
     private doBuildSearchSpotifyEndpoint(spotifySearchBaseEndpoint: string, itemSearchText: string, typeToSearch: string) {
         return `${spotifySearchBaseEndpoint}?q=${itemSearchText}&type=${typeToSearch}`;;
@@ -75,10 +73,6 @@ export class SearchItemsComponent implements OnInit {
         );
     }
 
-    private loadTracks(tracks: any) {
-        console.log("SearchItemsComponent.loadTracks() ->", tracks);
-    }
-
     private loadArtists(artists: any) {
         console.log("SearchItemsComponent.loadArtists() ->", artists);
     }
@@ -89,5 +83,9 @@ export class SearchItemsComponent implements OnInit {
 
     private loadPlaylists(playlists: any) {
         console.log("SearchItemsComponent.loadPlaylists() ->", playlists);
+    }
+
+    private loadTracks(tracks: any) {
+        console.log("SearchItemsComponent.loadTracks() ->", tracks);
     }
 }

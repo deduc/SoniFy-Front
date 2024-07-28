@@ -1,25 +1,49 @@
 <body>
     <shared-header></shared-header>
 
-    <shared-buscador (clickBoton)="doSearchContentFromSpotifyAPI()"></shared-buscador>
+    <shared-buscador (clickBoton)="doSearchContentFromSpotifyAPI()"
+        [inputPlaceholderText]="itemSearchText"></shared-buscador>
 
     <main>
-        <h1>Canciones relacionadas</h1>
-
+        <!-- * contenedor de canciones, deberian ser 4 -->
         <section class="contenedor-canciones">
-            <article *ngFor="let item of tracks">
-                <img [src]="item.imgUrl" alt="">
-                <div>
-                    <span>{{item.tittle}}</span>
-                    <span>{{item.group}}</span>
-                    <span>{{item.time}}</span>
-                </div>
-            </article>
+            <h1>Canciones relacionadas</h1>
+
+            <div>
+                <shared-card-track *ngFor="let track of tracks" [track]="track"></shared-card-track>
+            </div>
         </section>
 
-        <section class="contenedor-artistas-albums">
-            <article>2</article>
-            <article>3</article>
+        <!-- * contenedor artistas y albums -->
+        <section class="contenedor-artistas-playlist-albums container-fluid row">
+            <!-- contenedor a la izquierda de artistas -->
+            <article class="col-lg-5 contenedor-artistas">
+                <shared-card-artist ngClass="pito" *ngFor="let artist of artists" [artist]="artist"></shared-card-artist>
+            </article>
+
+
+            <!-- contenedor a la derecha de un desplegable de albums y playlists  -->
+            <article class="col contenedor-playlist-albums">
+                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+                    <mat-tab label="Albums">
+                        <section class="contenedor-albums-playlists">
+                            <div *ngFor="let item of albums">
+
+                            </div>
+                        </section>
+                    </mat-tab>
+
+                    <mat-tab label="Playlists">
+                        <section class="contenedor-albums-playlists">
+                            <div *ngFor="let item of playlists">
+                                <img [src]="item.imageUrl" alt="imagen playlist">
+                                {{item.name}}
+                                {{item.description}}
+                            </div>
+                        </section>
+                    </mat-tab>
+                </mat-tab-group>
+            </article>
         </section>
     </main>
 

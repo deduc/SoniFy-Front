@@ -1,7 +1,7 @@
 <section class="container-fluid">
     <article class="contenedor-buscador">
         <!-- * ngModel=searchText asigna el valor del input al atributo de la clase -->
-        <input type="search" name="buscador" placeholder="¿Qué quieres escuchar?" class="col-10 text-center music-input"
+        <input type="search" name="buscador" [placeholder]="inputPlaceholderText" class="col-10 text-center music-input"
             id="buscador-canciones-grupos" [(ngModel)]="searchText">
         <button class="btn btn-success" (click)="searchContent()">Buscar</button>
     </article>

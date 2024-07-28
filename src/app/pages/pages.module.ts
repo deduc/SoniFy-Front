@@ -12,13 +12,16 @@ import { SharedModule } from '../shared/shared.module';
 import { HomeModule } from './home/home.module';
 // modulo http para usar el componente HttpClient
 import { HttpClientModule } from '@angular/common/http';
-// modulo angular material
+// modulos angular material
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+
 import { SearchItemsComponent } from './search-items/search-items.component';
 
 
 @NgModule({
     declarations: [
+        // * No declaro HomeComponent porque ya importo su módulo
         MyPlaylistsComponent,
         MyProfileComponent,
         MyArtistsComponent,
@@ -27,10 +30,14 @@ import { SearchItemsComponent } from './search-items/search-items.component';
     imports: [
         CommonModule,
         HomeModule,
-        MatIconModule,
-        SharedModule,
-        PagesRoutingModule,
         HttpClientModule,
+        
+        // modulos angular material
+        MatIconModule,
+        MatTabsModule,
+        
+        PagesRoutingModule,
+        SharedModule,
     ],
     providers: []
 })

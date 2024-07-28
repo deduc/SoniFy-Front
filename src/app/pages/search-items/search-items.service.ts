@@ -9,13 +9,15 @@ import { accessTokenKey } from 'src/app/core/constants/constants';
 // servicios
 import { DataEmitterService } from 'src/app/core/global-services/data-emitter.service';
 import { TrackInfoInterface } from 'src/app/core/interfaces/TrackInfoInterface';
+import { ArtistInterface } from 'src/app/core/interfaces/ArtistsInterface';
+import { AlbumDataInterface } from 'src/app/core/interfaces/AlbumDataInterface';
+import { PlaylistDataInterface } from 'src/app/core/interfaces/PlaylistsDataInterface';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchItemsService {
-
     private accessTokenKey: string = accessTokenKey;
     private dataEmitterService: DataEmitterService;
     private httpClient: HttpClient;
@@ -32,6 +34,50 @@ export class SearchItemsService {
     }
 
 
+    public doSearchContentFromSpotifyAPI(spotifyEndpoint: string): Observable<any> {
+        return this.httpClient.get(spotifyEndpoint, { headers: this.httpHeaders });
+    }
+
+    public loadAndBuildAlbums(albums: any): ArtistInterface[] {
+        let albumsData: ArtistInterface[] = [];
+
+        albums.items.forEach((albums: any) => {
+            // albumsData.push(this.doBuildAlbumInfoObject(albums));
+            // albumsData = this.doSortByPopularity(albumsData);
+        });
+
+
+        return albumsData;
+    }
+
+    public loadAndBuildArtists(artists: any): ArtistInterface[] {
+        let artistsData: ArtistInterface[] = [];
+
+        artists.items.forEach((artists: any) => {
+            try {
+                artistsData.push(this.doBuildArtistInfoObject(artists));
+            }
+            catch (err) {
+                // console.error("SearchItemsService.loadAndBuildArtists() -> No se ha podido construir el objeto ArtistInterface", err);
+            }
+        });
+
+
+        return artistsData;
+    }
+
+    public loadAndBuildPlaylists(playlists: any): PlaylistDataInterface[] {
+        let playlistsData: PlaylistDataInterface[] = [];
+
+        playlists.items.forEach((playlists: any) => {
+            playlistsData.push(this.doBuildPlaylistInfoObject(playlists));
+            // playlistsData = this.doSortByPopularity(playlistsData);
+        });
+
+
+        return playlistsData;
+    }
+
     public loadAndBuildTracks(tracks: any): TrackInfoInterface[] {
         let tracksListAux: TrackInfoInterface[] = [];
 
@@ -45,13 +91,51 @@ export class SearchItemsService {
         return tracksListAux;
     }
 
-    public doSearchContentFromSpotifyAPI(spotifyEndpoint: string): Observable<any> {
-        return this.httpClient.get(spotifyEndpoint, { headers: this.httpHeaders });
-    }
+
 
     // * METODOS PRIVADOS
     // * METODOS PRIVADOS
     // * METODOS PRIVADOS
+
+    private doBuildAlbumInfoObject(album: any): ArtistInterface {
+        const artist: ArtistInterface = {
+            external_url: album,
+            genres: album,
+            id: album,
+            image_url: album,
+            name: album,
+        };
+
+        return artist;
+    }
+
+    private doBuildArtistInfoObject(artist: any): ArtistInterface {
+        const albumData: ArtistInterface = {
+            external_url: artist.external_urls.spotify,
+            genres: artist.genres,
+            id: artist.id,
+            image_url: artist.images[0].url,
+            name: artist.name,
+        };
+
+        return albumData;
+    }
+
+    private doBuildPlaylistInfoObject(playlist: any): PlaylistDataInterface {
+        const playlistData: PlaylistDataInterface = {
+            description: playlist.description,
+            idPlaylist: playlist.id,
+            imageUrl: playlist.images[0].url,
+            name: playlist.name,
+            SpotifyApiSongsUrl: playlist.tracks.href,
+            SpotifyApiUrl: playlist.href,
+            SpotifyExternalUrl: playlist.external_urls.spotify,
+            SpotifyOwnerUser: playlist.owner.display_name,
+            SpotifyOwnerUserProfile: playlist.owner.href
+        };
+
+        return playlistData;
+    }
 
     private doBuildTrackInfoObject(track: any): TrackInfoInterface {
         const songTime: string = this.doFormatMilliseconds((parseInt(track.duration_ms)));
