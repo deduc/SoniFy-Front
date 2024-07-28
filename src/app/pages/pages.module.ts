@@ -14,6 +14,7 @@ import { HomeModule } from './home/home.module';
 import { HttpClientModule } from '@angular/common/http';
 // modulo angular material
 import { MatIconModule } from '@angular/material/icon';
+import { SearchItemsComponent } from './search-items/search-items.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
         MyPlaylistsComponent,
         MyProfileComponent,
         MyArtistsComponent,
+        SearchItemsComponent,
     ],
     imports: [
         CommonModule,
