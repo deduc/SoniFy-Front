@@ -1,0 +1,27 @@
+<body>
+    <shared-header></shared-header>
+
+    <shared-buscador (clickBoton)="doSearchContentFromSpotifyAPI()"></shared-buscador>
+
+    <main>
+        <h1>Canciones relacionadas</h1>
+
+        <section class="contenedor-canciones">
+            <article *ngFor="let item of tracks">
+                <img [src]="item.imgUrl" alt="">
+                <div>
+                    <span>{{item.tittle}}</span>
+                    <span>{{item.group}}</span>
+                    <span>{{item.time}}</span>
+                </div>
+            </article>
+        </section>
+
+        <section class="contenedor-artistas-albums">
+            <article>2</article>
+            <article>3</article>
+        </section>
+    </main>
+
+    <shared-footer></shared-footer>
+</body>

@@ -1,0 +1,79 @@
+/* * {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+} */
+
+body {
+    background-color: black;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    margin-bottom: 32px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main section article {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+}
+main section article img {
+    width: 80px;
+}
+
+main section article div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.contenedor-canciones {
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.contenedor-canciones article {
+    width: 250px;
+    height: 100px;
+    padding: 8px;
+    outline: 1px solid gray;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-artistas-albums {
+    width: 100%;
+    margin-top: 32px;
+    padding: 16px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+.contenedor-artistas-albums article {
+    width: 100%;
+    border: 1px solid red;
+}
