@@ -1,0 +1,25 @@
+article {
+    padding: 8px;
+    border: 1px solid gray;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+img {
+    width: 80px;
+}
+
+.external-link-img {
+    width: 1rem;
+    height: 1rem;
+
+    border-radius: 0%;
+    opacity: 0.5;
+}
+
+.external-link-img:hover {
+    opacity: 1;
+}
