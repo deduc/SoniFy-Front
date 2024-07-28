@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { itemSearchTextKey, searchItemsUrl } from 'src/app/core/constants/constants';
@@ -11,11 +11,7 @@ import { itemSearchTextKey, searchItemsUrl } from 'src/app/core/constants/consta
 })
 export class BuscadorComponent  {
     // necesario para actualizar los componentes que utilicen el buscador
-    @Output()
-    clickBoton = new EventEmitter<void>();
-
-    @Input()
-    public inputPlaceholderText: string = "¿Qué quieres escuchar?";
+    @Output() clickBoton = new EventEmitter<void>();
 
     public itemSearchTextKey: string = itemSearchTextKey;
     // * Obtener el texto que hay en el input mediante ngModel y FormsModule desde shared-module

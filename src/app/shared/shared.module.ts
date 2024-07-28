@@ -13,8 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 // componentes
 import { AudioReproducerBarComponent } from './audio-reproducer-bar/audio-reproducer-bar.component';
-import { CardArtistComponent } from './card-artist/card-artist.component';
-import { CardTrackComponent } from './card-track/card-track.component';
 import { BuscadorComponent } from './buscador/buscador.component';
 import { DialogErrorComponent } from './dialog-error/dialog-error.component';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
@@ -25,8 +23,6 @@ import { HeaderComponent } from './header/header.component';
     declarations: [
         AudioReproducerBarComponent,
         BuscadorComponent,
-        CardArtistComponent,
-        CardTrackComponent,
         DialogErrorComponent,
         FilterBarComponent,
         FooterComponent,
@@ -35,8 +31,6 @@ import { HeaderComponent } from './header/header.component';
     exports: [
         AudioReproducerBarComponent,
         BuscadorComponent,
-        CardArtistComponent,
-        CardTrackComponent,
         DialogErrorComponent,
         FilterBarComponent,
         FooterComponent,
