@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AuthComponent } from './login/auth/auth.component';
 
-
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'login/auth', component: AuthComponent },
@@ -21,8 +20,9 @@ const routes: Routes = [
         loadChildren: () => import("./pages/pages.module").then(m => m.PagesModule)
     },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
+    // Redirige cualquier ruta no encontrada a login
+    { path: '**', redirectTo: 'login' } 
 ];
-
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

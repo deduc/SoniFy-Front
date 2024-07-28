@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataEmitterService } from '../../core/global-services/data-emitter.service';
 
 // interfaces y clases
-import { PlaylistDataInterface } from '../home/components/user-playlists/interfaces/PlaylistsDataInterface';
+import { PlaylistDataInterface } from '../../core/interfaces/PlaylistsDataInterface';
 import { UserLikedSongs } from '../home/components/user-playlists/interfaces/UserLikedSongs';
 
 

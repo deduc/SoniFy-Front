@@ -47,8 +47,7 @@ export class TokenService {
             .subscribe(response => {
                 let data: any = { ...response };
 
-                // console.log("TokenService.getAndSaveToken() access token object:", data);
-
+                // guardar el token de acceso actual y el token de refresh y el momento en el que se obtuvo
                 localStorage.setItem(this.accessTokenKey, data.access_token);
                 localStorage.setItem(this.accessTokenRefreshKey, data.refresh_token);
                 this.setTimeStampWhenAccessTokenWasTaken();

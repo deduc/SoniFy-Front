@@ -9,7 +9,7 @@ import { appName, githubLink, email } from 'src/app/core/constants/constants';
 })
 export class FooterComponent implements OnInit {
     public appName: string = appName;
-    public creditos: string = this.appName + ", aplicación creada por Iván Gómez en Angular";
+    public creditos: string = this.appName + ", aplicación creada por Iván Gómez en Angular v16";
     public emailContacto: string = "Email de contacto: " + email;
     public githubLink: string = githubLink;
 

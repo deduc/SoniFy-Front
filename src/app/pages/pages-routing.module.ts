@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { MyArtistsComponent } from './my-artists/my-artists.component';
 import { MyPlaylistsComponent } from './my-playlists/my-playlists.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
-
+import { SearchItemsComponent } from './search-items/search-items.component';
 
 const routes: Routes = [
     // * Este routerMdoule está dentro de la dirección /me
@@ -14,6 +14,7 @@ const routes: Routes = [
     { path: 'my-artists', component: MyArtistsComponent },
     { path: 'my-playlists', component: MyPlaylistsComponent },
     { path: 'my-profile', component: MyProfileComponent },
+    { path: 'search', component: SearchItemsComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' },
 ];

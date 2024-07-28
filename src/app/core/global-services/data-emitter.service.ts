@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+// rxjs
+import { BehaviorSubject, Observable } from 'rxjs';
 
-
+// interfaces y clases
 import { AlbumDataInterface } from '../interfaces/AlbumDataInterface';
 import { ArtistCardInfoInterface } from 'src/app/pages/home/components/user-top-artists/Interfaces/ArtistCardInfoInterface';
-import { PlaylistDataInterface } from 'src/app/pages/home/components/user-playlists/interfaces/PlaylistsDataInterface';
+import { PlaylistDataInterface } from '../interfaces/PlaylistsDataInterface';
 import { TopArtistListInterface } from '../interfaces/TopArtistListInterface';
 import { UserLikedSongs } from 'src/app/pages/home/components/user-playlists/interfaces/UserLikedSongs';
+
 
 
 @Injectable({
@@ -55,7 +57,7 @@ export class DataEmitterService {
 
     // invocado desde TokenService
     public emitAccessToken(token: string) {
-        // console.log("DataEmitterService.emitAccessToken() ->", token);
+        console.log("DataEmitterService.emitAccessToken() ->", token);
         this.accessToken.next(token);
     }
 
