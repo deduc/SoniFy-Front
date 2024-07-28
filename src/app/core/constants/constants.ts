@@ -43,9 +43,9 @@ export const accessTokenTimestampKey: string = "accessTokenTimestamp";
 export const clientIdKey: string = "clientId";
 export const clientSecretKey: string = "clientSecret";
 export const codeVerifierKey: string = "code_verifier";
-// En la url hay un parámetro llamado code. Importante no cambiar su nombre.
+// En la url hay un parámetro llamado code. Importante no cambiar este nombre.
 export const codeFromUrlKey: string = "code";
-export const lastSearchedKey: string = "lastSearch";
+export const itemSearchTextKey: string = "itemSearchText";
 export const redirectUriKey: string = "redirectUri";
 export const verifierKey: string = "verifier";
 
@@ -55,12 +55,13 @@ export const homeUrl: string = "/me/home";
 export const loginUrl: string = "/login";
 export const loginAuthUrl: string = "/login/auth";
 export const myArtistsUrl: string = "/me/my-artists"
+export const searchItemsUrl: string = "/me/search";
 
 
 //* Otras constantes
 export const appName: string = "SoniFy";
 export const githubLink: string = "https://github.com/deduc";
-export const email: string = "deductivegoose@outlook.es";
+export const email: string = "ivan_dev@outlook.es";
 export const oneHourTimeStamp: number = 3600000;
 export const spotifySdkPlayerName: string = "Reproductor de sonido " + appName;
 
