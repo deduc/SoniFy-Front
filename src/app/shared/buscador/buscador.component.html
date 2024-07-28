@@ -5,11 +5,4 @@
             id="buscador-canciones-grupos" [(ngModel)]="searchText">
         <button class="btn btn-success" (click)="searchContent()">Buscar</button>
     </article>
-
-    <div class="container">
-        <article *ngFor="let item of albumsInfoList; let index=index">
-            <span (click)=getItemInfoPage(index)>{{index}}</span>
-            <span>{{item.name}}</span>
-        </article>
-    </div>
 </section>
