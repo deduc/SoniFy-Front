@@ -1,49 +1,18 @@
 <body>
-    <shared-header></shared-header>
-
-    <shared-buscador (clickBoton)="doSearchContentFromSpotifyAPI()"
-        [inputPlaceholderText]="itemSearchText"></shared-buscador>
+    <shared-header [buscadorComponentToRender]="true" (clickBoton)="doSearchContentInSpotifyAPI()"
+        [inputPlaceholderText]="itemSearchText">
+    </shared-header>
 
     <main>
-        <!-- * contenedor de canciones, deberian ser 4 -->
-        <section class="contenedor-canciones">
-            <h1>Canciones relacionadas</h1>
+        <search-items-contenedor-canciones [tracks]="tracks">
+        </search-items-contenedor-canciones>
 
-            <div>
-                <shared-card-track *ngFor="let track of tracks" [track]="track"></shared-card-track>
-            </div>
-        </section>
+        <section>
+            <search-items-contenedor-artistas [artists]="artists">
+            </search-items-contenedor-artistas>
 
-        <!-- * contenedor artistas y albums -->
-        <section class="contenedor-artistas-playlist-albums container-fluid row">
-            <!-- contenedor a la izquierda de artistas -->
-            <article class="col-lg-5 contenedor-artistas">
-                <shared-card-artist ngClass="pito" *ngFor="let artist of artists" [artist]="artist"></shared-card-artist>
-            </article>
-
-
-            <!-- contenedor a la derecha de un desplegable de albums y playlists  -->
-            <article class="col contenedor-playlist-albums">
-                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
-                    <mat-tab label="Albums">
-                        <section class="contenedor-albums-playlists">
-                            <div *ngFor="let item of albums">
-
-                            </div>
-                        </section>
-                    </mat-tab>
-
-                    <mat-tab label="Playlists">
-                        <section class="contenedor-albums-playlists">
-                            <div *ngFor="let item of playlists">
-                                <img [src]="item.imageUrl" alt="imagen playlist">
-                                {{item.name}}
-                                {{item.description}}
-                            </div>
-                        </section>
-                    </mat-tab>
-                </mat-tab-group>
-            </article>
+            <search-items-contenedor-playlists-albums [albums]="albums" [playlists]="playlists">
+            </search-items-contenedor-playlists-albums>
         </section>
     </main>
 

@@ -2,48 +2,33 @@ body {
     background-color: black;
 }
 
-main {
+main section {
+    width: 100%;
+    padding: 16px;
+
+    display: grid;
+    /* Crea una rejilla de 12 columnas iguales */
+    grid-template-columns: repeat(12, 1fr);
+    gap: 10px;
+}
+
+main search-items-contenedor-canciones {
+    background-color: rgb(16, 16, 16);
+    padding-top: 16px;
+    padding-bottom: 16px;
+
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 32px;
 }
 
-.contenedor-canciones {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 16px;
+main section search-items-contenedor-artistas {
+    grid-column: span 5;
+    background-color: rgb(16, 16, 16);
 }
 
-.contenedor-canciones h1 {
-    display: flex;
-    justify-content: center;
-}
-
-.contenedor-canciones div {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-}
-
-
-.contenedor-artistas-playlist-albums {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.contenedor-artistas {
-    padding: 16px;
-    border: 1px solid rgba(128, 128, 128, 0.6);
-}
-
-.contenedor-playlist-albums {
-    width: 40%;
-    padding: 160px;
-    border: 1px solid rgba(128, 128, 128, 0.6);
+main section search-items-contenedor-playlists-albums {
+    grid-column: span 7;
+    background-color: rgb(16, 16, 16);
 }

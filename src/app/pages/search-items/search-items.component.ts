@@ -30,6 +30,7 @@ export class SearchItemsComponent implements OnInit {
     private searchItemsService: SearchItemsService;
     private searchSpotifyEndpoint: string = "null_searchSpotifyEndpoint_value";
     private typeToSearch: string = "track%2Cartist%2Cplaylist%2Calbum";
+    private limit: number = 6;
 
 
     constructor(searchItemsService: SearchItemsService) {
@@ -39,18 +40,18 @@ export class SearchItemsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.doSearchContentFromSpotifyAPI();
+        this.doSearchContentInSpotifyAPI();
     }
 
 
-    public doSearchContentFromSpotifyAPI() {
+    public doSearchContentInSpotifyAPI() {
         this.doUpdateItemSearchText();
 
-        this.searchItemsService.doSearchContentFromSpotifyAPI(this.searchSpotifyEndpoint)
+        this.searchItemsService.doSearchContentInSpotifyAPI(this.searchSpotifyEndpoint)
             .subscribe((apiResponse: any) => {
                 console.log(111, apiResponse);
 
-                // this.albums = this.searchItemsService.loadAndBuildAlbums(apiResponse.albums);
+                this.albums = this.searchItemsService.loadAndBuildAlbums(apiResponse.albums);
                 this.artists = this.searchItemsService.loadAndBuildArtists(apiResponse.artists);
                 this.playlists = this.searchItemsService.loadAndBuildPlaylists(apiResponse.playlists);
                 this.tracks = this.searchItemsService.loadAndBuildTracks(apiResponse.tracks);
@@ -62,7 +63,7 @@ export class SearchItemsComponent implements OnInit {
     // * metodos privados
 
     private doBuildSearchSpotifyEndpoint(spotifySearchBaseEndpoint: string, itemSearchText: string, typeToSearch: string) {
-        return `${spotifySearchBaseEndpoint}?q=${itemSearchText}&type=${typeToSearch}`;;
+        return `${spotifySearchBaseEndpoint}?q=${itemSearchText}&type=${typeToSearch}&limit=${this.limit}`;
     }
 
     private doUpdateItemSearchText(): void {
@@ -71,21 +72,5 @@ export class SearchItemsComponent implements OnInit {
         this.searchSpotifyEndpoint = this.doBuildSearchSpotifyEndpoint(
             this.spotifySearchBaseEndpoint, this.itemSearchText, this.typeToSearch
         );
-    }
-
-    private loadArtists(artists: any) {
-        console.log("SearchItemsComponent.loadArtists() ->", artists);
-    }
-
-    private loadAlbums(albums: any) {
-        console.log("SearchItemsComponent.loadAlbums() ->", albums);
-    }
-
-    private loadPlaylists(playlists: any) {
-        console.log("SearchItemsComponent.loadPlaylists() ->", playlists);
-    }
-
-    private loadTracks(tracks: any) {
-        console.log("SearchItemsComponent.loadTracks() ->", tracks);
     }
 }
