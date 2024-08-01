@@ -1,10 +1,15 @@
 <!-- ! Cabecera para dispositivos lg y xl -->
-<header class="container-fluid header-flex-space-between visualizar-xl-lg">
+<header class="visualizar-xl-lg">
     <div class="header-flex-start-center">
         <button class="app-tittle" (click)="navigate('me/home')">{{ appName }}</button>
         <button class="my-btn btn" (click)="navigate('me/home')">Home</button>
-        <button class="my-btn btn" (click)="navigate('me/my-playlists')">Playlists</button>
+        <!-- <button class="my-btn btn" (click)="navigate('me/my-playlists')">Playlists</button> -->
     </div>
+    
+    <div *ngIf="buscadorComponentToRender != false" class="buscador-component">
+        <shared-buscador [inputPlaceholderText]="inputPlaceholderText"></shared-buscador>
+    </div>
+    
     <button class="my-profile-btn" (click)="navigate('me/my-profile')">
         <b>{{myUserName}}</b>
         <img class="profile-img" [src]="myProfileImg" alt="profile-image">

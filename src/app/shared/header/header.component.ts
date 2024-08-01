@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { appName } from 'src/app/core/constants/constants';
@@ -12,6 +12,11 @@ import { MyUserInfoInterface } from 'src/app/core/interfaces/MyUserInfoInterface
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+    // renderizar el buscador en el header de forma opcional
+    @Input()
+    public buscadorComponentToRender: boolean = false;
+    @Input()
+    public inputPlaceholderText: string = "";
     public router: Router;
     public appName: string = appName;
     public myProfileImg: string = "";
