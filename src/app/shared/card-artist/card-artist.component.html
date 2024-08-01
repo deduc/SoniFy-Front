@@ -1,9 +1,9 @@
 <article [style]="artistCardInfo.css">
     <div>
-        <img [src]="artistCardInfo.img" alt="imagen-artista" [id]="artistCardInfo.img">
+        <img class="imagen-artista" [src]="artistCardInfo.img" alt="imagen-artista" [id]="artistCardInfo.img">
         <p>{{artist.name}}</p>
     </div>
 
-    <img (click)="navigateToSpotifyWeb(artistCardInfo.spotify_url)" class="external-link-img"
+    <img class="imagen-link-externo" (click)="navigateToSpotifyWeb(artistCardInfo.spotify_url)"
         src="/assets/external-link.png" alt="">
 </article>
