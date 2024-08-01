@@ -34,16 +34,15 @@ export class SearchItemsService {
     }
 
 
-    public doSearchContentFromSpotifyAPI(spotifyEndpoint: string): Observable<any> {
+    public doSearchContentInSpotifyAPI(spotifyEndpoint: string): Observable<any> {
         return this.httpClient.get(spotifyEndpoint, { headers: this.httpHeaders });
     }
 
-    public loadAndBuildAlbums(albums: any): ArtistInterface[] {
-        let albumsData: ArtistInterface[] = [];
+    public loadAndBuildAlbums(albums: any): AlbumDataInterface[] {
+        let albumsData: AlbumDataInterface[] = [];
 
         albums.items.forEach((albums: any) => {
-            // albumsData.push(this.doBuildAlbumInfoObject(albums));
-            // albumsData = this.doSortByPopularity(albumsData);
+            albumsData.push(this.doBuildAlbumDataObject(albums));
         });
 
 
@@ -61,7 +60,6 @@ export class SearchItemsService {
                 // console.error("SearchItemsService.loadAndBuildArtists() -> No se ha podido construir el objeto ArtistInterface", err);
             }
         });
-
 
         return artistsData;
     }
@@ -85,7 +83,9 @@ export class SearchItemsService {
         tracks.items.forEach((track: any) => {
             tracksListAux.push(this.doBuildTrackInfoObject(track));
             tracksListAux = this.doSortByPopularity(tracksListAux);
-            tracksListAux = this.doFilterFirstNTracks(tracksListAux, 4);
+            
+            // obtener los 4 tracks más populares
+            tracksListAux = tracksListAux.slice(0, 4);
         });
 
         return tracksListAux;
@@ -97,16 +97,20 @@ export class SearchItemsService {
     // * METODOS PRIVADOS
     // * METODOS PRIVADOS
 
-    private doBuildAlbumInfoObject(album: any): ArtistInterface {
-        const artist: ArtistInterface = {
-            external_url: album,
-            genres: album,
-            id: album,
-            image_url: album,
-            name: album,
+    private doBuildAlbumDataObject(album: any): AlbumDataInterface {
+        let albumListAux: AlbumDataInterface = {
+            api_href: album.href,
+            api_id: album.id,
+            artistName: album.name,
+            idArtist: album.id,
+            img_url: album.images[0].url,
+            name: album.name,
+            release_date: album.release_date,
+            spotify_url: album.external_urls.spotify,
+            total_tracks: album.total_tracks,
         };
 
-        return artist;
+        return albumListAux;
     }
 
     private doBuildArtistInfoObject(artist: any): ArtistInterface {
