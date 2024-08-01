@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { SearchItemsComponent } from './search-items/search-items.component';
+import { SearchItemsModule } from './search-items/search-items.module';
 
 
 @NgModule({
@@ -25,7 +25,6 @@ import { SearchItemsComponent } from './search-items/search-items.component';
         MyPlaylistsComponent,
         MyProfileComponent,
         MyArtistsComponent,
-        SearchItemsComponent,
     ],
     imports: [
         CommonModule,
@@ -38,6 +37,7 @@ import { SearchItemsComponent } from './search-items/search-items.component';
         
         PagesRoutingModule,
         SharedModule,
+        SearchItemsModule,
     ],
     providers: []
 })
