@@ -1,8 +1,8 @@
 export interface AlbumDataInterface {
-    album_type: string,
     api_href: string,
     api_id: string,
-    artist: string,
+    artistName: string,
+    idArtist: string,
     img_url: string,
     name: string,
     release_date: string,
