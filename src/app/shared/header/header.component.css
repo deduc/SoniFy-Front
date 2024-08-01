@@ -1,6 +1,14 @@
 header,
 nav {
+    height: 64px;
     background-color: rgb(0, 161, 40);
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .app-tittle {
@@ -16,6 +24,10 @@ nav {
 
 .app-tittle:hover {
     cursor: pointer;
+}
+
+.buscador-component {
+    width: 100%;
 }
 
 .header-flex-start-center {

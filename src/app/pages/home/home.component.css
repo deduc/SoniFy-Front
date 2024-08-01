@@ -33,4 +33,8 @@ home-user-top-artists {
     main div * {
         width: 50%;
     }
+
+    shared-buscador {
+        margin-top: 32px;
+    }
 }
