@@ -1,15 +1,15 @@
 <main>
     <h2>Tus albums</h2>
 
-    <section class="albums-container">
-        <article [style]="item.css" *ngFor="let item of loadedAlbumCards">
-            <a href="" target="_blank">
+    <section>
+        <div>
+            <article [style]="item.css" *ngFor="let item of loadedAlbumCards">
                 <img [src]="item.img" alt="imagen-album" [id]="item.img">
                 <div>
                     <p>{{item.titulo}}</p>
                     <p>{{item.grupo}}</p>
                 </div>
-            </a>
-        </article>
+            </article>
+        </div>
     </section>
 </main>

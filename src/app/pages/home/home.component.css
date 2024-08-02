@@ -4,6 +4,11 @@ body {
     flex-direction: column;
 }
 
+shared-buscador {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -16,6 +21,7 @@ footer {
     gap: 6rem;
 }
 
+
 home-user-top-artists {
     margin-bottom: 32px;
 }
@@ -23,18 +29,27 @@ home-user-top-artists {
 /* vista pc */
 @media (min-width: 993px) {
     main div {
+        width: 95vw;
+        margin-top: 32px;
+
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 16px;
     }
-
+    
     main div * {
-        width: 50%;
+        width: 45vw;
     }
+}
 
-    shared-buscador {
-        margin-top: 32px;
+/* moviles y tablets */
+@media (max-width: 993px) {
+    main div {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 32px;
     }
 }

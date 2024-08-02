@@ -1,63 +1,81 @@
-/* * {
-    outline: 1px solid red;
-    box-sizing: border-box;
-} */
+main {
+    background-color: rgb(32, 32, 32);
+    padding: 8px;
+    padding-bottom: 16px;
+    border-radius: 10px;
+}
 
-a {
-    min-height: 150px;
-    color: white;
-    text-decoration: none;
-
+section {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    gap: 8px;
+}
+
+section div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
 }
 
 article {
-    width: 200px;
-    height: 250px;
-    padding: 8px;
+    width: 160px;
+    height: 300px;
 
-    border: 1px solid rgba(211, 211, 211, 0.6);
+    padding: 8px;
+    border-radius: 10px;
+    text-align: center;
+
+    background-color: rgb(16, 16, 16);
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+
+    transition: 0.2s;
+}
+article:hover {
+    transform: scale(1.05);
+}
+
+article div {
+    margin-top: 8px;
 }
 
 article img {
-    width: 50%;
+    height: 8rem;
+    transform: scale(0.65);
 }
 
-article span {
-    font-size: 48px;
+article div p {
+    text-align: left;
 }
 
 h2 {
     color: white;
 }
 
+
 p {
     color: white;
 }
 
-section {
+.liked-songs {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
     gap: 8px;
 }
+.liked-songs div {
+    font-size: 64px;
+}
 
+/* moviles y tablets */
 @media (max-width: 993px) {
-    article {
-        min-width: 200px;
-        min-height: 200px;
-    }
-
     section {
-        justify-content: flex-start;
+        width: 95vw;
+        justify-content: center;
         flex-wrap: wrap;
     }
 }

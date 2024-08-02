@@ -2,22 +2,20 @@
     <h2>Tus playlists</h2>
 
     <section>
-        <article>
-            <a href="" target="_blank">
+        <div>
+            <article class="liked-songs">
                 <!-- heart icon -->
-                <span>&#10084;</span>
+                <div>&#10084;</div>
                 <p>Tus canciones favoritas</p>
-            </a>
-        </article>
+            </article>
 
-        <article *ngFor="let item of userPlaylists$ | async">
-            <a href="" target="_blank">
+            <article *ngFor="let item of userPlaylists$ | async">
                 <img src={{item.imageUrl}} alt="imagen-playlist">
                 <div>
                     <p>{{item.name}}</p>
                     <p>{{item.description}}</p>
                 </div>
-            </a>
-        </article>
+            </article>
+        </div>
     </section>
 </main>
