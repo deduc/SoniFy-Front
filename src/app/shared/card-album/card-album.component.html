@@ -1,3 +1,18 @@
-<p>
-  card-album works!
-</p>
+<div *ngFor="let item of albums">
+    <img [src]="item.img_url" alt="imagen album">
+    <ul>
+        <li>
+            {{item.name}}
+        </li>
+        <li>
+            {{item.artistName}}
+        </li>
+        <li>
+            {{item.release_date}}
+        </li>
+        <li>
+            {{item.total_tracks}} canciones
+        </li>
+    </ul>
+    <!-- {{item.description}} -->
+</div>
