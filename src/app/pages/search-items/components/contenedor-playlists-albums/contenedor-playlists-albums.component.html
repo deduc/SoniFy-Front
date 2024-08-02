@@ -1,7 +1,8 @@
 <section>
     <header>
-        <button class="btn btn-primary" (click)="changeComponentToRender(0)">Albums</button>
-        <button class="btn btn-primary" (click)="changeComponentToRender(1)">Playlists</button>
+        <ng-container *ngIf="componentIndexToRender === 0"></ng-container>
+        <button [ngClass]="cssClassBtn0" (click)="changeComponentToRender(0)">Albums</button>
+        <button [ngClass]="cssClassBtn1" (click)="changeComponentToRender(1)">Playlists</button>
     </header>
 
     <article>
