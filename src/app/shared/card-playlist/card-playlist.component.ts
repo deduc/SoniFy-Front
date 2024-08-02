@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { PlaylistDataInterface } from 'src/app/core/interfaces/PlaylistsDataInterface';
 
 @Component({
-  selector: 'app-card-playlist',
-  templateUrl: './card-playlist.component.html',
-  styleUrls: ['./card-playlist.component.css']
+    selector: 'shared-card-playlists',
+    templateUrl: './card-playlist.component.html',
+    styleUrls: ['./card-playlist.component.css']
 })
-export class CardPlaylistComponent implements OnInit {
+export class CardPlaylistComponent {
+    @Input()
+    public playlists: PlaylistDataInterface[] = [];
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+    constructor() { }
 }

@@ -1,3 +1,5 @@
-<p>
-  card-playlist works!
-</p>
+<div *ngFor="let item of playlists">
+    <img [src]="item.imageUrl" alt="imagen playlist">
+    {{item.name}}
+    {{item.description}}
+</div>
