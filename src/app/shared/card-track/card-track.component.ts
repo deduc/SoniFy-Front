@@ -10,6 +10,8 @@ export class CardTrackComponent {
     @Input()
     public track: TrackInfoInterface;
 
+    public textoLargo: string = "null_string_value";
+
     constructor() {
         this.track = {
             apiHref: "", externalUrl: "", group: "", time: "", tittle: "", idTrack: "", imgUrl: "", uri: "", popularity: ""

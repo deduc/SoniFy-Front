@@ -101,7 +101,7 @@ export class SearchItemsService {
         let albumListAux: AlbumDataInterface = {
             api_href: album.href,
             api_id: album.id,
-            artistName: album.name,
+            artistName: album.artists[0].name,
             idArtist: album.id,
             img_url: album.images[0].url,
             name: album.name,

@@ -17,7 +17,7 @@ import { TrackInfoInterface } from 'src/app/core/interfaces/TrackInfoInterface';
     styleUrls: ['./search-items.component.css']
 })
 export class SearchItemsComponent implements OnInit {
-    // words searched by user got from localStorage
+    // palabras buscadas por el usuario, encontradas en localStorage
     public itemSearchText: string = "";
     public spotifySearchBaseEndpoint: string = SpotifySearch;
 

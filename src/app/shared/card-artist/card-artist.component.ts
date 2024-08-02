@@ -11,6 +11,7 @@ export class CardArtistComponent implements OnInit {
     @Input()
     public artist: ArtistInterface;
     public artistCardInfo: ArtistCardInfoInterface;
+    public pito: string = "";
 
 
     constructor() {
@@ -34,12 +35,6 @@ export class CardArtistComponent implements OnInit {
         }
 
         this.setArtistsListCssProperties();
-    }
-
-
-    // Usuario clica en el icono para saltar a otra pagina
-    public navigateToSpotifyWeb(spotifyLink: string): void {
-        window.open(spotifyLink, '_blank');
     }
 
     // * metodos privados

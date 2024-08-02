@@ -4,6 +4,5 @@
         <p>{{artist.name}}</p>
     </div>
 
-    <img class="imagen-link-externo" (click)="navigateToSpotifyWeb(artistCardInfo.spotify_url)"
-        src="/assets/external-link.png" alt="">
+    <shared-external-link-icon [externalSpotifyUrl]="artistCardInfo.spotify_url"></shared-external-link-icon>
 </article>

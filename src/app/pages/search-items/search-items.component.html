@@ -1,7 +1,8 @@
 <body>
-    <shared-header [buscadorComponentToRender]="true" (clickBoton)="doSearchContentInSpotifyAPI()"
-        [inputPlaceholderText]="itemSearchText">
-    </shared-header>
+    <shared-header></shared-header>
+
+    <shared-buscador (clickBoton)="doSearchContentInSpotifyAPI()" [inputPlaceholderText]="itemSearchText">
+    </shared-buscador>
 
     <main>
         <search-items-contenedor-canciones [tracks]="tracks">
@@ -17,4 +18,6 @@
     </main>
 
     <shared-footer></shared-footer>
+
+    <shared-audio-reproducer-bar></shared-audio-reproducer-bar>
 </body>

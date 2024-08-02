@@ -10,7 +10,7 @@ import { itemSearchTextKey, searchItemsUrl } from 'src/app/core/constants/consta
     styleUrls: ['./buscador.component.css']
 })
 export class BuscadorComponent  {
-    // necesario para actualizar los componentes que utilicen el buscador
+    // * necesario para actualizar los componentes que utilicen el buscador
     @Output()
     clickBoton = new EventEmitter<void>();
 

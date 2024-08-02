@@ -27,13 +27,3 @@ p {
     padding: 8px;
     width: 80px;
 }
-
-.imagen-link-externo {
-    width: 16px;
-    opacity: 0.5;
-}
-
-.imagen-link-externo:hover {
-    opacity: 0.8;
-    scale: 1.1;
-}
