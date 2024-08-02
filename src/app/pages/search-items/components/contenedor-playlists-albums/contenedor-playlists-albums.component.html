@@ -1,11 +1,16 @@
-<article>
-    <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="center">
-        <mat-tab label="Albums">
-            <shared-card-albums [albums]="albums"></shared-card-albums>
-        </mat-tab>
+<section>
+    <header>
+        <button class="btn btn-primary" (click)="changeComponentToRender(0)">Albums</button>
+        <button class="btn btn-primary" (click)="changeComponentToRender(1)">Playlists</button>
+    </header>
 
-        <mat-tab label="Playlists">
-            <shared-card-playlists [playlists]="playlists"></shared-card-playlists>
-        </mat-tab>
-    </mat-tab-group>
-</article>
+    <article>
+        <ng-container *ngIf="componentIndexToRender === 0">
+            <shared-card-albums class="animacion-zoom-in" [albums]="albums"></shared-card-albums>
+        </ng-container>
+
+        <ng-container *ngIf="componentIndexToRender === 1">
+            <shared-card-playlists class="animacion-zoom-in" [playlists]="playlists"></shared-card-playlists>
+        </ng-container>
+    </article>
+</section>

@@ -1,0 +1,24 @@
+header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+    gap: 16px;
+}
+
+header button {
+    width: 100%;
+}
+
+.animacion-zoom-in {
+    animation: zoomIn 0.2s ease-in-out;
+}
+
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

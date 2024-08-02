@@ -12,6 +12,12 @@ export class ContenedorPlaylistsAlbumsComponent {
     public albums: AlbumDataInterface[] = [];
     @Input()
     public playlists: PlaylistDataInterface[] = [];
+    
+    public componentIndexToRender: number = 0;
 
     constructor() { }
+
+    public changeComponentToRender(index: number): void {
+        this.componentIndexToRender = index;
+    }
 }
