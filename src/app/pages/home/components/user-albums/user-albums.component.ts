@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { UserAlbumsService } from './user-albums.service';
 import { AlbumCardsInterface } from './interfaces/AlbumCardsInterface';
@@ -14,8 +14,6 @@ export class UserAlbumsComponent {
 
     // Lista que se carga en el html
     public loadedAlbumCards: AlbumCardsInterface[] = [];
-
-    private contador: number = 0;
 
 
     constructor(private userAlbumsService: UserAlbumsService) {
