@@ -1,21 +1,16 @@
 body {
     background-color: black;
-}
 
-main section {
-    width: 100%;
-    padding: 16px;
-
-    display: grid;
-    /* Crea una rejilla de 12 columnas iguales */
-    grid-template-columns: repeat(12, 1fr);
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 main search-items-contenedor-canciones {
     background-color: rgb(16, 16, 16);
     padding-top: 16px;
     padding-bottom: 16px;
+    margin-bottom: 32px;
 
     display: flex;
     flex-direction: row;
@@ -31,4 +26,16 @@ main section search-items-contenedor-artistas {
 main section search-items-contenedor-playlists-albums {
     grid-column: span 7;
     background-color: rgb(16, 16, 16);
+}
+
+@media (min-width: 993px) {
+    main section {
+        width: 100%;
+        padding: 16px;
+
+        display: grid;
+        /* Crea una rejilla de 12 columnas iguales */
+        grid-template-columns: repeat(12, 1fr);
+        gap: 10px;
+    }
 }
