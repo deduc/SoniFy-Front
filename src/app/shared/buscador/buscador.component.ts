@@ -28,8 +28,11 @@ export class BuscadorComponent  {
     public searchContent() {
         if (this.searchText.length == 0) return;
 
+        let queryUrlText: string = this.searchText;
+
         localStorage.setItem(this.itemSearchTextKey, this.searchText);
-        this.router.navigateByUrl(this.searchItemsUrl);
+        
+        this.router.navigate([this.searchItemsUrl], { queryParams: { query: queryUrlText } });
 
         // emito el evento click para actualizar el comopnente que utilice a este
         this.clickBoton.emit();
